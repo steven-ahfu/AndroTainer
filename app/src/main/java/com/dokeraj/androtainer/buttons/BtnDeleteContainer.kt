@@ -5,26 +5,30 @@ import android.graphics.drawable.TransitionDrawable
 import android.view.View
 import android.view.animation.AnimationUtils
 import com.dokeraj.androtainer.R
-import kotlinx.android.synthetic.main.delete_docker_container_btn.view.*
+import com.dokeraj.androtainer.databinding.DeleteDockerContainerBtnBinding
 
-class BtnDeleteContainer(val ct: Context, val view: View) {
+class BtnDeleteContainer(
+    private val ct: Context,
+    private val binding: DeleteDockerContainerBtnBinding
+) {
     fun changeBtnState(enable: Boolean) {
         val fadeIn = AnimationUtils.loadAnimation(ct, R.anim.fade_in_btn)
-        val colorTransition = view.clContainerDelete.background as TransitionDrawable
+        val colorTransition =
+            binding.clContainerDelete.background as TransitionDrawable
 
-        if (enable != view.isClickable) {
-            view.isClickable = enable
+        if (enable != binding.root.isClickable) {
+            binding.root.isClickable = enable
             if (enable) {
-                view.tvContainerDelete.visibility = View.VISIBLE
-                view.pbContainerDelete.visibility = View.GONE
-                view.ivTrashContainerDelete.visibility = View.VISIBLE
+                binding.tvContainerDelete.visibility = View.VISIBLE
+                binding.pbContainerDelete.visibility = View.GONE
+                binding.ivTrashContainerDelete.visibility = View.VISIBLE
                 colorTransition.reverseTransition(200)
             } else {
-                view.pbContainerDelete.animation = fadeIn
+                binding.pbContainerDelete.animation = fadeIn
                 colorTransition.startTransition(200)
-                view.tvContainerDelete.visibility = View.GONE
-                view.pbContainerDelete.visibility = View.VISIBLE
-                view.ivTrashContainerDelete.visibility = View.GONE
+                binding.tvContainerDelete.visibility = View.GONE
+                binding.pbContainerDelete.visibility = View.VISIBLE
+                binding.ivTrashContainerDelete.visibility = View.GONE
             }
         }
     }

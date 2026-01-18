@@ -17,6 +17,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokeraj.androtainer.adapter.DockerContainerAdapter
 import com.dokeraj.androtainer.adapter.DockerEndpointAdapter
+import com.dokeraj.androtainer.databinding.FragmentDockerContainerDetailsBinding
+import com.dokeraj.androtainer.databinding.FragmentDockerListerBinding
 import com.dokeraj.androtainer.dialogs.ShowHiddenFeaturesDiag
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.models.ContainerStateType
@@ -30,18 +32,20 @@ import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.linkify.LinkifyPlugin
-import kotlinx.android.synthetic.main.drawer_lister_header.*
-import kotlinx.android.synthetic.main.fragment_docker_lister.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
+    private var _binding: FragmentDockerListerBinding? = null
+    private val binding get() = _binding!!
     private val args: DockerListerFragmentArgs by navArgs()
     private var lastTimePressed: Long = 0L
     private val intervalToastTime = 1200
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        _binding = FragmentDockerListerBinding.bind(view)
 
         /** how to instantiate a viewModel object*/
         val model: DockerListerViewModel =
@@ -53,19 +57,19 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         val globActivity: MainActiviy = (activity as MainActiviy?)!!
         val globalVars: GlobalApp = (globActivity.application as GlobalApp)
 
-        tvContainerListerEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
+        binding.tvContainerListerEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
 
         setDrawerInfo(globalVars)
 
         val hamburgerMenu = ActionBarDrawerToggle(activity,
-            drawerLister,
-            toolbarMenu,
+            binding.drawerLister,
+            binding.toolbarMenu,
             R.string.nav_app_bar_open_drawer_description,
             R.string.navigation_drawer_close)
 
         hamburgerMenu.drawerArrowDrawable.color =
             ContextCompat.getColor(requireContext(), R.color.disText2)
-        drawerLister.addDrawerListener(hamburgerMenu)
+        binding.drawerLister.addDrawerListener(hamburgerMenu)
         hamburgerMenu.syncState()
 
         if (globActivity.getIsLoginToDockerLister()) {
@@ -85,26 +89,26 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 globalVars.currentUser!!.currentEndpoint.id,
                 globalVars,
                 requireContext(), this, model)
-        recycler_view.adapter = recyclerAdapter
-        recycler_view.layoutManager = LinearLayoutManager(activity)
-        recycler_view.setHasFixedSize(true)
+        binding.recyclerView.adapter = recyclerAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.setHasFixedSize(true)
 
-        rvDockerEndpoints.adapter = DockerEndpointAdapter(globalVars.currentUser!!.listOfEndpoints,
-            globalVars, requireContext(), globActivity, drawerLister, model, recyclerAdapter, this)
-        rvDockerEndpoints.layoutManager = LinearLayoutManager(activity)
-        rvDockerEndpoints.setHasFixedSize(true)
+        binding.rvDockerEndpoints.adapter = DockerEndpointAdapter(globalVars.currentUser!!.listOfEndpoints,
+            globalVars, requireContext(), globActivity, binding.drawerLister, model, recyclerAdapter, this)
+        binding.rvDockerEndpoints.layoutManager = LinearLayoutManager(activity)
+        binding.rvDockerEndpoints.setHasFixedSize(true)
 
-        btnLogout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             logout(globActivity)
         }
 
-        btnAbout.setOnClickListener {
-            if (tvAboutInfo.visibility == View.VISIBLE) {
-                tvAboutInfo.visibility = View.INVISIBLE
-                btnHiddenFeatures.visibility = View.INVISIBLE
+        binding.btnAbout.setOnClickListener {
+            if (binding.tvAboutInfo.visibility == View.VISIBLE) {
+                binding.tvAboutInfo.visibility = View.INVISIBLE
+                binding.btnHiddenFeatures.visibility = View.INVISIBLE
             } else {
-                tvAboutInfo.visibility = View.VISIBLE
-                btnHiddenFeatures.visibility = View.VISIBLE
+                binding.tvAboutInfo.visibility = View.VISIBLE
+                binding.btnHiddenFeatures.visibility = View.VISIBLE
             }
         }
 
@@ -112,88 +116,88 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         when (globalVars.appSettings!!.kontainerFilter) {
             KontainerFilterPref.RUNNING -> filterContainers(recyclerAdapter,
                 globActivity,
-                clStatsRunning,
-                listOf(clStatsTotal, clStatsStopped),
+                binding.clStatsRunning,
+                listOf(binding.clStatsTotal, binding.clStatsStopped),
                 KontainerFilterPref.RUNNING)
             KontainerFilterPref.STOPPED_OR_ERRORED -> filterContainers(recyclerAdapter,
                 globActivity,
-                clStatsStopped,
-                listOf(clStatsTotal, clStatsRunning),
+                binding.clStatsStopped,
+                listOf(binding.clStatsTotal, binding.clStatsRunning),
                 KontainerFilterPref.STOPPED_OR_ERRORED)
             KontainerFilterPref.TOTAL -> filterContainers(recyclerAdapter,
                 globActivity,
-                clStatsTotal,
-                listOf(clStatsRunning, clStatsStopped),
+                binding.clStatsTotal,
+                listOf(binding.clStatsRunning, binding.clStatsStopped),
                 KontainerFilterPref.TOTAL)
         }
 
         // initialize the searchTermVisibility
         if (globalVars.appSettings!!.searchTermVisibility)
-            llSearchTerm.visibility = View.VISIBLE
+            binding.llSearchTerm.visibility = View.VISIBLE
         else
-            llSearchTerm.visibility = View.GONE
+            binding.llSearchTerm.visibility = View.GONE
 
 
         // container filtering
-        clStatsRunning.setOnClickListener {
+        binding.clStatsRunning.setOnClickListener {
             filterContainers(recyclerAdapter,
                 globActivity,
-                clStatsRunning,
-                listOf(clStatsTotal, clStatsStopped),
+                binding.clStatsRunning,
+                listOf(binding.clStatsTotal, binding.clStatsStopped),
                 KontainerFilterPref.RUNNING)
         }
-        clStatsStopped.setOnClickListener {
+        binding.clStatsStopped.setOnClickListener {
             filterContainers(recyclerAdapter,
                 globActivity,
-                clStatsStopped,
-                listOf(clStatsTotal, clStatsRunning),
+                binding.clStatsStopped,
+                listOf(binding.clStatsTotal, binding.clStatsRunning),
                 KontainerFilterPref.STOPPED_OR_ERRORED)
         }
-        clStatsTotal.setOnClickListener {
+        binding.clStatsTotal.setOnClickListener {
             filterContainers(recyclerAdapter,
                 globActivity,
-                clStatsTotal,
-                listOf(clStatsRunning, clStatsStopped),
+                binding.clStatsTotal,
+                listOf(binding.clStatsRunning, binding.clStatsStopped),
                 KontainerFilterPref.TOTAL)
         }
 
-        btnHiddenFeatures.setOnClickListener {
+        binding.btnHiddenFeatures.setOnClickListener {
             val dialog = ShowHiddenFeaturesDiag()
             dialog.show(parentFragmentManager, "Hidden Explanations")
         }
 
-        btnEndpoints.setOnClickListener {
-            if (rvDockerEndpoints.visibility == View.VISIBLE)
-                rvDockerEndpoints.visibility = View.GONE
+        binding.btnEndpoints.setOnClickListener {
+            if (binding.rvDockerEndpoints.visibility == View.VISIBLE)
+                binding.rvDockerEndpoints.visibility = View.GONE
             else {
-                rvDockerEndpoints.visibility = View.VISIBLE
+                binding.rvDockerEndpoints.visibility = View.VISIBLE
             }
         }
 
-        btnManageUsers.setOnClickListener {
+        binding.btnManageUsers.setOnClickListener {
             val action =
                 DockerListerFragmentDirections.actionDockerListerFragmentToUsersListerFragment()
             findNavController().navigate(action)
         }
 
-        swiperLayout.setOnRefreshListener {
+        binding.swiperLayout.setOnRefreshListener {
             callSwiperLogic(model, globActivity, globalVars, recyclerAdapter)
         }
 
-        clStatsTotal.setOnLongClickListener {
-            if (llSearchTerm.visibility == View.VISIBLE) {
-                etSearchTerm.setText("")
-                llSearchTerm.visibility = View.GONE
+        binding.clStatsTotal.setOnLongClickListener {
+            if (binding.llSearchTerm.visibility == View.VISIBLE) {
+                binding.etSearchTerm.setText("")
+                binding.llSearchTerm.visibility = View.GONE
                 globActivity.setGlobalAppSettings(searchTermVisibility = false)
             } else {
-                llSearchTerm.visibility = View.VISIBLE
+                binding.llSearchTerm.visibility = View.VISIBLE
                 globActivity.setGlobalAppSettings(searchTermVisibility = true)
             }
 
             true
         }
 
-        etSearchTerm.addTextChangedListener(object : TextWatcher {
+        binding.etSearchTerm.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -206,14 +210,14 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             }
         })
 
-        clDeleteTerm.setOnClickListener {
-            etSearchTerm.setText("")
+        binding.clDeleteTerm.setOnClickListener {
+            binding.etSearchTerm.setText("")
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
             // hijack the back button press and don't allow going back to login page (only close the drawer)
-            if (drawerLister.isDrawerOpen(GravityCompat.START))
-                drawerLister.close()
+            if (binding.drawerLister.isDrawerOpen(GravityCompat.START))
+                binding.drawerLister.close()
             else {
                 if (lastTimePressed < System.currentTimeMillis() - intervalToastTime) {
                     globActivity.showGenericSnack(requireContext(),
@@ -240,15 +244,15 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 is DataState.Success<List<Kontainer>> -> {
                     recyclerAdapter.setItems(ds.data)
                     recyclerAdapter.notifyDataSetChanged()
-                    swiperLayout.isRefreshing = false
+                    binding.swiperLayout.isRefreshing = false
                     setContainerStats(ds.data)
                 }
                 is DataState.Error -> {
-                    swiperLayout.isRefreshing = false
+                    binding.swiperLayout.isRefreshing = false
                     logout(mainActivity, "Issue with Portainer! Please login again.")
                 }
                 is DataState.Loading -> {
-                    swiperLayout.isRefreshing = true
+                    binding.swiperLayout.isRefreshing = true
                     setContainerStats(listOf(), true)
                 }
                 /** below these is the logic for handling the idividual cards*/
@@ -259,7 +263,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                     setContainerStats(listOf(), true)
                 }
                 is DataState.CardSuccess -> {
-                    swiperLayout.isRefreshing = false
+                    binding.swiperLayout.isRefreshing = false
                     recyclerAdapter.setItems(ds.data)
                     recyclerAdapter.notifyDataSetChanged()
                     //recyclerAdapter.notifyItemChanged(ds.itemIndex)
@@ -302,7 +306,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         if (globActivity.isJwtValid()) {
             // don't refresh if there are any items that are transitioning between states
             if (recyclerAdapter.areItemsInTransitioningState())
-                swiperLayout.isRefreshing = false
+                binding.swiperLayout.isRefreshing = false
             else {
                 callGetContainers(dataViewModel,
                     globalVars.currentUser!!.serverUrl,
@@ -317,8 +321,8 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
 
     private fun setDrawerInfo(globalVars: GlobalApp) {
         // set the name of the logged in user and the server url
-        tvLoggedUsername.text = globalVars.currentUser!!.username
-        tvLoggedUrl.text = globalVars.currentUser!!.serverUrl
+        binding.listerHeder.tvLoggedUsername.text = globalVars.currentUser!!.username
+        binding.listerHeder.tvLoggedUrl.text = globalVars.currentUser!!.serverUrl
 
         //get version name of app
         val pInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
@@ -336,7 +340,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             .build()
 
         // get the text from the string resources and add the version number
-        markwon.setMarkdown(tvAboutInfo, getString(R.string.about_app, appVersion))
+        markwon.setMarkdown(binding.tvAboutInfo, getString(R.string.about_app, appVersion))
     }
 
     private fun logout(mainActivity: MainActiviy, logoutMsg: String? = null) {
@@ -355,19 +359,19 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             else
                 Pair(View.INVISIBLE, View.VISIBLE)
 
-            pbTotalStats.visibility = pbAndTextVisibility.first
-            pbRunningStats.visibility = pbAndTextVisibility.first
-            pbStoppedStats.visibility = pbAndTextVisibility.first
-            tvTotalStat.visibility = pbAndTextVisibility.second
-            tvStoppedStat.visibility = pbAndTextVisibility.second
-            tvRunningStat.visibility = pbAndTextVisibility.second
+            binding.pbTotalStats.visibility = pbAndTextVisibility.first
+            binding.pbRunningStats.visibility = pbAndTextVisibility.first
+            binding.pbStoppedStats.visibility = pbAndTextVisibility.first
+            binding.tvTotalStat.visibility = pbAndTextVisibility.second
+            binding.tvStoppedStat.visibility = pbAndTextVisibility.second
+            binding.tvRunningStat.visibility = pbAndTextVisibility.second
         }
         if (!isLoading) {
-            tvTotalStat.text = allContainers.size.toString()
-            tvRunningStat.text = allContainers.count { kon ->
+            binding.tvTotalStat.text = allContainers.size.toString()
+            binding.tvRunningStat.text = allContainers.count { kon ->
                 kon.state == ContainerStateType.RUNNING
             }.toString()
-            tvStoppedStat.text = allContainers.count { kon ->
+            binding.tvStoppedStat.text = allContainers.count { kon ->
                 kon.state == ContainerStateType.EXITED || kon.state == ContainerStateType.ERRORED
             }.toString()
 

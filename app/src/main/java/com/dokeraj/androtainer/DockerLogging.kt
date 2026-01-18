@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokeraj.androtainer.adapter.LoggingAdapter
+import com.dokeraj.androtainer.databinding.FragmentLoggingBinding
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.interfaces.ApiInterface
 import com.dokeraj.androtainer.interfaces.ApiInterfaceApiKey
@@ -16,7 +17,6 @@ import com.dokeraj.androtainer.models.LogItem
 import com.dokeraj.androtainer.network.RetrofitInstance
 import com.dokeraj.androtainer.util.LogTimer
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_logging.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -28,7 +28,8 @@ import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class DockerLogging : Fragment(R.layout.fragment_logging) {
-
+    private var _binding: FragmentLoggingBinding? = null
+    private val binding get() = _binding!!
     private val args: DockerLoggingArgs by navArgs()
     private val linesOfLog = listOf(1000, 5000, 100)
     private val autoRefreshIntervals = listOf(3000, 6000, 12000)
@@ -44,11 +45,13 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         val globActivity: MainActiviy = (activity as MainActiviy?)!!
         val globalVars: GlobalApp = (globActivity.application as GlobalApp)
 
-        tbContainerLogging.navigationIcon =
+        _binding = FragmentLoggingBinding.bind(view)
+
+        binding.tbContainerLogging.navigationIcon =
             ContextCompat.getDrawable(requireActivity(), R.drawable.ic_back)
 
-        tvContainerLoggingTitle.text = "${args.containerName} Logs"
-        tvLoggingEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
+        binding.tvContainerLoggingTitle.text = "${args.containerName} Logs"
+        binding.tvLoggingEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
 
         val contId = args.containerId
         val baseUrl = globalVars.currentUser!!.serverUrl
@@ -59,63 +62,63 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         // pull from global var and setup the chips state
         initChipsState(globalVars)
 
-        srlLogging.isEnabled = true
-        srlLogging.isRefreshing = true
+        binding.srlLogging.isEnabled = true
+        binding.srlLogging.isRefreshing = true
 
         val timer = LogTimer()
 
-        if (chpAutoRefresh.isChecked) {
-            timer.startTimer(this, baseUrl, endpointId, contId, token, globalVars, isUsingApiKey)
+        if (binding.chpAutoRefresh.isChecked) {
+            timer.startTimer(this, baseUrl, endpointId, contId, token, globalVars, isUsingApiKey, binding.chpTimestamp.isChecked)
         } else {
             getLogFromRetro(baseUrl,
                 contId,
                 token,
                 endpointId,
                 globalVars.logSettings?.linesCount ?: 1000,
-                chpTimestamp.isChecked,
+                binding.chpTimestamp.isChecked,
                 isUsingApiKey
             )
         }
 
-        srlLogging.setOnRefreshListener {
-            if (!chpAutoRefresh.isChecked) {
+        binding.srlLogging.setOnRefreshListener {
+            if (!binding.chpAutoRefresh.isChecked) {
                 getLogFromRetro(baseUrl,
                     contId,
                     token,
                     endpointId,
                     globalVars.logSettings?.linesCount ?: 1000,
-                    chpTimestamp.isChecked,
+                    binding.chpTimestamp.isChecked,
                     isUsingApiKey)
             }
         }
 
-        chpAutoRefresh.setOnClickListener {
-            globActivity.setGlobalLoggingSettings(chpAutoRefresh.isChecked,
-                chpTimestamp.isChecked,
+        binding.chpAutoRefresh.setOnClickListener {
+            globActivity.setGlobalLoggingSettings(binding.chpAutoRefresh.isChecked,
+                binding.chpTimestamp.isChecked,
                 null,
                 null
             )
 
-            if (chpAutoRefresh.isChecked) {
-                srlLogging.isEnabled = false
-                timer.startTimer(this, baseUrl, endpointId, contId, token, globalVars, isUsingApiKey)
+            if (binding.chpAutoRefresh.isChecked) {
+                binding.srlLogging.isEnabled = false
+                timer.startTimer(this, baseUrl, endpointId, contId, token, globalVars, isUsingApiKey, binding.chpTimestamp.isChecked)
             } else {
-                srlLogging.isEnabled = true
+                binding.srlLogging.isEnabled = true
                 timer.cancelTimer()
             }
         }
 
-        chpAutoRefresh.setOnLongClickListener {
+        binding.chpAutoRefresh.setOnLongClickListener {
             // disable the auto refresh so next time when you turn it on - it will pull the correct auto refresh interval
-            chpAutoRefresh.isChecked = false
-            srlLogging.isEnabled = true
+            binding.chpAutoRefresh.isChecked = false
+            binding.srlLogging.isEnabled = true
             timer.cancelTimer()
 
             val currentAutoRefreshInt: Long = globalVars.logSettings?.autoRefreshInterval ?: 6000L
             val nextArInterval =
                 getNextListItem(currentAutoRefreshInt.toInt(), autoRefreshIntervals)
-            globActivity.setGlobalLoggingSettings(chpAutoRefresh.isChecked,
-                chpTimestamp.isChecked,
+            globActivity.setGlobalLoggingSettings(binding.chpAutoRefresh.isChecked,
+                binding.chpTimestamp.isChecked,
                 null,
                 nextArInterval.toLong()
             )
@@ -129,30 +132,30 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
             true
         }
 
-        chpTimestamp.setOnClickListener {
-            globActivity.setGlobalLoggingSettings(chpAutoRefresh.isChecked,
-                chpTimestamp.isChecked,
+        binding.chpTimestamp.setOnClickListener {
+            globActivity.setGlobalLoggingSettings(binding.chpAutoRefresh.isChecked,
+                binding.chpTimestamp.isChecked,
                 null,
                 null
             )
         }
 
-        chpLinesCount.setOnClickListener {
+        binding.chpLinesCount.setOnClickListener {
             val currentLinesCount = globalVars.logSettings?.linesCount ?: 1000
             val nextLineCount = getNextListItem(currentLinesCount, linesOfLog)
-            globActivity.setGlobalLoggingSettings(chpAutoRefresh.isChecked,
-                chpTimestamp.isChecked,
+            globActivity.setGlobalLoggingSettings(binding.chpAutoRefresh.isChecked,
+                binding.chpTimestamp.isChecked,
                 nextLineCount,
                 null
             )
-            chpLinesCount.text = "${nextLineCount} lines"
+            binding.chpLinesCount.text = "${nextLineCount} lines"
         }
 
-        tbContainerLogging.setNavigationOnClickListener {
+        binding.tbContainerLogging.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        chpLinesCount.setOnLongClickListener {
+        binding.chpLinesCount.setOnLongClickListener {
             val index = (eEgg.indices).random()
 
             globActivity.showGenericSnack(requireContext(),
@@ -164,7 +167,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
-            if (!srlLogging.isRefreshing) {
+            if (!binding.srlLogging.isRefreshing) {
                 timer.cancelTimer()
                 findNavController().popBackStack()
             } else
@@ -200,7 +203,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
 
                     val fixedLine = noPrintable.drop(1)
 
-                    val timeFormatted = if (chpTimestamp.isChecked) {
+                    val timeFormatted = if (binding.chpTimestamp.isChecked) {
                         val instant: Instant? = try {
                             Instant.parse(fixedLine.take(30))
                         } catch (ex: Exception) {
@@ -223,21 +226,21 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
 
                 charReader.close()
 
-                rvLogging.adapter = LoggingAdapter(logItems)
-                rvLogging.layoutManager = LinearLayoutManager(activity)
-                rvLogging.setHasFixedSize(true)
+                binding.rvLogging.adapter = LoggingAdapter(logItems)
+                binding.rvLogging.layoutManager = LinearLayoutManager(activity)
+                binding.rvLogging.setHasFixedSize(true)
 
-                srlLogging.isRefreshing = false
-                if (chpAutoRefresh.isChecked)
-                    srlLogging.isEnabled = false
+                binding.srlLogging.isRefreshing = false
+                if (binding.chpAutoRefresh.isChecked)
+                    binding.srlLogging.isEnabled = false
 
-                rvLogging.scrollToPosition(logItems.size - 1);
+                binding.rvLogging.scrollToPosition(logItems.size - 1);
 
                 toggleErrorTextView(
                     false,
                     null)
             } else {
-                srlLogging.isRefreshing = false
+                binding.srlLogging.isRefreshing = false
                 toggleErrorTextView(
                     true,
                     "ERROR: Cannot read log data!")
@@ -266,7 +269,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
                     if (response.code() == 200) {
                         readFromStream(response.body())
                     } else {
-                        srlLogging.isRefreshing = false
+                        binding.srlLogging.isRefreshing = false
                         toggleErrorTextView(
                             true,
                             "ERROR: Response code: ${response.code()}; ${
@@ -276,7 +279,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    srlLogging.isRefreshing = false
+                    binding.srlLogging.isRefreshing = false
                     toggleErrorTextView(
                         true,
                         "ERROR failure: ${t.message}")
@@ -288,9 +291,9 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         globalVars: GlobalApp,
     ) {
         globalVars.logSettings?.let {
-            chpAutoRefresh.isChecked = it.autoRefresh
-            chpTimestamp.isChecked = it.timestamp
-            chpLinesCount.text = "${it.linesCount} lines"
+            binding.chpAutoRefresh.isChecked = it.autoRefresh
+            binding.chpTimestamp.isChecked = it.timestamp
+            binding.chpLinesCount.text = "${it.linesCount} lines"
         }
     }
 
@@ -306,13 +309,13 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
     ) {
         if (show) {
             errorMsg?.let {
-                tvLogError.text = it
+                binding.tvLogError.text = it
             }
-            tvLogError.visibility = View.VISIBLE
-            rvLogging.visibility = View.GONE
+            binding.tvLogError.visibility = View.VISIBLE
+            binding.rvLogging.visibility = View.GONE
         } else {
-            tvLogError.visibility = View.GONE
-            rvLogging.visibility = View.VISIBLE
+            binding.tvLogError.visibility = View.GONE
+            binding.rvLogging.visibility = View.VISIBLE
         }
     }
 }

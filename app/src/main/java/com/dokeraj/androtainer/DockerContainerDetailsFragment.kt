@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dokeraj.androtainer.buttons.BtnDeleteContainer
+import com.dokeraj.androtainer.databinding.FragmentDockerContainerDetailsBinding
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.models.Kontainer
 import com.dokeraj.androtainer.models.logos.Logo
@@ -24,16 +25,19 @@ import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.linkify.LinkifyPlugin
-import kotlinx.android.synthetic.main.fragment_docker_container_details.*
 import java.time.Instant.ofEpochSecond
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_container_details) {
+    private var _binding: FragmentDockerContainerDetailsBinding? = null
+    private val binding get() = _binding!!
     var isDeletingNow: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentDockerContainerDetailsBinding.bind(view)
+
         val args: DockerContainerDetailsFragmentArgs by navArgs()
 
         /** how to instantiate a viewModel object*/
@@ -41,17 +45,17 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
 
         val selectedContainer: Kontainer = args.dContainer
 
-        tbContainerDetails.navigationIcon =
+        binding.tbContainerDetails.navigationIcon =
             ContextCompat.getDrawable(requireActivity(), R.drawable.ic_back)
 
         val btnDeleteState =
-            BtnDeleteContainer(requireContext(), btnContainerDelete)
+            BtnDeleteContainer(requireContext(), binding.btnContainerDelete)
 
         val globActivity: MainActiviy = (activity as MainActiviy?)!!
         val globalVars: GlobalApp = (globActivity.application as GlobalApp)
 
-        tvContainerDetailsTitle.text = selectedContainer.name
-        tvContainerDetailsEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
+        binding.tvContainerDetailsTitle.text = selectedContainer.name
+        binding.tvContainerDetailsEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
 
         setContainerDetails(selectedContainer)
 
@@ -79,27 +83,27 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
         logoToDisplay?.let {
             Picasso.get().load(it.url)
                 .resize(it.width, it.height)
-                .into(ivContainerLogo)
+                .into(binding.ivContainerLogo)
         }
 
         // on nav button back clicked set the global var that the swiperRefresh should be turned on
-        tbContainerDetails.setNavigationOnClickListener {
+        binding.tbContainerDetails.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
         // show textview telling to do a long press in order to delete the container
-        btnContainerDelete.setOnClickListener {
+        binding.btnContainerDelete.root.setOnClickListener {
             val markwon = Markwon.builder(requireContext()).build()
 
-            markwon.setMarkdown(tv_btn_remove_container_description,
+            markwon.setMarkdown(binding.tvBtnRemoveContainerDescription,
                 getString(R.string.deletingContainerNote).replace("{containerName}",
                     selectedContainer.name))
 
-            tv_btn_remove_container_description.visibility = View.VISIBLE
+            binding.tvBtnRemoveContainerDescription.visibility = View.VISIBLE
         }
 
         // on long press - delete the docker container and go back to docker lister
-        btnContainerDelete.setOnLongClickListener {
+        binding.btnContainerDelete.root.setOnLongClickListener {
             val fullUrl =
                 getString(R.string.removeDockerContainer).replace("{baseUrl}",
                     globalVars.currentUser!!.serverUrl.removeSuffix("/"))
@@ -142,7 +146,7 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
                 is DataState.DeleteLoading -> {
                     isDeletingNow = true
                     btnDeleteState.changeBtnState(false)
-                    tv_btn_remove_container_description.visibility = View.GONE
+                    binding.tvBtnRemoveContainerDescription.visibility = View.GONE
                 }
                 is DataState.None -> {
                 }
@@ -208,7 +212,7 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
         val completeInfo =
             StringBuilder().append(id).append(formattedDate).append(imageName).append(maintainer)
                 .append(hostConfig).append(allMounts).append(allPorts).append(state).append(status)
-        markwon.setMarkdown(tvContainerDetailsInfo,
+        markwon.setMarkdown(binding.tvContainerDetailsInfo,
             "${completeInfo}")
 
     }

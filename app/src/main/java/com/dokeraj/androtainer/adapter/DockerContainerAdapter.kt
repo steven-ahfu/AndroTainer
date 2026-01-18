@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dokeraj.androtainer.DockerListerFragment
 import com.dokeraj.androtainer.DockerListerFragmentDirections
 import com.dokeraj.androtainer.R
+import com.dokeraj.androtainer.databinding.DockerCardItemBinding
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.models.ContainerActionType
 import com.dokeraj.androtainer.models.ContainerStateType
@@ -24,7 +25,6 @@ import com.dokeraj.androtainer.models.Kontainer
 import com.dokeraj.androtainer.models.KontainerFilterPref
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
 import com.dokeraj.androtainer.viewmodels.MainStateEvent
-import kotlinx.android.synthetic.main.docker_card_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -44,10 +44,12 @@ class DockerContainerAdapter(
     var containerSearchTerm: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContainerViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.docker_card_item, parent, false)
-
-        return ContainerViewHolder(itemView)
+        val binding = DockerCardItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ContainerViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ContainerViewHolder, position: Int) {
@@ -202,15 +204,15 @@ class DockerContainerAdapter(
 
     override fun getItemCount() = pContainerList.size
 
-    class ContainerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val dockerNameView: TextView = itemView.etDockerName
-        val dockerStatusView: TextView = itemView.etDockerStatus
-        val dockerButton: View = itemView.btnStartStop
+    class ContainerViewHolder(binding: DockerCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val dockerNameView: TextView = binding.etDockerName
+        val dockerStatusView: TextView = binding.etDockerStatus
+        val dockerButton: View = binding.btnStartStop.root
         val btnBackgroundView: ConstraintLayout = itemView.findViewById(R.id.clLister)
         val btnProgressBar: ProgressBar = itemView.findViewById(R.id.pbLister)
         val btnTextView: TextView = itemView.findViewById(R.id.tvLister)
-        val cardHolderLayout: ConstraintLayout = itemView.cardHolderLayout
-        val statusIconView: ImageView = itemView.statusIcon
+        val cardHolderLayout: ConstraintLayout = binding.cardHolderLayout
+        val statusIconView: ImageView = binding.statusIcon
     }
 
     @ExperimentalCoroutinesApi

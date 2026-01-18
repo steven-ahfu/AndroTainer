@@ -11,10 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.dokeraj.androtainer.MainActiviy
 import com.dokeraj.androtainer.R
+import com.dokeraj.androtainer.databinding.UsersCardItemBinding
 import com.dokeraj.androtainer.models.Credential
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.users_card_item.view.*
-import org.w3c.dom.Text
 
 class UsersLoginAdapter(
     private val credentials: List<Credential>,
@@ -26,10 +24,12 @@ class UsersLoginAdapter(
     RecyclerView.Adapter<UsersLoginAdapter.UsersViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.users_card_item, parent, false)
-
-        return UsersViewHolder(itemView)
+        val binding = UsersCardItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return UsersViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
@@ -67,10 +67,13 @@ class UsersLoginAdapter(
 
     override fun getItemCount() = credentials.size
 
-    class UsersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val serverUrl: TextView = itemView.tvServerUrl
-        val username: TextView = itemView.tvCardUsername
-        val cardLayout: ConstraintLayout = itemView.usersCardHolderLayout
-        val userIsApiKey: TextView = itemView.tvIsUserApiKey
+    class UsersViewHolder(
+        val binding: UsersCardItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        val serverUrl: TextView = binding.tvServerUrl
+        val username: TextView = binding.tvCardUsername
+        val cardLayout: ConstraintLayout = binding.usersCardHolderLayout
+        val userIsApiKey: TextView = binding.tvIsUserApiKey
     }
 }

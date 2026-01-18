@@ -3,11 +3,9 @@ plugins {
     id 'kotlin-android'
     id 'androidx.navigation.safeargs'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
-
 }
-
 
 android {
     compileSdkVersion 31
@@ -35,6 +33,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 }
 

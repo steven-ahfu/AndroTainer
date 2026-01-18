@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokeraj.androtainer.adapter.UsersLoginAdapter
 import com.dokeraj.androtainer.buttons.BtnLogin
+import com.dokeraj.androtainer.databinding.FragmentHomeBinding
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.interfaces.ApiInterface
 import com.dokeraj.androtainer.interfaces.ApiInterfaceApiKey
@@ -34,8 +35,6 @@ import com.dokeraj.androtainer.util.DataState
 import com.dokeraj.androtainer.viewmodels.HomeFragmentViewModel
 import com.dokeraj.androtainer.viewmodels.HomeMainStateEvent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_logging.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -47,12 +46,17 @@ import kotlin.math.abs
 class HomeFragment : Fragment(R.layout.fragment_home) {
     var disableDrawerSwipe: Boolean = false
 
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     /** how to instantiate a viewModel object*/
     private val model: HomeFragmentViewModel by viewModels()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        _binding = FragmentHomeBinding.bind(view)
 
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.dis4)
@@ -62,54 +66,54 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val globActivity: MainActiviy = (activity as MainActiviy?)!!
         val globalVars = (globActivity.application as GlobalApp)
 
-        swUseApiKey.setOnCheckedChangeListener { _, isChecked ->
+        binding.swUseApiKey.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                lnLayUsrPwd.visibility = View.INVISIBLE
-                conApiKey.visibility = View.VISIBLE
+                binding.lnLayUsrPwd.visibility = View.INVISIBLE
+                binding.conApiKey.visibility = View.VISIBLE
             } else {
-                lnLayUsrPwd.visibility = View.VISIBLE
-                conApiKey.visibility = View.GONE
+                binding.lnLayUsrPwd.visibility = View.VISIBLE
+                binding.conApiKey.visibility = View.GONE
             }
         }
 
-        etUrl.setOnFocusChangeListener { _, hasFocus ->
+        binding.etUrl.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
 
-                when (Patterns.WEB_URL.matcher(etUrl.text.toString())
-                    .matches() && (etUrl.text.toString().toLowerCase()
-                    .startsWith("http") || etUrl.text.toString().toLowerCase()
+                when (Patterns.WEB_URL.matcher(binding.etUrl.text.toString())
+                    .matches() && (binding.etUrl.text.toString().toLowerCase()
+                    .startsWith("http") || binding.etUrl.text.toString().toLowerCase()
                     .startsWith("https"))) {
                     true -> {
-                        etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_web_link,
+                        binding.etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_web_link,
                             0,
                             0,
                             0)
-                        val background = etUrl.background
+                        val background = binding.etUrl.background
                         background.mutate()
                         background.colorFilter =
                             PorterDuffColorFilter(ContextCompat.getColor(requireContext(),
                                 R.color.blue_main),
                                 PorterDuff.Mode.SRC_ATOP)
-                        etUrl.background = background
+                        binding.etUrl.background = background
                     }
                     else -> {
-                        etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_warning,
+                        binding.etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_warning,
                             0,
                             0,
                             0)
-                        val background = etUrl.background
+                        val background = binding.etUrl.background
                         background.mutate()
                         background.colorFilter =
                             PorterDuffColorFilter(ContextCompat.getColor(requireContext(),
                                 R.color.orange_warning),
                                 PorterDuff.Mode.SRC_ATOP)
-                        etUrl.background = background
+                        binding.etUrl.background = background
                     }
                 }
             }
         }
 
-        val btnLoginState = BtnLogin(requireContext(), lgnBtn)
+        val btnLoginState = BtnLogin(requireContext(), binding.lgnBtn)
 
         if (globActivity.getLogoutMsg() != null) {
             globActivity.showGenericSnack(requireContext(),
@@ -120,12 +124,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             globActivity.setLogoutMsg(null)
         }
 
-        globalVars.currentUser?.serverUrl?.let { etUrl.setText(it) }
-        globalVars.currentUser?.username?.let { etUser.setText(it) }
-        globalVars.currentUser?.pwd?.let { etPass.setText(it) }
+        globalVars.currentUser?.serverUrl?.let { binding.etUrl.setText(it) }
+        globalVars.currentUser?.username?.let { binding.etUser.setText(it) }
+        globalVars.currentUser?.pwd?.let { binding.etPass.setText(it) }
         globalVars.currentUser?.isUsingApiKey?.let { useApi ->
-            swUseApiKey.isChecked = useApi
-            globalVars.currentUser?.jwt?.let { etApiKey.setText(it) }
+            binding.swUseApiKey.isChecked = useApi
+            globalVars.currentUser?.jwt?.let { binding.etApiKey.setText(it) }
         }
 
 
@@ -137,13 +141,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         } else if (globActivity.hasJwt() && (!globActivity.isJwtValid() && !globActivity.isUserUsingApiKey())) {
             btnLoginState.changeBtnState(false)
             if (globActivity.isUserUsingApiKey()) {
-                authenticateApi(etUrl.text.toString(),
-                    etApiKey.text.toString(),
+                authenticateApi(binding.etUrl.text.toString(),
+                    binding.etApiKey.text.toString(),
                     btnLoginState)
             } else
-                authenticate(etUrl.text.toString(),
-                    etUser.text.toString(),
-                    etPass.text.toString(),
+                authenticate(binding.etUrl.text.toString(),
+                    binding.etUser.text.toString(),
+                    binding.etPass.text.toString(),
                     btnLoginState)
         }
 
@@ -154,44 +158,44 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // on button back pressed - close the users drawer
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
-            users_lister.close()
+            binding.usersLister.close()
         }
 
         // load the user credentials into the drawer recyclerview
         val savedUsers: List<Credential> = globalVars.credentials.map { (_, v) -> v }
 
         if (savedUsers.isNotEmpty()) {
-            tvUsersNoContent.visibility = View.GONE
+            binding.tvUsersNoContent.visibility = View.GONE
             val recyclerAdapter =
-                UsersLoginAdapter(savedUsers, users_lister, view, globActivity, requireContext())
-            rv_login_users.adapter = recyclerAdapter
-            rv_login_users.layoutManager = LinearLayoutManager(activity)
-            rv_login_users.setHasFixedSize(true)
+                UsersLoginAdapter(savedUsers, binding.usersLister, view, globActivity, requireContext())
+            binding.rvLoginUsers.adapter = recyclerAdapter
+            binding.rvLoginUsers.layoutManager = LinearLayoutManager(activity)
+            binding.rvLoginUsers.setHasFixedSize(true)
         } else {
-            rv_login_users.visibility = View.GONE
-            tvUsersNoContent.visibility = View.VISIBLE
+            binding.rvLoginUsers.visibility = View.GONE
+            binding.tvUsersNoContent.visibility = View.VISIBLE
         }
 
 
-        lgnBtn.setOnClickListener {
+        binding.lgnBtn.root.setOnClickListener {
             disableDrawerSwipe = true
             btnLoginState.changeBtnState(false)
-            if (swUseApiKey.isChecked) {
-                authenticateApi(etUrl.text.toString(),
-                    etApiKey.text.toString(),
+            if (binding.swUseApiKey.isChecked) {
+                authenticateApi(binding.etUrl.text.toString(),
+                    binding.etApiKey.text.toString(),
                     btnLoginState)
-            } else if (Patterns.WEB_URL.matcher(etUrl.text.toString())
-                    .matches() && (etUrl.text.toString()
-                    .toLowerCase().startsWith("http") || etUrl.text.toString().toLowerCase()
+            } else if (Patterns.WEB_URL.matcher(binding.etUrl.text.toString())
+                    .matches() && (binding.etUrl.text.toString()
+                    .toLowerCase().startsWith("http") || binding.etUrl.text.toString().toLowerCase()
                     .startsWith("https"))
             ) {
-                authenticate(etUrl.text.toString(),
-                    etUser.text.toString(),
-                    etPass.text.toString(), btnLoginState)
+                authenticate(binding.etUrl.text.toString(),
+                    binding.etUser.text.toString(),
+                    binding.etPass.text.toString(), btnLoginState)
             } else {
 
-                val errText = if (!etUrl.text.toString().toLowerCase()
-                        .startsWith("http") && !etUrl.text.toString().toLowerCase()
+                val errText = if (!binding.etUrl.text.toString().toLowerCase()
+                        .startsWith("http") && !binding.etUrl.text.toString().toLowerCase()
                         .startsWith("https")
                 )
                     "The URL must start with http:// or https://"
@@ -474,7 +478,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         true
                     } else if (diffx < 0) {
                         // this is a left swipe - close the drawer
-                        users_lister.close()
+                        binding.usersLister.close()
                         true
                     } else
                         super.onFling(downEvent, moveEvent, velocityX, velocityY)
@@ -487,6 +491,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun openDrawer() {
         if (!disableDrawerSwipe)
-            users_lister.openDrawer(Gravity.LEFT)
+            binding.usersLister.openDrawer(Gravity.LEFT)
     }
 }

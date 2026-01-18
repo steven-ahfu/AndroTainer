@@ -14,9 +14,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dokeraj.androtainer.MainActiviy
 import com.dokeraj.androtainer.R
+import com.dokeraj.androtainer.databinding.UsersCardItemBinding
 import com.dokeraj.androtainer.dialogs.DeleteCurrentUserDiag
 import com.dokeraj.androtainer.models.Credential
-import kotlinx.android.synthetic.main.users_card_item.view.*
 
 class ManageUsersAdapter(
     private var credentials: List<Credential>,
@@ -28,10 +28,12 @@ class ManageUsersAdapter(
     RecyclerView.Adapter<ManageUsersAdapter.UsersViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.users_card_item, parent, false)
-
-        return UsersViewHolder(itemView)
+        val binding = UsersCardItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return UsersViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
@@ -67,13 +69,16 @@ class ManageUsersAdapter(
 
     override fun getItemCount() = credentials.size
 
-    class UsersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvServerUrl: TextView = itemView.tvServerUrl
-        val tvUsername: TextView = itemView.tvCardUsername
-        val tvCurrentUser: TextView = itemView.tvLoggedUserWarrning
-        val btnDelete: Button = itemView.btnUserDelete
-        val cardHolderLayout: ConstraintLayout = itemView.usersCardHolderLayout
-        val tvApiUser: TextView = itemView.tvIsUserApiKey
+    class UsersViewHolder(
+        val binding: UsersCardItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        val tvServerUrl: TextView = binding.tvServerUrl
+        val tvUsername: TextView = binding.tvCardUsername
+        val tvCurrentUser: TextView = binding.tvLoggedUserWarrning
+        val btnDelete: Button = binding.btnUserDelete
+        val cardHolderLayout: ConstraintLayout = binding.usersCardHolderLayout
+        val tvApiUser: TextView = binding.tvIsUserApiKey
     }
 
     fun removeUser(currentItem: Credential, position: Int) {

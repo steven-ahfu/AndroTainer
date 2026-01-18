@@ -2,8 +2,12 @@ package com.dokeraj.androtainer.util
 
 import com.dokeraj.androtainer.DockerLogging
 import com.dokeraj.androtainer.globalvars.GlobalApp
-import kotlinx.android.synthetic.main.fragment_logging.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LogTimer : CoroutineScope by MainScope() {
 
@@ -28,11 +32,12 @@ class LogTimer : CoroutineScope by MainScope() {
     fun startTimer(
         logFrag: DockerLogging,
         baseUrl: String,
-        endpointId:Int,
+        endpointId: Int,
         contId: String,
         token: String,
         globalVars: GlobalApp,
-        isUsingApiKey:Boolean
+        isUsingApiKey: Boolean,
+        showTimestamp: Boolean
     ) {
         job =
             startCoroutineTimer(delayMillis = 0, repeatMillis = globalVars.logSettings?.autoRefreshInterval ?: 6000L) {
@@ -43,7 +48,7 @@ class LogTimer : CoroutineScope by MainScope() {
                         token,
                         endpointId,
                         globalVars.logSettings?.linesCount ?: 100,
-                        logFrag.chpTimestamp.isChecked,
+                        showTimestamp,
                         isUsingApiKey
                     )
                 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dokeraj.androtainer.DockerListerFragment
 import com.dokeraj.androtainer.MainActiviy
 import com.dokeraj.androtainer.R
+import com.dokeraj.androtainer.databinding.DockerEndpointsCardItemBinding
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.models.DockerEndpoint
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
-import kotlinx.android.synthetic.main.docker_endpoints_card_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class DockerEndpointAdapter(
@@ -33,11 +32,12 @@ class DockerEndpointAdapter(
     RecyclerView.Adapter<DockerEndpointAdapter.DockerEndpointViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DockerEndpointViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.docker_endpoints_card_item, parent, false)
-
-        return DockerEndpointViewHolder(itemView)
+        val binding = DockerEndpointsCardItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return DockerEndpointViewHolder(binding)
     }
 
     @ExperimentalCoroutinesApi
@@ -69,10 +69,13 @@ class DockerEndpointAdapter(
 
     override fun getItemCount(): Int = dockerEndpoints.size
 
-    class DockerEndpointViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvName: TextView = itemView.tvDockerEnpointNameCard
-        val tvUrl: TextView = itemView.tvDockerEnpointUrlCard
-        val llEndpoint: LinearLayout = itemView.llDockerEndpoint
+    class DockerEndpointViewHolder(
+        binding: DockerEndpointsCardItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        val tvName: TextView = binding.tvDockerEnpointNameCard
+        val tvUrl: TextView = binding.tvDockerEnpointUrlCard
+        val llEndpoint: LinearLayout = binding.llDockerEndpoint
     }
 
     private fun setCardStyle(
