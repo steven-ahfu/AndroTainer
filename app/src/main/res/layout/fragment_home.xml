@@ -162,7 +162,6 @@
             android:id="@+id/tvUsersNoContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ubuntu_bold"
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:paddingTop="20dp"

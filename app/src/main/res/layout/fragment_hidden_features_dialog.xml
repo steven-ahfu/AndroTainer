@@ -25,7 +25,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ubuntu_bold"
             android:text="X"
             android:textColor="@color/dis6"
             android:textSize="15sp"
@@ -45,7 +44,6 @@
         android:layout_marginHorizontal="65dp"
         android:layout_marginTop="20dp"
         android:paddingBottom="20dp"
-        android:fontFamily="@font/ubuntu_bold"
         android:gravity="center"
         android:text="@string/hiddenHeader"
         android:textColor="@color/disText1"
@@ -63,7 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
-        android:fontFamily="@font/ubuntu"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
         android:text="@string/hiddenExplanations"

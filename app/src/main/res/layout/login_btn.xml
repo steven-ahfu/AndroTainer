@@ -25,7 +25,6 @@
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_bold"
                 android:text="Login"
                 android:textAllCaps="true"
                 android:textColor="@color/dis4"

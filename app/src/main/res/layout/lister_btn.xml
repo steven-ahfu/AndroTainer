@@ -31,7 +31,6 @@
                 android:id="@+id/tvLister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_bold"
                 android:letterSpacing="0.08"
                 android:text="STARTING"
                 android:textAllCaps="true"

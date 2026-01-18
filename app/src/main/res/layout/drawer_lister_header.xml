@@ -27,7 +27,6 @@
         android:id="@+id/tvLoggedUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/ubuntu"
         android:gravity="end"
         android:paddingEnd="6dp"
         android:text="https://numsivacha.com/portainerX/cant/"
@@ -44,7 +43,6 @@
         android:id="@+id/tvLoggedUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/ubuntu"
         android:paddingTop="8dp"
         android:text="Numsi"
         android:textColor="@color/disText2"
@@ -62,7 +60,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/zilah_modern_narrow"
         android:paddingStart="32dp"
         android:text="AndroTainer"
         android:textColor="@color/blue_main"
