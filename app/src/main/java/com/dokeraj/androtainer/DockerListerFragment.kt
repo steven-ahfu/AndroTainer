@@ -33,6 +33,8 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.linkify.LinkifyPlugin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.Locale
+import java.util.Locale.getDefault
 
 @AndroidEntryPoint
 class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
@@ -206,7 +208,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 if (s.toString() == "")
                     filterContainersByTerm(recyclerAdapter, null)
                 else
-                    filterContainersByTerm(recyclerAdapter, s.toString().toLowerCase())
+                    filterContainersByTerm(recyclerAdapter, s.toString().lowercase(getDefault()))
             }
         })
 
@@ -275,6 +277,8 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                     //recyclerAdapter.notifyItemChanged(ds.itemIndex)
                     setContainerStats(ds.data)
                 }
+
+                else -> {}
             }
         })
     }
@@ -326,7 +330,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
 
         //get version name of app
         val pInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
-        val appVersion: String = pInfo.versionName
+        val appVersion: String? = pInfo.versionName
 
         // use Markwon to format the text
         val markwon = Markwon.builder(requireContext())

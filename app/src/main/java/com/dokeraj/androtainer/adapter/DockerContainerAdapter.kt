@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dokeraj.androtainer.DockerListerFragment
 import com.dokeraj.androtainer.DockerListerFragmentDirections
@@ -26,6 +26,8 @@ import com.dokeraj.androtainer.models.KontainerFilterPref
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
 import com.dokeraj.androtainer.viewmodels.MainStateEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.Locale
+import java.util.Locale.getDefault
 
 
 class DockerContainerAdapter(
@@ -224,7 +226,7 @@ class DockerContainerAdapter(
         val fullUrl = context.getString(R.string.StartStopContainer)
             .replace("{baseUrl}", baseUrl.removeSuffix("/"))
             .replace("{containerId}", containerId)
-            .replace("{actionType}", actionType.name.toLowerCase())
+            .replace("{actionType}", actionType.name.lowercase(getDefault()))
             .replace("{endpointId}", endpointId.toString())
 
         dataViewModel.setStateEvent(MainStateEvent.StartStopKontejneri(jwt = jwt,
@@ -272,7 +274,8 @@ class DockerContainerAdapter(
                     cardBckColor), BlendMode.SRC)
 
             // statusView text and color
-            holder.dockerStatusView.text = currentItem.status.capitalize()
+            holder.dockerStatusView.text =
+                currentItem.status.replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
             holder.dockerStatusView.setTextColor(ContextCompat.getColor(context,
                 statusTextColor))
 
@@ -346,7 +349,7 @@ class DockerContainerAdapter(
         holder: ContainerViewHolder,
     ): Boolean {
         return containerSearchTerm?.let {
-            holder.dockerNameView.text.toString().toLowerCase().startsWith(it)
+            holder.dockerNameView.text.toString().lowercase(getDefault()).startsWith(it)
         } ?: run {
             true
         }

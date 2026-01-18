@@ -7,12 +7,14 @@ import com.dokeraj.androtainer.models.MaintainerInfo
 import com.dokeraj.androtainer.models.Mount
 import com.dokeraj.androtainer.models.Port
 import com.dokeraj.androtainer.util.EntityMapper
+import java.util.Locale
+import java.util.Locale.getDefault
 import javax.inject.Inject
 
 class NetworkMapper @Inject constructor() : EntityMapper<PContainerResponse, Kontainer> {
     override fun mapFromEntity(entity: PContainerResponse): Kontainer {
         val state: ContainerStateType = try {
-            ContainerStateType.valueOf(entity.state.toUpperCase())
+            ContainerStateType.valueOf(entity.state.uppercase(getDefault()))
         } catch (e: IllegalArgumentException) {
             ContainerStateType.ERRORED
         }
@@ -33,7 +35,8 @@ class NetworkMapper @Inject constructor() : EntityMapper<PContainerResponse, Kon
 
         return Kontainer(
             id = entity.id,
-            name = entity.names[0].drop(1).trim().capitalize(),
+            name = entity.names[0].drop(1).trim()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() },
             status = entity.status,
             state = state,
             created = entity.created,

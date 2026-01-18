@@ -40,6 +40,8 @@ import retrofit2.Call
 import retrofit2.Response
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
+import java.util.Locale
+import java.util.Locale.getDefault
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -80,8 +82,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             if (!hasFocus) {
 
                 when (Patterns.WEB_URL.matcher(binding.etUrl.text.toString())
-                    .matches() && (binding.etUrl.text.toString().toLowerCase()
-                    .startsWith("http") || binding.etUrl.text.toString().toLowerCase()
+                    .matches() && (binding.etUrl.text.toString().lowercase(getDefault())
+                    .startsWith("http") || binding.etUrl.text.toString().lowercase(getDefault())
                     .startsWith("https"))) {
                     true -> {
                         binding.etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_web_link,
@@ -186,7 +188,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     btnLoginState)
             } else if (Patterns.WEB_URL.matcher(binding.etUrl.text.toString())
                     .matches() && (binding.etUrl.text.toString()
-                    .toLowerCase().startsWith("http") || binding.etUrl.text.toString().toLowerCase()
+                    .lowercase(getDefault()).startsWith("http") || binding.etUrl.text.toString()
+                    .lowercase(getDefault())
                     .startsWith("https"))
             ) {
                 authenticate(binding.etUrl.text.toString(),
@@ -194,8 +197,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     binding.etPass.text.toString(), btnLoginState)
             } else {
 
-                val errText = if (!binding.etUrl.text.toString().toLowerCase()
-                        .startsWith("http") && !binding.etUrl.text.toString().toLowerCase()
+                val errText = if (!binding.etUrl.text.toString().lowercase(getDefault())
+                        .startsWith("http") && !binding.etUrl.text.toString()
+                        .lowercase(getDefault())
                         .startsWith("https")
                 )
                     "The URL must start with http:// or https://"
@@ -239,6 +243,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     disableDrawerSwipe = true
                     btnLoginState.changeBtnState(false)
                 }
+
+                else -> {}
             }
         })
     }
@@ -461,7 +467,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         override fun onFling(
             downEvent: MotionEvent?,
-            moveEvent: MotionEvent?,
+            moveEvent: MotionEvent,
             velocityX: Float,
             velocityY: Float,
         ): Boolean {

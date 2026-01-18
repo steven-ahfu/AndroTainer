@@ -28,6 +28,8 @@ import io.noties.markwon.linkify.LinkifyPlugin
 import java.time.Instant.ofEpochSecond
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.Locale.getDefault
 
 @AndroidEntryPoint
 class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_container_details) {
@@ -64,7 +66,7 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
 
         val logoToDisplay: Logo? = allLogos.find { logo ->
             logo.names.any { lName ->
-                lName.toLowerCase() in selectedContainer.pulledImage.toLowerCase()
+                lName.lowercase(getDefault()) in selectedContainer.pulledImage.lowercase(getDefault())
             }
         }
 
@@ -150,6 +152,8 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
                 }
                 is DataState.None -> {
                 }
+
+                else -> {}
             }
         })
     }
@@ -205,9 +209,15 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
             } else
                 ""
 
-        val state = "### State\n- ***${container.state.name.toLowerCase().capitalize()}***\n"
+        val state = "### State\n- ***${
+            container.state.name.lowercase(getDefault())
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
+        }***\n"
 
-        val status = "### Status\n- ***${container.status.toLowerCase().capitalize()}***\n"
+        val status = "### Status\n- ***${
+            container.status.lowercase(getDefault())
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
+        }***\n"
 
         val completeInfo =
             StringBuilder().append(id).append(formattedDate).append(imageName).append(maintainer)
