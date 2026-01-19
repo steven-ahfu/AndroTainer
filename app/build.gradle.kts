@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.parcelize)
@@ -40,6 +40,7 @@ android {
 
     kotlin {
         compilerOptions {
+            languageVersion = KotlinVersion.KOTLIN_2_3
             jvmTarget = JvmTarget.JVM_21
         }
     }
