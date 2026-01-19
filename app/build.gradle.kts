@@ -14,7 +14,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.dokeraj.androtainer"
+        applicationId = "org.thayyil.androtainer"
         minSdk = 29
         targetSdk = 36
         versionCode = 20
