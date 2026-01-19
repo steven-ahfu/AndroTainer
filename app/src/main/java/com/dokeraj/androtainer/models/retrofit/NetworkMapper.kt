@@ -7,7 +7,6 @@ import com.dokeraj.androtainer.models.MaintainerInfo
 import com.dokeraj.androtainer.models.Mount
 import com.dokeraj.androtainer.models.Port
 import com.dokeraj.androtainer.util.EntityMapper
-import java.util.Locale
 import java.util.Locale.getDefault
 import javax.inject.Inject
 

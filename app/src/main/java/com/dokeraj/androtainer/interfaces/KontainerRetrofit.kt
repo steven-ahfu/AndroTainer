@@ -2,7 +2,12 @@ package com.dokeraj.androtainer.interfaces
 
 import com.dokeraj.androtainer.models.retrofit.PContainersResponse
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface KontainerRetrofit {
     @GET

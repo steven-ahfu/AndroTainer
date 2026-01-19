@@ -28,7 +28,6 @@ import io.noties.markwon.linkify.LinkifyPlugin
 import java.time.Instant.ofEpochSecond
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.Locale.getDefault
 
 @AndroidEntryPoint

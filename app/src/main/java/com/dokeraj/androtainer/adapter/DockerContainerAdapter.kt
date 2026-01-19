@@ -26,7 +26,6 @@ import com.dokeraj.androtainer.models.KontainerFilterPref
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
 import com.dokeraj.androtainer.viewmodels.MainStateEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.Locale
 import java.util.Locale.getDefault
 
 

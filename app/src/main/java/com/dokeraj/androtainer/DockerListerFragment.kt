@@ -17,7 +17,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokeraj.androtainer.adapter.DockerContainerAdapter
 import com.dokeraj.androtainer.adapter.DockerEndpointAdapter
-import com.dokeraj.androtainer.databinding.FragmentDockerContainerDetailsBinding
 import com.dokeraj.androtainer.databinding.FragmentDockerListerBinding
 import com.dokeraj.androtainer.dialogs.ShowHiddenFeaturesDiag
 import com.dokeraj.androtainer.globalvars.GlobalApp
@@ -33,7 +32,6 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.linkify.LinkifyPlugin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.Locale
 import java.util.Locale.getDefault
 
 @AndroidEntryPoint

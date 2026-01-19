@@ -1,9 +1,6 @@
 package com.dokeraj.androtainer.models.retrofit
 
 import com.google.gson.annotations.SerializedName
-import android.os.Parcelable
-import com.dokeraj.androtainer.models.retrofit.PContainersResponse
-import kotlinx.android.parcel.Parcelize
 
 data class PContainerResponse(
     @SerializedName("Id") val id: String,

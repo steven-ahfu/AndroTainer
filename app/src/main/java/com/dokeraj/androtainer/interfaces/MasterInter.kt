@@ -1,11 +1,10 @@
 package com.dokeraj.androtainer.interfaces
 
-import com.dokeraj.androtainer.models.retrofit.PContainersResponse
 import com.dokeraj.androtainer.models.retrofit.PEndpointsResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Headers
 
 interface MasterInter {
     @Headers("Content-Type: application/json")

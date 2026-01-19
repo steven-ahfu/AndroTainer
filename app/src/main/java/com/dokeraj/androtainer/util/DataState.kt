@@ -1,7 +1,6 @@
 package com.dokeraj.androtainer.util
 
 import com.dokeraj.androtainer.models.Kontainer
-import java.lang.Exception
 
 sealed class DataState<out R> {
     data class Success<out T>(val data: T): DataState<T>()
