@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Ciao Mondo Quadrato!</string>
+    <string name="navigation_drawer_open">Apri menu di navigazione</string>
+    <string name="navigation_drawer_close">Chiudi menu di navigazione</string>
+    <string name="welcome_messages">Il Mio Primo Titolo Il mio <i>primo</i> paragrafo.</string>
+    <string name="about_app">**AndroTainer** è un\'app open source. Questo *SERVIZIO* è fornito da Dokeraj gratuitamente ed è destinato all\'uso così com\'è.\nIl codice sorgente può essere trovato qui: https://github.com/althafvly/AndroTainer\n\n`Versione corrente: %1$s`</string>
+    <string name="users_manage_note">`QUALSIASI CREDENZIALE ELIMINATA VERRÀ RIMOSSA SOLO DA ANDROTAINER`\n\nSuggerimento: Puoi trovare le credenziali memorizzate scorrendo verso destra nella schermata di accesso.</string>
+    <string name="dialogWarning">Se scegli `CONTINUA`, verrai disconnesso e riportato alla schermata di accesso.</string>
+    <string name="hiddenHeader">Funzionalità nascoste</string>
+    <string name="hiddenExplanations">`Riavvia container` - Premi a lungo sul pulsante **AVVIA** / **ARRESTA**.\n\n`Cerca container per nome` - Premi a lungo sul filtro statistiche **Totale**.\n\n`Apri registri` - Premi a lungo sul nome del container.\n\n`Modifica tempo aggiornamento registri` - Premi a lungo sul pulsante **Aggiornamento automatico**.</string>
+    <string name="deletingContainerNote">Premi a lungo il pulsante di rimozione per eliminare il container **{containerName}**</string>
+</resources>

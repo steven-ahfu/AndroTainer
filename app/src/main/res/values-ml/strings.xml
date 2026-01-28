@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">ടെസ്റ്റ് ആക്റ്റിവിറ്റി</string>
+    <string name="hello_world">ഹലോ സ്ക്വയർ വേൾഡ്!</string>
+    <string name="navigation_drawer_open">നാവിഗേഷൻ മെനു തുറക്കുക</string>
+    <string name="navigation_drawer_close">നാവിഗേഷൻ മെനു അടയ്ക്കുക</string>
+    <string name="welcome_messages">എന്റെ ആദ്യ തലക്കെട്ട് എന്റെ <i>ആദ്യ</i> ഖണ്ഡിക.</string>
+    <string name="about_app">**AndroTainer** ഒരു ഓപ്പൺ സോഴ്സ് ആപ്പാണ്. ഈ *സേവനം* Dokeraj സൗജന്യമായി നൽകുന്നു.\nസോഴ്സ് കോഡ് ഇവിടെ കാണാം: https://github.com/althafvly/AndroTainer\n\n`നിലവിലെ പതിപ്പ്: %1$s`</string>
+    <string name="users_manage_note">`നീക്കം ചെയ്ത ക്രെഡൻഷ്യലുകൾ ANDROTAINER-ൽ നിന്ന് മാത്രമേ നീക്കം ചെയ്യപ്പെടുകയുള്ളൂ`\n\nടിപ്പ്: ലോഗിൻ സ്‌ക്രീനിൽ വലത്തോട്ട് സ്വൈപ്പ് ചെയ്‌താൽ നിങ്ങൾക്ക് സേവ് ചെയ്ത ക്രെഡൻഷ്യലുകൾ കാണാം.</string>
+    <string name="dialogWarning">നിങ്ങൾ `തുടരുക` തിരഞ്ഞെടുക്കുകയാണെങ്കിൽ, നിങ്ങൾ ലോഗ് ഔട്ട് ചെയ്യപ്പെടുകയും ലോഗിൻ സ്‌ക്രീനിലേക്ക് തിരികെ പോകുകയും ചെയ്യും.</string>
+    <string name="hiddenHeader">മറഞ്ഞിരിക്കുന്ന പ്രവർത്തനങ്ങൾ</string>
+    <string name="hiddenExplanations">`കണ്ടെയ്നർ പുനരാരംഭിക്കുക` - **START** / **STOP** ബട്ടണിൽ ദീർഘനേരം അമർത്തുക.\n\n`പേര് ഉപയോഗിച്ച് കണ്ടെയ്നർ തിരയുക` - **Total** സ്റ്റാറ്റിസ്റ്റിക്സ് ഫിൽട്ടറിൽ ദീർഘനേരം അമർത്തുക.\n\n`ലോഗുകൾ തുറക്കുക` - കണ്ടെയ്നർ പേരിൽ ദീർഘനേരം അമർത്തുക.\n\n`ലോഗ് റിഫ്രഷ് സമയം മാറ്റുക` - **Auto Refresh** ബട്ടണിൽ ദീർഘനേരം അമർത്തുക.</string>
+    <string name="deletingContainerNote">കണ്ടെയ്നർ **{containerName}** നീക്കം ചെയ്യാൻ ഡിലീറ്റ് ബട്ടണിൽ ദീർഘനേരം അമർത്തുക</string>
+</resources>

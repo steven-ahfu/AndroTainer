@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">测试活动</string>
+    <string name="hello_world">你好，方块世界！</string>
+    <string name="navigation_drawer_open">打开导航菜单</string>
+    <string name="navigation_drawer_close">关闭导航菜单</string>
+    <string name="welcome_messages">我的第一个标题 我的 <i>第一</i> 段。</string>
+    <string name="about_app">**AndroTainer** 是一个开源应用程序。此 *服务* 由 Dokeraj 免费提供，按原样使用。\n源代码可以在这里找到：https://github.com/althafvly/AndroTainer\n\n`当前版本：%1$s`</string>
+    <string name="users_manage_note">`任何删除的凭据仅会从 ANDROTAINER 中移除`\n\n提示：您可以在登录屏幕上向右滑动找到存储的凭据。</string>
+    <string name="dialogWarning">如果您选择 `继续`，您将注销并返回登录屏幕。</string>
+    <string name="hiddenHeader">隐藏功能</string>
+    <string name="hiddenExplanations">`重启容器` - 长按 **启动** / **停止** 按钮。\n\n`按名称搜索容器` - 长按 **总计** 统计筛选器。\n\n`打开日志` - 长按容器名称。\n\n`更改日志刷新时间` - 长按 **自动刷新** 按钮。</string>
+    <string name="deletingContainerNote">长按删除按钮以删除容器 **{containerName}**</string>
+</resources>

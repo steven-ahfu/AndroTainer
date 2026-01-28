@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Hallo quadratische Welt!</string>
+    <string name="navigation_drawer_open">Navigationsmenü öffnen</string>
+    <string name="navigation_drawer_close">Navigationsmenü schließen</string>
+    <string name="welcome_messages">Meine erste Überschrift Mein <i>erster</i> Absatz.</string>
+    <string name="about_app">**AndroTainer** ist eine Open-Source-App. Dieser *DIENST* wird von Dokeraj kostenlos zur Verfügung gestellt und ist zur Nutzung im Ist-Zustand vorgesehen.\nDen Quellcode finden Sie hier: https://github.com/althafvly/AndroTainer\n\n`Aktuelle Version: %1$s`</string>
+    <string name="users_manage_note">`JEDE GELÖSCHTE ANMELDUNG WIRD NUR AUS ANDROTAINER ENTFERNT`\n\nTipp: Sie finden die gespeicherten Anmeldeinformationen, indem Sie auf dem Anmeldebildschirm nach rechts wischen.</string>
+    <string name="dialogWarning">Wenn Sie `WEITER` wählen, werden Sie abgemeldet und zum Anmeldebildschirm zurückgebracht.</string>
+    <string name="hiddenHeader">Versteckte Funktionen</string>
+    <string name="hiddenExplanations">`Container neu starten` - Drücken Sie lange auf die Taste **START** / **STOPP**.\n\n`Container nach Namen suchen` - Drücken Sie lange auf den Statistikfilter **Gesamt**.\n\n`Protokolle öffnen` - Drücken Sie lange auf den Containernamen.\n\n`Aktualisierungszeit für Protokolle ändern` - Drücken Sie lange auf die Taste **Automatische Aktualisierung**.</string>
+    <string name="deletingContainerNote">Drücken Sie lange auf die Entfernen-Schaltfläche, um den Container **{containerName}** zu löschen.</string>
+</resources>

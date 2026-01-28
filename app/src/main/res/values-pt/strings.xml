@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Olá Mundo Quadrado!</string>
+    <string name="navigation_drawer_open">Abrir menu de navegação</string>
+    <string name="navigation_drawer_close">Fechar menu de navegação</string>
+    <string name="welcome_messages">Meu Primeiro Título Meu <i>primeiro</i> parágrafo.</string>
+    <string name="about_app">**AndroTainer** é um aplicativo de código aberto. Este *SERVIÇO* é fornecido por Dokeraj gratuitamente e destina-se ao uso como está.\nO código-fonte pode ser encontrado aqui: https://github.com/althafvly/AndroTainer\n\n`Versão atual: %1$s`</string>
+    <string name="users_manage_note">`QUALQUER CREDENCIAL EXCLUÍDA SERÁ REMOVIDA APENAS DO ANDROTAINER`\n\nDica: Você pode encontrar as credenciais armazenadas deslizando para a direita na tela de login.</string>
+    <string name="dialogWarning">Se você escolher `CONTINUAR`, você será desconectado e levado de volta para a tela de login.</string>
+    <string name="hiddenHeader">Funcionalidades ocultas</string>
+    <string name="hiddenExplanations">`Reiniciar contêiner` - Pressione longamente o botão **INICIAR** / **PARAR**.\n\n`Pesquisar contêiner por nome` - Pressione longamente o filtro de estatísticas **Total**.\n\n`Abrir logs` - Pressione longamente o nome do contêiner.\n\n`Alterar tempo de atualização de logs` - Pressione longamente o botão **Atualização automática**.</string>
+    <string name="deletingContainerNote">Pressione longamente o botão de remover para excluir o contêiner **{containerName}**</string>
+</resources>

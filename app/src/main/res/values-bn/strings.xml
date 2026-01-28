@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">টেস্ট অ্যাক্টিভিটি</string>
+    <string name="hello_world">হ্যালো স্কয়ার ওয়ার্ল্ড!</string>
+    <string name="navigation_drawer_open">নেভিগেশন মেনু খুলুন</string>
+    <string name="navigation_drawer_close">নেভিগেশন মেনু বন্ধ করুন</string>
+    <string name="welcome_messages">আমার প্রথম শিরোনাম আমার <i>প্রথম</i> অনুচ্ছেদ।</string>
+    <string name="about_app">**AndroTainer** একটি ওপেন সোর্স অ্যাপ। এই *পরিষেবা* Dokeraj বিনামূল্যে প্রদান করে।\nসোর্স কোড এখানে পাওয়া যাবে: https://github.com/althafvly/AndroTainer\n\n`বর্তমান সংস্করণ: %1$s`</string>
+    <string name="users_manage_note">`যেকোনো মুছে ফেলা ক্রেডেনশিয়াল শুধুমাত্র ANDROTAINER থেকে সরানো হবে`\n\nটিপ: আপনি লগইন স্ক্রিনে ডানদিকে সোয়াইপ করে সংরক্ষিত ক্রেডেনশিয়ালগুলি খুঁজে পেতে পারেন।</string>
+    <string name="dialogWarning">আপনি যদি `চালিয়ে যান` চয়ন করেন, আপনি লগ আউট হয়ে যাবেন এবং লগইন স্ক্রিনে ফিরে আসবেন।</string>
+    <string name="hiddenHeader">লুকানো কার্যকারিতা</string>
+    <string name="hiddenExplanations">`কন্টেইনার রিস্টার্ট করুন` - **START** / **STOP** বোতামে দীর্ঘক্ষণ টিপুন।\n\n`নাম দিয়ে কন্টেইনার খুঁজুন` - **Total** পরিসংখ্যান ফিল্টারে দীর্ঘক্ষণ টিপুন।\n\n`লগ খুলুন` - কন্টেইনারের নামে দীর্ঘক্ষণ টিপুন।\n\n`লগ রিফ্রেশ সময় পরিবর্তন করুন` - **Auto Refresh** বোতামে দীর্ঘক্ষণ টিপুন।</string>
+    <string name="deletingContainerNote">কন্টেইনার **{containerName}** মুছে ফেলার জন্য ডিলিট বোতামে দীর্ঘক্ষণ টিপুন</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTainer</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Bonjour le monde carré !</string>
+    <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
+    <string name="navigation_drawer_close">Fermer le menu de navigation</string>
+    <string name="welcome_messages">Mon Premier Titre Mon <i>premier</i> paragraphe.</string>
+    <string name="about_app">**AndroTainer** est une application open source. Ce *SERVICE* est fourni par Dokeraj gratuitement et est destiné à être utilisé tel quel.\nLe code source peut être trouvé ici : https://github.com/althafvly/AndroTainer\n\n`Version actuelle : %1$s`</string>
+    <string name="users_manage_note">`TOUTE IDENTIFICATION SUPPRIMÉE NE SERA SUPPRIMÉE QUE D\'ANDROTAINER`\n\nAstuce : Vous pouvez trouver les identifiants stockés en glissant vers la droite sur l\'écran de connexion.</string>
+    <string name="dialogWarning">Si vous choisissez `CONTINUER`, vous serez déconnecté et renvoyé à l\'écran de connexion.</string>
+    <string name="hiddenHeader">Fonctionnalités cachées</string>
+    <string name="hiddenExplanations">`Redémarrer le conteneur` - Appuyez longuement sur le bouton **DÉMARRER** / **ARRÊTER**.\n\n`Rechercher un conteneur par nom` - Appuyez longuement sur le filtre de statistiques **Total**.\n\n`Ouvrir les journaux` - Appuyez longuement sur le nom du conteneur.\n\n`Modifier le temps d\'actualisation des journaux` - Appuyez longuement sur le bouton **Actualisation automatique**.</string>
+    <string name="deletingContainerNote">Appuyez longuement sur le bouton de suppression pour supprimer le conteneur **{containerName}**</string>
+</resources>
