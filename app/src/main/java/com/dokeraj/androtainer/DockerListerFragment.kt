@@ -217,7 +217,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
             // hijack the back button press and don't allow going back to login page (only close the drawer)
             if (binding.drawerLister.isDrawerOpen(GravityCompat.START))
-                binding.drawerLister.close()
+                binding.drawerLister.closeDrawer(GravityCompat.START)
             else {
                 if (lastTimePressed < System.currentTimeMillis() - intervalToastTime) {
                     globActivity.showGenericSnack(requireContext(),

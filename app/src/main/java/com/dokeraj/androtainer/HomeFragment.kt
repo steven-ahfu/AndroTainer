@@ -12,6 +12,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -154,12 +155,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         view.setOnTouchListener { _, event ->
             detector.onTouchEvent(event)
-            true
         }
 
         // on button back pressed - close the users drawer
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
-            binding.usersLister.close()
+            binding.usersLister.closeDrawer(GravityCompat.START)
         }
 
         // load the user credentials into the drawer recyclerview
@@ -483,7 +483,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         true
                     } else if (diffx < 0) {
                         // this is a left swipe - close the drawer
-                        binding.usersLister.close()
+                        binding.usersLister.closeDrawer(GravityCompat.START)
                         true
                     } else
                         super.onFling(downEvent, moveEvent, velocityX, velocityY)
@@ -496,6 +496,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun openDrawer() {
         if (!disableDrawerSwipe)
-            binding.usersLister.openDrawer(Gravity.LEFT)
+            binding.usersLister.openDrawer(GravityCompat.START)
     }
 }
