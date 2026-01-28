@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ManageUsersListerFragment"
-    android:background="@color/dis4"
     android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,9 +18,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Manage Users"
+            android:text="@string/manage_users"
             android:textColor="@color/dis4"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -29,7 +28,7 @@
         android:id="@+id/tvUsersListerNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Insert text here"
+        tools:text="Insert text here"
         android:textColor="@color/dis7"
         android:textSize="13sp"
         android:paddingTop="20dp"
