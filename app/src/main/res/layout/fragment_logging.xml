@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dis4"
     android:fitsSystemWindows="true"
     tools:context=".DockerLogging">
 
@@ -24,9 +23,9 @@
                 android:id="@+id/tvContainerLoggingTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Container Log"
+                tools:text="Container Log"
                 android:textColor="@color/dis4"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -34,10 +33,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:text="Endpoint Name"
+                tools:text="Endpoint Name"
                 android:textColor="@color/dis4"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -64,7 +64,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="Auto Refresh"
+            android:text="@string/auto_refresh"
             android:textAlignment="center" />
 
         <com.google.android.material.chip.Chip
@@ -75,7 +75,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="Timestamp"
+            android:text="@string/timestamp"
             android:textAlignment="center" />
 
         <com.google.android.material.chip.Chip
@@ -86,7 +86,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="1000 lines"
+            android:text="@string/lines_1000"
             android:textAlignment="center" />
     </LinearLayout>
 
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="TextView"
+                tools:text="Error Message"
                 android:textAlignment="center"
                 android:textColor="@color/disRedDisabled"
                 android:textSize="16sp"
