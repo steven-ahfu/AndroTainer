@@ -6,12 +6,10 @@ import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.util.Patterns
 import android.view.GestureDetector
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -60,10 +58,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         _binding = FragmentHomeBinding.bind(view)
 
+        @Suppress("DEPRECATION")
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.dis4)
 
-        val detector = GestureDetectorCompat(requireContext(), UsersGestureListener())
+        val detector = GestureDetector(requireContext(), UsersGestureListener())
 
         val globActivity: MainActiviy = (activity as MainActiviy?)!!
         val globalVars = (globActivity.application as GlobalApp)
@@ -470,8 +469,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             velocityX: Float,
             velocityY: Float,
         ): Boolean {
-            val diffx = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
-            val diffy = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
+            val diffx = moveEvent.x.minus(downEvent!!.x)
+            val diffy = moveEvent.y.minus(downEvent!!.y)
 
             return if (abs(diffx) > abs(diffy)) {
                 // this is a left or right swipe

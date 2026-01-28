@@ -51,6 +51,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         val model: DockerListerViewModel =
             ViewModelProvider(requireActivity()).get(DockerListerViewModel::class.java)
 
+        @Suppress("DEPRECATION")
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.dis2)
 
