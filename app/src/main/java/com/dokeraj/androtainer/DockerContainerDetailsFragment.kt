@@ -19,7 +19,7 @@ import com.dokeraj.androtainer.util.DataState
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
 import com.dokeraj.androtainer.viewmodels.MainStateEvent
 import com.google.gson.Gson
-import com.squareup.picasso.Picasso
+import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -82,9 +82,9 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
         }
 
         logoToDisplay?.let {
-            Picasso.get().load(it.url)
-                .resize(it.width, it.height)
-                .into(binding.ivContainerLogo)
+            binding.ivContainerLogo.load(it.url) {
+                size(it.width, it.height)
+            }
         }
 
         // on nav button back clicked set the global var that the swiperRefresh should be turned on

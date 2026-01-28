@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.markwon.core)
     implementation(libs.markwon.linkify)
-    implementation(libs.picasso)
+    implementation(libs.coil)
     implementation(libs.lifecycle.extensions)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
