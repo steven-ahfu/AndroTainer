@@ -152,7 +152,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         }
 
         binding.tbContainerLogging.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         binding.chpLinesCount.setOnLongClickListener {

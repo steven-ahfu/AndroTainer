@@ -89,7 +89,7 @@ class DockerContainerDetailsFragment : Fragment(R.layout.fragment_docker_contain
 
         // on nav button back clicked set the global var that the swiperRefresh should be turned on
         binding.tbContainerDetails.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         // show textview telling to do a long press in order to delete the container
