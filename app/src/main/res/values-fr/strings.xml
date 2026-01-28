@@ -12,4 +12,26 @@
     <string name="hiddenHeader">Fonctionnalités cachées</string>
     <string name="hiddenExplanations">`Redémarrer le conteneur` - Appuyez longuement sur le bouton **DÉMARRER** / **ARRÊTER**.\n\n`Rechercher un conteneur par nom` - Appuyez longuement sur le filtre de statistiques **Total**.\n\n`Ouvrir les journaux` - Appuyez longuement sur le nom du conteneur.\n\n`Modifier le temps d\'actualisation des journaux` - Appuyez longuement sur le bouton **Actualisation automatique**.</string>
     <string name="deletingContainerNote">Appuyez longuement sur le bouton de suppression pour supprimer le conteneur **{containerName}**</string>
+
+    <string name="container_logo">Logo du Conteneur</string>
+    <string name="docker_containers_title">Conteneurs Docker</string>
+    <string name="total">Total</string>
+    <string name="running">En Exécution</string>
+    <string name="stopped">Arrêté</string>
+    <string name="logout">Déconnexion</string>
+    <string name="manage_users">Gérer les Utilisateurs</string>
+    <string name="endpoints">Endpoints</string>
+    <string name="about">À Propos</string>
+    <string name="hidden_functionalities">Fonctionnalités Cachées</string>
+    <string name="search_hint">Rechercher un conteneur</string>
+    <string name="api_key_hint">Clé API</string>
+    <string name="username_hint">Nom d\'Utilisateur</string>
+    <string name="password_hint">Mot de Passe</string>
+    <string name="use_api_key">Utiliser Clé API</string>
+    <string name="no_saved_credentials">Pas d\'identifiants enregistrés</string>
+    <string name="auto_refresh">Actualisation Auto</string>
+    <string name="timestamp">Horodatage</string>
+    <string name="lines_1000">1000 lignes</string>
+    <string name="stop">Arrêter</string>
+    <string name="status_icon">Icône d\'État</string>
 </resources>

@@ -12,4 +12,26 @@
     <string name="hiddenHeader">Funzionalità nascoste</string>
     <string name="hiddenExplanations">`Riavvia container` - Premi a lungo sul pulsante **AVVIA** / **ARRESTA**.\n\n`Cerca container per nome` - Premi a lungo sul filtro statistiche **Totale**.\n\n`Apri registri` - Premi a lungo sul nome del container.\n\n`Modifica tempo aggiornamento registri` - Premi a lungo sul pulsante **Aggiornamento automatico**.</string>
     <string name="deletingContainerNote">Premi a lungo il pulsante di rimozione per eliminare il container **{containerName}**</string>
+
+    <string name="container_logo">Logo del Contenitore</string>
+    <string name="docker_containers_title">Contenitori Docker</string>
+    <string name="total">Totale</string>
+    <string name="running">In Esecuzione</string>
+    <string name="stopped">Fermato</string>
+    <string name="logout">Disconnettersi</string>
+    <string name="manage_users">Gestisci Utenti</string>
+    <string name="endpoints">Endpoint</string>
+    <string name="about">Info</string>
+    <string name="hidden_functionalities">Funzionalità Nascoste</string>
+    <string name="search_hint">Cerca contenitore</string>
+    <string name="api_key_hint">Chiave API</string>
+    <string name="username_hint">Nome Utente</string>
+    <string name="password_hint">Password</string>
+    <string name="use_api_key">Usa Chiave API</string>
+    <string name="no_saved_credentials">Nessuna credenziale salvata</string>
+    <string name="auto_refresh">Aggiornamento Auto</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="lines_1000">1000 righe</string>
+    <string name="stop">Stop</string>
+    <string name="status_icon">Icona di Stato</string>
 </resources>

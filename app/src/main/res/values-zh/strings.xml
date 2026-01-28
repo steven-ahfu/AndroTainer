@@ -12,4 +12,26 @@
     <string name="hiddenHeader">隐藏功能</string>
     <string name="hiddenExplanations">`重启容器` - 长按 **启动** / **停止** 按钮。\n\n`按名称搜索容器` - 长按 **总计** 统计筛选器。\n\n`打开日志` - 长按容器名称。\n\n`更改日志刷新时间` - 长按 **自动刷新** 按钮。</string>
     <string name="deletingContainerNote">长按删除按钮以删除容器 **{containerName}**</string>
+
+    <string name="container_logo">容器徽标</string>
+    <string name="docker_containers_title">Docker 容器</string>
+    <string name="total">总计</string>
+    <string name="running">运行中</string>
+    <string name="stopped">已停止</string>
+    <string name="logout">登出</string>
+    <string name="manage_users">管理用户</string>
+    <string name="endpoints">Endpoints</string>
+    <string name="about">关于</string>
+    <string name="hidden_functionalities">隐藏功能</string>
+    <string name="search_hint">搜索容器名称</string>
+    <string name="api_key_hint">API 密钥</string>
+    <string name="username_hint">用户名</string>
+    <string name="password_hint">密码</string>
+    <string name="use_api_key">使用 API 密钥</string>
+    <string name="no_saved_credentials">没有保存的用户凭据</string>
+    <string name="auto_refresh">自动刷新</string>
+    <string name="timestamp">时间戳</string>
+    <string name="lines_1000">1000 行</string>
+    <string name="stop">停止</string>
+    <string name="status_icon">状态图标</string>
 </resources>

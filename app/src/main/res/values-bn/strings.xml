@@ -12,4 +12,27 @@
     <string name="hiddenHeader">লুকানো কার্যকারিতা</string>
     <string name="hiddenExplanations">`কন্টেইনার রিস্টার্ট করুন` - **START** / **STOP** বোতামে দীর্ঘক্ষণ টিপুন।\n\n`নাম দিয়ে কন্টেইনার খুঁজুন` - **Total** পরিসংখ্যান ফিল্টারে দীর্ঘক্ষণ টিপুন।\n\n`লগ খুলুন` - কন্টেইনারের নামে দীর্ঘক্ষণ টিপুন।\n\n`লগ রিফ্রেশ সময় পরিবর্তন করুন` - **Auto Refresh** বোতামে দীর্ঘক্ষণ টিপুন।</string>
     <string name="deletingContainerNote">কন্টেইনার **{containerName}** মুছে ফেলার জন্য ডিলিট বোতামে দীর্ঘক্ষণ টিপুন</string>
+
+    <string name="container_logo">কন্টেইনার লোগো</string>
+    <string name="docker_containers_title">ডকার কন্টেইনার</string>
+    <string name="total">মোট</string>
+    <string name="running">চলছে</string>
+    <string name="stopped">বন্ধ</string>
+    <string name="clear_search">X</string>
+    <string name="logout">লগ আউট</string>
+    <string name="manage_users">ব্যবহারকারী পরিচালনা</string>
+    <string name="endpoints">এন্ডপয়েন্ট</string>
+    <string name="about">সম্পর্কে</string>
+    <string name="hidden_functionalities">লুকানো কার্যকারিতা</string>
+    <string name="search_hint">কন্টেইনারের নাম খুঁজুন</string>
+    <string name="api_key_hint">API কী</string>
+    <string name="username_hint">ব্যবহারকারীর নাম</string>
+    <string name="password_hint">পাসওয়ার্ড</string>
+    <string name="use_api_key">API কী ব্যবহার করুন</string>
+    <string name="no_saved_credentials">কোনো সংরক্ষিত ব্যবহারকারী তথ্য নেই</string>
+    <string name="auto_refresh">স্বয়ংক্রিয় রিফ্রেশ</string>
+    <string name="timestamp">টাইমস্ট্যাম্প</string>
+    <string name="lines_1000">১০০০ লাইন</string>
+    <string name="stop">থামুন</string>
+    <string name="status_icon">স্ট্যাটাস আইকন</string>
 </resources>

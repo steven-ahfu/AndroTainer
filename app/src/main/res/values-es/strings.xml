@@ -12,4 +12,26 @@
     <string name="hiddenHeader">Funcionalidades ocultas</string>
     <string name="hiddenExplanations">`Reiniciar contenedor` - Mantenga presionado el botón **INICIAR** / **DETENER**.\n\n`Buscar contenedor por nombre` - Mantenga presionado el filtro de estadísticas **Total**.\n\n`Abrir registros` - Mantenga presionado el nombre del contenedor.\n\n`Cambiar tiempo de actualización de registros` - Mantenga presionado el botón **Actualización automática**.</string>
     <string name="deletingContainerNote">Mantenga presionado el botón de eliminar para borrar el contenedor **{containerName}**</string>
+
+    <string name="container_logo">Logotipo del Contenedor</string>
+    <string name="docker_containers_title">Contenedores Docker</string>
+    <string name="total">Total</string>
+    <string name="running">Ejecutando</string>
+    <string name="stopped">Detenido</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="manage_users">Administrar Usuarios</string>
+    <string name="endpoints">Endpoints</string>
+    <string name="about">Acerca de</string>
+    <string name="hidden_functionalities">Funcionalidades Ocultas</string>
+    <string name="search_hint">Buscar nombre del contenedor</string>
+    <string name="api_key_hint">Clave API</string>
+    <string name="username_hint">Nombre de Usuario</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="use_api_key">Usar Clave API</string>
+    <string name="no_saved_credentials">No hay credenciales de usuario guardadas</string>
+    <string name="auto_refresh">Actualización Automática</string>
+    <string name="timestamp">Marca de tiempo</string>
+    <string name="lines_1000">1000 líneas</string>
+    <string name="stop">Detener</string>
+    <string name="status_icon">Icono de Estado</string>
 </resources>

@@ -12,4 +12,26 @@
     <string name="hiddenHeader">Funcionalidades ocultas</string>
     <string name="hiddenExplanations">`Reiniciar contêiner` - Pressione longamente o botão **INICIAR** / **PARAR**.\n\n`Pesquisar contêiner por nome` - Pressione longamente o filtro de estatísticas **Total**.\n\n`Abrir logs` - Pressione longamente o nome do contêiner.\n\n`Alterar tempo de atualização de logs` - Pressione longamente o botão **Atualização automática**.</string>
     <string name="deletingContainerNote">Pressione longamente o botão de remover para excluir o contêiner **{containerName}**</string>
+
+    <string name="container_logo">Logotipo do Contêiner</string>
+    <string name="docker_containers_title">Contêineres Docker</string>
+    <string name="total">Total</string>
+    <string name="running">Executando</string>
+    <string name="stopped">Parado</string>
+    <string name="logout">Sair</string>
+    <string name="manage_users">Gerenciar Usuários</string>
+    <string name="endpoints">Endpoints</string>
+    <string name="about">Sobre</string>
+    <string name="hidden_functionalities">Funcionalidades Ocultas</string>
+    <string name="search_hint">Pesquisar contêiner</string>
+    <string name="api_key_hint">Chave API</string>
+    <string name="username_hint">Nome de Usuário</string>
+    <string name="password_hint">Senha</string>
+    <string name="use_api_key">Usar Chave API</string>
+    <string name="no_saved_credentials">Nenhuma credencial salva</string>
+    <string name="auto_refresh">Atualização Auto</string>
+    <string name="timestamp">Carimbo de data/hora</string>
+    <string name="lines_1000">1000 linhas</string>
+    <string name="stop">Parar</string>
+    <string name="status_icon">Ícone de Status</string>
 </resources>

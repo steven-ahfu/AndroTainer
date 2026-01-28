@@ -12,4 +12,27 @@
     <string name="hiddenHeader">छिपी हुई कार्यक्षमताएँ</string>
     <string name="hiddenExplanations">`कंटेनर पुनः आरंभ करें` - **START** / **STOP** बटन पर लंबा दबाएं।\n\n`नाम से कंटेनर खोजें` - **Total** सांख्यिकी फ़िल्टर पर लंबा दबाएं।\n\n`लॉग्स खोलें` - कंटेनर नाम पर लंबा दबाएं।\n\n`लॉग्स रिफ्रेश समय बदलें` - **Auto Refresh** बटन पर लंबा दबाएं।</string>
     <string name="deletingContainerNote">कंटेनर **{containerName}** को हटाने के लिए हटाने वाले बटन को लंबा दबाएं</string>
+
+    <string name="container_logo">कंटेनर लोगो</string>
+    <string name="docker_containers_title">डॉकर कंटेनर</string>
+    <string name="total">कुल</string>
+    <string name="running">चल रहा है</string>
+    <string name="stopped">रुका हुआ</string>
+    <string name="clear_search">X</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="manage_users">उपयोगकर्ता प्रबंधित करें</string>
+    <string name="endpoints">एंडपॉइंट्स</string>
+    <string name="about">के बारे में</string>
+    <string name="hidden_functionalities">छिपी हुई कार्यक्षमताएँ</string>
+    <string name="search_hint">कंटेनर का नाम खोजें</string>
+    <string name="api_key_hint">एपीआई कुंजी</string>
+    <string name="username_hint">उपयोगकर्ता नाम</string>
+    <string name="password_hint">पासवर्ड</string>
+    <string name="use_api_key">एपीआई कुंजी का उपयोग करें</string>
+    <string name="no_saved_credentials">कोई सहेजा गया उपयोगकर्ता क्रेडेंशियल नहीं</string>
+    <string name="auto_refresh">ऑटो रिफ्रेश</string>
+    <string name="timestamp">टाइमस्टैम्प</string>
+    <string name="lines_1000">1000 पंक्तियाँ</string>
+    <string name="stop">रुकें</string>
+    <string name="status_icon">स्थिति आइकन</string>
 </resources>

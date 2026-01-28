@@ -12,4 +12,27 @@
     <string name="hiddenHeader">മറഞ്ഞിരിക്കുന്ന പ്രവർത്തനങ്ങൾ</string>
     <string name="hiddenExplanations">`കണ്ടെയ്നർ പുനരാരംഭിക്കുക` - **START** / **STOP** ബട്ടണിൽ ദീർഘനേരം അമർത്തുക.\n\n`പേര് ഉപയോഗിച്ച് കണ്ടെയ്നർ തിരയുക` - **Total** സ്റ്റാറ്റിസ്റ്റിക്സ് ഫിൽട്ടറിൽ ദീർഘനേരം അമർത്തുക.\n\n`ലോഗുകൾ തുറക്കുക` - കണ്ടെയ്നർ പേരിൽ ദീർഘനേരം അമർത്തുക.\n\n`ലോഗ് റിഫ്രഷ് സമയം മാറ്റുക` - **Auto Refresh** ബട്ടണിൽ ദീർഘനേരം അമർത്തുക.</string>
     <string name="deletingContainerNote">കണ്ടെയ്നർ **{containerName}** നീക്കം ചെയ്യാൻ ഡിലീറ്റ് ബട്ടണിൽ ദീർഘനേരം അമർത്തുക</string>
+
+    <string name="container_logo">കണ്ടെയ്നർ ലോഗോ</string>
+    <string name="docker_containers_title">ഡോക്കർ കണ്ടെയ്നറുകൾ</string>
+    <string name="total">ആകെ</string>
+    <string name="running">പ്രവർത്തിക്കുന്നു</string>
+    <string name="stopped">നിർത്തി</string>
+    <string name="clear_search">X</string>
+    <string name="logout">ലോഗൗട്ട്</string>
+    <string name="manage_users">ഉപയോക്താക്കളെ നിയന്ത്രിക്കുക</string>
+    <string name="endpoints">എൻഡ്‌പോയിന്റുകൾ</string>
+    <string name="about">കുറിച്ച്</string>
+    <string name="hidden_functionalities">മറഞ്ഞിരിക്കുന്ന പ്രവർത്തനങ്ങൾ</string>
+    <string name="search_hint">കണ്ടെയ്നർ പേര് തിരയുക</string>
+    <string name="api_key_hint">API കീ</string>
+    <string name="username_hint">ഉപയോക്തൃനാമം</string>
+    <string name="password_hint">പാസ്‌വേഡ്</string>
+    <string name="use_api_key">API കീ ഉപയോഗിക്കുക</string>
+    <string name="no_saved_credentials">സംരക്ഷിച്ച ഉപയോക്തൃ വിവരങ്ങളൊന്നുമില്ല</string>
+    <string name="auto_refresh">സ്വയം പുതുക്കുക</string>
+    <string name="timestamp">സമയമുദ്ര</string>
+    <string name="lines_1000">1000 വരികൾ</string>
+    <string name="stop">നിർത്തുക</string>
+    <string name="status_icon">സ്റ്റാറ്റസ് ഐക്കൺ</string>
 </resources>

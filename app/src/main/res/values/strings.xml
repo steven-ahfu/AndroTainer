@@ -37,7 +37,7 @@
     <string name="total">Total</string>
     <string name="running">Running</string>
     <string name="stopped">Stopped</string>
-    <string name="clear_search">X</string>
+    <string name="clear_search" translatable="false">X</string>
     <string name="logout">Logout</string>
     <string name="manage_users">Manage Users</string>
     <string name="endpoints">Endpoints</string>
@@ -54,6 +54,5 @@
     <string name="lines_1000">1000 lines</string>
     <string name="stop">Stop</string>
     <string name="status_icon">Status Icon</string>
-
 
 </resources>

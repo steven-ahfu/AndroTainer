@@ -12,4 +12,26 @@
     <string name="hiddenHeader">Versteckte Funktionen</string>
     <string name="hiddenExplanations">`Container neu starten` - Drücken Sie lange auf die Taste **START** / **STOPP**.\n\n`Container nach Namen suchen` - Drücken Sie lange auf den Statistikfilter **Gesamt**.\n\n`Protokolle öffnen` - Drücken Sie lange auf den Containernamen.\n\n`Aktualisierungszeit für Protokolle ändern` - Drücken Sie lange auf die Taste **Automatische Aktualisierung**.</string>
     <string name="deletingContainerNote">Drücken Sie lange auf die Entfernen-Schaltfläche, um den Container **{containerName}** zu löschen.</string>
+
+    <string name="container_logo">Container-Logo</string>
+    <string name="docker_containers_title">Docker-Container</string>
+    <string name="total">Gesamt</string>
+    <string name="running">Läuft</string>
+    <string name="stopped">Gestoppt</string>
+    <string name="logout">Abmelden</string>
+    <string name="manage_users">Benutzer Verwalten</string>
+    <string name="endpoints">Endpoints</string>
+    <string name="about">Über</string>
+    <string name="hidden_functionalities">Versteckte Funktionen</string>
+    <string name="search_hint">Container suchen</string>
+    <string name="api_key_hint">API-Schlüssel</string>
+    <string name="username_hint">Benutzername</string>
+    <string name="password_hint">Passwort</string>
+    <string name="use_api_key">API-Schlüssel verwenden</string>
+    <string name="no_saved_credentials">Keine gespeicherten Anmeldeinformationen</string>
+    <string name="auto_refresh">Auto-Aktualisierung</string>
+    <string name="timestamp">Zeitstempel</string>
+    <string name="lines_1000">1000 Zeilen</string>
+    <string name="stop">Stopp</string>
+    <string name="status_icon">Statussymbol</string>
 </resources>
