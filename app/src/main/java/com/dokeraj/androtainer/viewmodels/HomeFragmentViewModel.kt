@@ -26,7 +26,7 @@ class HomeFragmentViewModel @Inject constructor(
     val dataState: LiveData<DataState<List<Kontainer>>>
         get() = _dataState
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun setStateEvent(homeMainStateEvent: HomeMainStateEvent) {
         viewModelScope.launch {
             when (homeMainStateEvent) {

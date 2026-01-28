@@ -216,7 +216,7 @@ class DockerContainerAdapter(
         val statusIconView: ImageView = binding.statusIcon
     }
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun callStartStopContainer(
         currentItemIndex: Int,
         containerId: String,
@@ -235,7 +235,7 @@ class DockerContainerAdapter(
             containerActionType = actionType))
     }
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun callRestartContainer(
         currentItemIndex: Int,
         containerId: String,

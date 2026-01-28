@@ -29,7 +29,7 @@ class DockerListerViewModel @Inject constructor(
     val dataState: LiveData<DataState<List<Kontainer>>>
         get() = _dataState
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun setStateEvent(mainStateEvent: MainStateEvent) {
         viewModelScope.launch {
             when (mainStateEvent) {
