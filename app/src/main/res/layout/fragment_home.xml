@@ -5,7 +5,6 @@
     android:id="@+id/users_lister"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dis4"
     android:fitsSystemWindows="true"
     tools:context=".HomeFragment"
     tools:openDrawer="end">
@@ -24,7 +23,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="70dp"
-            app:srcCompat="@drawable/ic_androtainerlogo_text" />
+            app:srcCompat="@drawable/ic_androtainerlogo_text"
+            android:contentDescription="@string/app_name" />
 
         <EditText
             android:id="@+id/etUrl"
@@ -40,8 +40,9 @@
             android:drawableStart="@drawable/ic_web_link"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:hint="https://mydomain.com/portainer"
-            android:inputType="textPersonName"
+            tools:hint="https://mydomain.com/portainer"
+            android:inputType="textUri"
+            android:importantForAutofill="no"
             android:maxLength="760"
             android:textColor="@color/loginText"
             android:textColorHint="@color/loginDisabledText" />
@@ -64,7 +65,8 @@
                 android:backgroundTint="#38daff"
                 android:drawableStart="@drawable/ic_fingerprint"
                 android:fontFamily="sans-serif-light"
-                android:hint="Api Key"
+                android:hint="@string/api_key_hint"
+                android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:textColor="@color/loginText"
                 android:textColorHint="@color/loginDisabledText"
@@ -94,7 +96,8 @@
                 android:backgroundTint="#38daff"
                 android:drawableStart="@drawable/ic_person_login"
                 android:fontFamily="sans-serif-light"
-                android:hint="UserName"
+                android:hint="@string/username_hint"
+                android:autofillHints="username"
                 android:inputType="textPersonName"
                 android:textColor="@color/loginText"
                 android:textColorHint="@color/loginDisabledText" />
@@ -110,14 +113,15 @@
                 android:backgroundTint="#38daff"
                 android:drawableStart="@drawable/ic_padlock"
                 android:fontFamily="sans-serif-light"
-                android:hint="Password"
+                android:hint="@string/password_hint"
+                android:autofillHints="password"
                 android:inputType="textPassword"
                 android:textColor="@color/loginText"
                 android:textColorHint="@color/loginDisabledText" />
 
         </LinearLayout>
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/swUseApiKey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -127,7 +131,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="#38daff"
             android:fontFamily="sans-serif"
-            android:text="Use Api Key"
+            android:text="@string/use_api_key"
             android:textColor="@color/loginDisabledText" />
 
         <include
@@ -165,7 +169,7 @@
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:paddingTop="20dp"
-            android:text="No saved user credentials"
+            android:text="@string/no_saved_credentials"
             android:textAllCaps="true"
             android:textColor="@color/dis5"
             android:textSize="20sp"

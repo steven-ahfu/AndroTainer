@@ -44,6 +44,11 @@
     <string name="about">About</string>
     <string name="hidden_functionalities">Hidden Functionalities</string>
     <string name="search_hint">Search container name</string>
+    <string name="api_key_hint">Api Key</string>
+    <string name="username_hint">UserName</string>
+    <string name="password_hint">Password</string>
+    <string name="use_api_key">Use Api Key</string>
+    <string name="no_saved_credentials">No saved user credentials</string>
 
 
 </resources>
