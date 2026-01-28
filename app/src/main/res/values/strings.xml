@@ -49,6 +49,9 @@
     <string name="password_hint">Password</string>
     <string name="use_api_key">Use Api Key</string>
     <string name="no_saved_credentials">No saved user credentials</string>
+    <string name="auto_refresh">Auto Refresh</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="lines_1000">1000 lines</string>
 
 
 </resources>
