@@ -52,6 +52,8 @@
     <string name="auto_refresh">Auto Refresh</string>
     <string name="timestamp">Timestamp</string>
     <string name="lines_1000">1000 lines</string>
+    <string name="stop">Stop</string>
+    <string name="status_icon">Status Icon</string>
 
 
 </resources>
