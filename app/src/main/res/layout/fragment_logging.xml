@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dis4"
+    android:fitsSystemWindows="true"
     tools:context=".DockerLogging">
 
     <androidx.appcompat.widget.Toolbar
