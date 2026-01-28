@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +46,7 @@ class UsersLoginAdapter(
             val etUrl: TextView = homeView.findViewById(R.id.etUrl)
             val etUser: TextView = homeView.findViewById(R.id.etUser)
             val etPass: TextView = homeView.findViewById(R.id.etPass)
-            val switchApiKey: Switch = homeView.findViewById(R.id.swUseApiKey)
+            val switchApiKey: SwitchCompat = homeView.findViewById(R.id.swUseApiKey)
             val etApiKey: TextView = homeView.findViewById(R.id.etApiKey)
 
             etUrl.text = currentItem.serverUrl

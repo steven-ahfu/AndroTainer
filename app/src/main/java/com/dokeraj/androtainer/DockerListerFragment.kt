@@ -64,7 +64,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         val hamburgerMenu = ActionBarDrawerToggle(activity,
             binding.drawerLister,
             binding.toolbarMenu,
-            R.string.nav_app_bar_open_drawer_description,
+            R.string.navigation_drawer_open,
             R.string.navigation_drawer_close)
 
         hamburgerMenu.drawerArrowDrawable.color =
