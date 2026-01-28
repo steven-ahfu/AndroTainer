@@ -25,9 +25,9 @@
                 android:id="@+id/tvContainerDetailsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Docker Container"
+                tools:text="Docker Container"
                 android:textColor="@color/dis4"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -35,10 +35,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:text="Endpoint Name"
+                tools:text="Endpoint Name"
                 android:textColor="@color/dis4"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -54,7 +55,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="10dp"
-                android:text="Insert text here"
+                tools:text="Insert text here"
                 android:textColor="@color/disText2"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:contentDescription="@string/container_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -101,9 +103,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="41dp"
                 android:maxWidth="220dp"
-                android:text="will get it from strings res, but lets fill it with stuff to see the padding now"
+                tools:text="will get it from strings res, but lets fill it with stuff to see the padding now"
                 android:textColor="@color/loginDisabledText"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
