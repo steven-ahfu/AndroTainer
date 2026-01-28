@@ -282,7 +282,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         })
     }
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun callGetContainers(
         dataViewModel: DockerListerViewModel,
         url: String,
@@ -299,7 +299,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             isUsingApiKey))
     }
 
-    @ExperimentalCoroutinesApi
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun callSwiperLogic(
         dataViewModel: DockerListerViewModel,
         globActivity: MainActiviy,

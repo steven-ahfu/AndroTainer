@@ -469,8 +469,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             velocityX: Float,
             velocityY: Float,
         ): Boolean {
-            val diffx = moveEvent.x.minus(downEvent!!.x)
-            val diffy = moveEvent.y.minus(downEvent!!.y)
+            if (downEvent == null) return super.onFling(downEvent, moveEvent, velocityX, velocityY)
+            
+            val diffx = moveEvent.x.minus(downEvent.x)
+            val diffy = moveEvent.y.minus(downEvent.y)
 
             return if (abs(diffx) > abs(diffy)) {
                 // this is a left or right swipe
