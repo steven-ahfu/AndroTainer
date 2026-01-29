@@ -54,5 +54,8 @@
     <string name="lines_1000">1000 lines</string>
     <string name="stop">Stop</string>
     <string name="status_icon">Status Icon</string>
+    <string name="logged_in_user_warning">This is the currently logged in user!</string>
+    <string name="api_key_user">API Key User</string>
+    <string name="delete">Delete</string>
 
 </resources>
