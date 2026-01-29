@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroTainer</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="hello_world">¡Hola Mundo Cuadrado!</string>
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="navigation_drawer_close">Cerrar menú de navegación</string>
-    <string name="welcome_messages">Mi Primer Encabezado Mi <i>primer</i> párrafo.</string>
     <string name="about_app">**AndroTainer** es una aplicación de código abierto. Este *SERVICIO* es proporcionado por Dokeraj sin costo alguno y está diseñado para usarse tal cual.\nEl código fuente se puede encontrar aquí: https://github.com/althafvly/AndroTainer\n\n`Versión actual: %1$s`</string>
     <string name="users_manage_note">`CUALQUIER CREDENCIAL ELIMINADA SOLO SE ELIMINARÁ DE ANDROTAINER`\n\nConsejo: Puede encontrar las credenciales almacenadas deslizando hacia la derecha en la pantalla de inicio de sesión.</string>
     <string name="dialogWarning">Si elige `CONTINUAR`, se cerrará la sesión y volverá a la pantalla de inicio de sesión.</string>

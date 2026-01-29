@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroTainer</string>
-    <string name="title_activity_test">测试活动</string>
-    <string name="hello_world">你好，方块世界！</string>
     <string name="navigation_drawer_open">打开导航菜单</string>
     <string name="navigation_drawer_close">关闭导航菜单</string>
-    <string name="welcome_messages">我的第一个标题 我的 <i>第一</i> 段。</string>
     <string name="about_app">**AndroTainer** 是一个开源应用程序。此 *服务* 由 Dokeraj 免费提供，按原样使用。\n源代码可以在这里找到：https://github.com/althafvly/AndroTainer\n\n`当前版本：%1$s`</string>
     <string name="users_manage_note">`任何删除的凭据仅会从 ANDROTAINER 中移除`\n\n提示：您可以在登录屏幕上向右滑动找到存储的凭据。</string>
     <string name="dialogWarning">如果您选择 `继续`，您将注销并返回登录屏幕。</string>

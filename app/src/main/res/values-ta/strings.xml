@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroTainer</string>
-    <string name="title_activity_test">சோதனை செயல்பாடு</string>
-    <string name="hello_world">வணக்கம் சதுர உலகம்!</string>
     <string name="navigation_drawer_open">வழிசெலுத்தல் மெனுவைத் திற</string>
     <string name="navigation_drawer_close">வழிசெலுத்தல் மெனுவை மூடு</string>
-    <string name="welcome_messages">எனது முதல் தலைப்பு எனது <i>முதல்</i> பத்தி.</string>
     <string name="about_app">**AndroTainer** ஒரு ஓப்பன் சோர்ஸ் பயன்பாடு. இந்த *சேவை* Dokeraj ஆல் இலவசமாக வழங்கப்படுகிறது.\nமூலக் குறியீட்டை இங்கே காணலாம்: https://github.com/althafvly/AndroTainer\n\n`தற்போதைய பதிப்பு: %1$s`</string>
     <string name="users_manage_note">`நீக்கப்பட்ட எந்தவொரு நற்சான்றிதழும் ANDROTAINER இலிருந்து மட்டுமே அகற்றப்படும்`\n\nஉதவிக்குறிப்பு: உள்நுழைவுத் திரையில் வலதுபுறமாக ஸ்வைப் செய்வதன் மூலம் சேமிக்கப்பட்ட நற்சான்றிதழ்களைக் காணலாம்.</string>
     <string name="dialogWarning">நீங்கள் `தொடரவும்` என்பதைத் தேர்வுசெய்தால், நீங்கள் வெளியேற்றப்பட்டு மீண்டும் உள்நுழைவுத் திரைக்குச் செல்வீர்கள்.</string>

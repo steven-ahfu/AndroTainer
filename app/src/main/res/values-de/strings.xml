@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroTainer</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="hello_world">Hallo quadratische Welt!</string>
     <string name="navigation_drawer_open">Navigationsmenü öffnen</string>
     <string name="navigation_drawer_close">Navigationsmenü schließen</string>
-    <string name="welcome_messages">Meine erste Überschrift Mein <i>erster</i> Absatz.</string>
     <string name="about_app">**AndroTainer** ist eine Open-Source-App. Dieser *DIENST* wird von Dokeraj kostenlos zur Verfügung gestellt und ist zur Nutzung im Ist-Zustand vorgesehen.\nDen Quellcode finden Sie hier: https://github.com/althafvly/AndroTainer\n\n`Aktuelle Version: %1$s`</string>
     <string name="users_manage_note">`JEDE GELÖSCHTE ANMELDUNG WIRD NUR AUS ANDROTAINER ENTFERNT`\n\nTipp: Sie finden die gespeicherten Anmeldeinformationen, indem Sie auf dem Anmeldebildschirm nach rechts wischen.</string>
     <string name="dialogWarning">Wenn Sie `WEITER` wählen, werden Sie abgemeldet und zum Anmeldebildschirm zurückgebracht.</string>

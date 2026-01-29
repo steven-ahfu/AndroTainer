@@ -17,10 +17,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="NavigationStyle" parent="Widget.Design.NavigationView">
-        <item name="android:textColorSecondary">@color/white</item>
-    </style>
-
 
     <style name="customChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_background</item>

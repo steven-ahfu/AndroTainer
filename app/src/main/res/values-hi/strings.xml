@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroTainer</string>
-    <string name="title_activity_test">टेस्ट गतिविधि</string>
-    <string name="hello_world">नमस्ते चौकोर दुनिया!</string>
     <string name="navigation_drawer_open">नेविगेशन मेनू खोलें</string>
     <string name="navigation_drawer_close">नेविगेशन मेनू बंद करें</string>
-    <string name="welcome_messages">मेरा पहला शीर्षक मेरा <i>पहला</i> पैराग्राफ।</string>
     <string name="about_app">**AndroTainer** एक ओपन सोर्स ऐप है। यह *सेवा* Dokeraj द्वारा नि:शुल्क प्रदान की जाती है और इसे वैसे ही उपयोग करने का इरादा है।\nसोर्स कोड यहाँ पाया जा सकता है: https://github.com/althafvly/AndroTainer\n\n`वर्तमान संस्करण: %1$s`</string>
     <string name="users_manage_note">`कोई भी हटाया गया क्रेडेंशियल केवल ANDROTAINER से हटा दिया जाएगा`\n\nसुझाव: आप लॉगिन स्क्रीन पर दाईं ओर स्वाइप करके संग्रहीत क्रेडेंशियल पा सकते हैं।</string>
     <string name="dialogWarning">यदि आप `जारी रखें` चुनते हैं, तो आप लॉग आउट हो जाएंगे और लॉगिन स्क्रीन पर वापस आ जाएंगे।</string>
