@@ -18,7 +18,6 @@
     <string name="total">ആകെ</string>
     <string name="running">പ്രവർത്തിക്കുന്നു</string>
     <string name="stopped">നിർത്തി</string>
-    <string name="clear_search">X</string>
     <string name="logout">ലോഗൗട്ട്</string>
     <string name="manage_users">ഉപയോക്താക്കളെ നിയന്ത്രിക്കുക</string>
     <string name="endpoints">എൻഡ്‌പോയിന്റുകൾ</string>

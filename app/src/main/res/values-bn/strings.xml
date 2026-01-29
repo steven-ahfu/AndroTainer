@@ -18,7 +18,6 @@
     <string name="total">মোট</string>
     <string name="running">চলছে</string>
     <string name="stopped">বন্ধ</string>
-    <string name="clear_search">X</string>
     <string name="logout">লগ আউট</string>
     <string name="manage_users">ব্যবহারকারী পরিচালনা</string>
     <string name="endpoints">এন্ডপয়েন্ট</string>

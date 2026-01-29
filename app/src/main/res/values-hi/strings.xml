@@ -18,7 +18,6 @@
     <string name="total">कुल</string>
     <string name="running">चल रहा है</string>
     <string name="stopped">रुका हुआ</string>
-    <string name="clear_search">X</string>
     <string name="logout">लॉग आउट</string>
     <string name="manage_users">उपयोगकर्ता प्रबंधित करें</string>
     <string name="endpoints">एंडपॉइंट्स</string>
