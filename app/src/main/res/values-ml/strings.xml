@@ -30,4 +30,17 @@
     <string name="lines_1000">1000 വരികൾ</string>
     <string name="stop">നിർത്തുക</string>
     <string name="status_icon">സ്റ്റാറ്റസ് ഐക്കൺ</string>
+    <string name="logged_in_user_warning">ഇത് നിലവിൽ ലോഗിൻ ചെയ്തിരിക്കുന്ന ഉപയോക്താവാണ്!</string>
+    <string name="api_key_user">API കീ ഉപയോക്താവ്</string>
+    <string name="delete">ഇല്ലാതാക്കുക</string>
+    <string name="docker_name">ഡോക്കർ പേര്</string>
+    <string name="local_endpoint">ലോക്കൽ എൻഡ്‌പോയിന്റ്</string>
+    <string name="delete_current_user_warning">നിങ്ങൾ നിലവിൽ ലോഗിൻ ചെയ്തിരിക്കുന്ന ഉപയോക്താവിനെ ഇല്ലാതാക്കാൻ പോകുകയാണ്</string>
+    <string name="continue_text">തുടരുക</string>
+    <string name="starting">ആരംഭിക്കുന്നു</string>
+    <string name="servers_and_users">സെർവറുകളും ഉപയോക്താക്കളും</string>
+    <string name="available_servers_users">ലഭ്യമായ സെർവറുകളും ഉപയോക്താക്കളും</string>
+    <string name="login">ലോഗിൻ</string>
+    <string name="remove">നീക്കം ചെയ്യുക</string>
 </resources>
+

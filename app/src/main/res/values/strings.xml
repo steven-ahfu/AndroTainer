@@ -54,5 +54,18 @@
     <string name="logged_in_user_warning">This is the currently logged in user!</string>
     <string name="api_key_user">API Key User</string>
     <string name="delete">Delete</string>
+    <string name="docker_name">Docker name</string>
+    <string name="local_endpoint">Local Endpoint</string>
+    <string name="docker_sock_url" translatable="false">https://var.docker.sock</string>
+    <string name="delete_current_user_warning">You are about to delete the currently logged in user</string>
+    <string name="continue_text">continue</string>
+    <string name="starting">STARTING</string>
+    <string name="log_template" translatable="false">AJKDE TEMPLARTE</string>
+    <string name="servers_and_users">Servers And Users</string>
+    <string name="available_servers_users">Available Servers and users</string>
+    <string name="login">Login</string>
+    <string name="placeholder_url" translatable="false">https://numsivacha.com/portainerX/cant/</string>
+    <string name="placeholder_username" translatable="false">Numsi</string>
+    <string name="remove">REMOVE</string>
 
 </resources>

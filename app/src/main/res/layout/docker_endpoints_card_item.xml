@@ -21,7 +21,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="1dp"
             android:textStyle="bold"
-            android:text="Local Endpoint"
+            android:text="@string/local_endpoint"
             android:textColor="@color/loggingText" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_marginBottom="9dp"
             android:textStyle="italic"
             android:textSize="12sp"
-            android:text="https://var.docker.sock"
+            android:text="@string/docker_sock_url"
             android:textColor="@color/loggingText" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

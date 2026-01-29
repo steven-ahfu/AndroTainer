@@ -30,4 +30,16 @@
     <string name="lines_1000">1000 पंक्तियाँ</string>
     <string name="stop">रुकें</string>
     <string name="status_icon">स्थिति आइकन</string>
+    <string name="logged_in_user_warning">यह वर्तमान में लॉग इन उपयोगकर्ता है!</string>
+    <string name="api_key_user">एपीआई कुंजी उपयोगकर्ता</string>
+    <string name="delete">हटाएं</string>
+    <string name="docker_name">डॉकर नाम</string>
+    <string name="local_endpoint">स्थानीय एंडपॉइंट</string>
+    <string name="delete_current_user_warning">आप वर्तमान में लॉग इन उपयोगकर्ता को हटाने वाले हैं</string>
+    <string name="continue_text">जारी रखें</string>
+    <string name="starting">शुरू हो रहा है</string>
+    <string name="servers_and_users">सर्वर और उपयोगकर्ता</string>
+    <string name="available_servers_users">उपलब्ध सर्वर और उपयोगकर्ता</string>
+    <string name="login">लॉग इन</string>
+    <string name="remove">हटाएं</string>
 </resources>

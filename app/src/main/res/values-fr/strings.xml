@@ -30,4 +30,16 @@
     <string name="lines_1000">1000 lignes</string>
     <string name="stop">Arrêter</string>
     <string name="status_icon">Icône d\'État</string>
+    <string name="logged_in_user_warning">C\'est l\'utilisateur actuellement connecté !</string>
+    <string name="api_key_user">Utilisateur Clé API</string>
+    <string name="delete">Supprimer</string>
+    <string name="docker_name">Nom Docker</string>
+    <string name="local_endpoint">Endpoint Local</string>
+    <string name="delete_current_user_warning">Vous êtes sur le point de supprimer l\'utilisateur actuellement connecté</string>
+    <string name="continue_text">continuer</string>
+    <string name="starting">DÉMARRAGE</string>
+    <string name="servers_and_users">Serveurs et Utilisateurs</string>
+    <string name="available_servers_users">Serveurs et utilisateurs disponibles</string>
+    <string name="login">Connexion</string>
+    <string name="remove">SUPPRIMER</string>
 </resources>

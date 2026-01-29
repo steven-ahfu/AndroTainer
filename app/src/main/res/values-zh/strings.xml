@@ -30,4 +30,16 @@
     <string name="lines_1000">1000 行</string>
     <string name="stop">停止</string>
     <string name="status_icon">状态图标</string>
+    <string name="logged_in_user_warning">这是当前登录的用户！</string>
+    <string name="api_key_user">API 密钥用户</string>
+    <string name="delete">删除</string>
+    <string name="docker_name">Docker 名称</string>
+    <string name="local_endpoint">本地端点</string>
+    <string name="delete_current_user_warning">您即将删除当前登录的用户</string>
+    <string name="continue_text">继续</string>
+    <string name="starting">正在启动</string>
+    <string name="servers_and_users">服务器和用户</string>
+    <string name="available_servers_users">可用的服务器和用户</string>
+    <string name="login">登录</string>
+    <string name="remove">删除</string>
 </resources>

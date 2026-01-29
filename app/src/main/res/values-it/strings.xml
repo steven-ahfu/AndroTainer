@@ -30,4 +30,16 @@
     <string name="lines_1000">1000 righe</string>
     <string name="stop">Stop</string>
     <string name="status_icon">Icona di Stato</string>
+    <string name="logged_in_user_warning">Questo è l\'utente attualmente connesso!</string>
+    <string name="api_key_user">Utente Chiave API</string>
+    <string name="delete">Elimina</string>
+    <string name="docker_name">Nome Docker</string>
+    <string name="local_endpoint">Endpoint Locale</string>
+    <string name="delete_current_user_warning">Stai per eliminare l\'utente attualmente connesso</string>
+    <string name="continue_text">continua</string>
+    <string name="starting">AVVIO</string>
+    <string name="servers_and_users">Server e Utenti</string>
+    <string name="available_servers_users">Server e utenti disponibili</string>
+    <string name="login">Accedi</string>
+    <string name="remove">RIMUOVI</string>
 </resources>

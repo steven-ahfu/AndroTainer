@@ -30,4 +30,16 @@
     <string name="lines_1000">1000 வரிகள்</string>
     <string name="stop">நிறுத்து</string>
     <string name="status_icon">நிலை ஐகான்</string>
+    <string name="logged_in_user_warning">இது தற்போது உள்நுழைந்த பயனர்!</string>
+    <string name="api_key_user">API விசை பயனர்</string>
+    <string name="delete">நீக்கு</string>
+    <string name="docker_name">டோக்கர் பெயர்</string>
+    <string name="local_endpoint">உள்ளூர் எண்ட்பாயிண்ட்</string>
+    <string name="delete_current_user_warning">நீங்கள் தற்போது உள்நுழைந்த பயனரை நீக்க உள்ளீர்கள்</string>
+    <string name="continue_text">தொடரவும்</string>
+    <string name="starting">தொடங்குகிறது</string>
+    <string name="servers_and_users">சேவையகங்கள் மற்றும் பயனர்கள்</string>
+    <string name="available_servers_users">கிடைக்கக்கூடிய சேவையகங்கள் மற்றும் பயனர்கள்</string>
+    <string name="login">உள்நுழைவு</string>
+    <string name="remove">நீக்கு</string>
 </resources>

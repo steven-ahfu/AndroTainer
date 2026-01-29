@@ -25,7 +25,7 @@
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login"
                 android:textAllCaps="true"
                 android:textColor="@color/dis4"
                 android:textSize="15sp"

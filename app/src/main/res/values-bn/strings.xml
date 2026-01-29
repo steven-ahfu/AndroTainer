@@ -30,4 +30,16 @@
     <string name="lines_1000">১০০০ লাইন</string>
     <string name="stop">থামুন</string>
     <string name="status_icon">স্ট্যাটাস আইকন</string>
+    <string name="logged_in_user_warning">এটি বর্তমানে লগ ইন করা ব্যবহারকারী!</string>
+    <string name="api_key_user">API কী ব্যবহারকারী</string>
+    <string name="delete">মুছুন</string>
+    <string name="docker_name">ডকার নাম</string>
+    <string name="local_endpoint">স্থানীয় এন্ডপয়েন্ট</string>
+    <string name="delete_current_user_warning">আপনি বর্তমানে লগ ইন করা ব্যবহারকারীকে মুছে ফেলতে চলেছেন</string>
+    <string name="continue_text">চালিয়ে যান</string>
+    <string name="starting">শুরু হচ্ছে</string>
+    <string name="servers_and_users">সার্ভার এবং ব্যবহারকারী</string>
+    <string name="available_servers_users">উপলব্ধ সার্ভার এবং ব্যবহারকারী</string>
+    <string name="login">লগ ইন</string>
+    <string name="remove">মুছুন</string>
 </resources>
