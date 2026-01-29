@@ -128,7 +128,6 @@
                 android:layout_height="match_parent"
                 android:paddingTop="3dp"
                 android:paddingStart="6dp"
-                android:paddingLeft="6dp"
                 tools:listitem="@layout/logging_card_item">
 
             </androidx.recyclerview.widget.RecyclerView>
