@@ -1,4 +1,5 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="VectorPath"
     android:viewportWidth="8333"
     android:viewportHeight="8333"
     android:width="1024.126dp"
