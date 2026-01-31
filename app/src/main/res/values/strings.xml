@@ -67,5 +67,7 @@
     <string name="placeholder_url" translatable="false">https://numsivacha.com/portainerX/cant/</string>
     <string name="placeholder_username" translatable="false">Numsi</string>
     <string name="remove">REMOVE</string>
+    <string name="container_logs_title">%1$s Logs</string>
+    <string name="lines_count">%1$d lines</string>
 
 </resources>

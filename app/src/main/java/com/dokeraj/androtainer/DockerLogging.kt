@@ -50,7 +50,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         binding.tbContainerLogging.navigationIcon =
             ContextCompat.getDrawable(requireActivity(), R.drawable.ic_back)
 
-        binding.tvContainerLoggingTitle.text = "${args.containerName} Logs"
+        binding.tvContainerLoggingTitle.text = getString(R.string.container_logs_title, args.containerName)
         binding.tvLoggingEndpointName.text = globalVars.currentUser!!.currentEndpoint.name
 
         val contId = args.containerId
@@ -148,7 +148,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
                 nextLineCount,
                 null
             )
-            binding.chpLinesCount.text = "${nextLineCount} lines"
+            binding.chpLinesCount.text = getString(R.string.lines_count, nextLineCount)
         }
 
         binding.tbContainerLogging.setNavigationOnClickListener {
@@ -293,7 +293,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         globalVars.logSettings?.let {
             binding.chpAutoRefresh.isChecked = it.autoRefresh
             binding.chpTimestamp.isChecked = it.timestamp
-            binding.chpLinesCount.text = "${it.linesCount} lines"
+            binding.chpLinesCount.text = getString(R.string.lines_count, it.linesCount)
         }
     }
 

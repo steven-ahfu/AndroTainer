@@ -371,13 +371,13 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             binding.tvRunningStat.visibility = pbAndTextVisibility.second
         }
         if (!isLoading) {
-            binding.tvTotalStat.text = allContainers.size.toString()
-            binding.tvRunningStat.text = allContainers.count { kon ->
+            binding.tvTotalStat.text = String.format("%d", allContainers.size)
+            binding.tvRunningStat.text = String.format("%d", allContainers.count { kon ->
                 kon.state == ContainerStateType.RUNNING
-            }.toString()
-            binding.tvStoppedStat.text = allContainers.count { kon ->
+            })
+            binding.tvStoppedStat.text = String.format("%d", allContainers.count { kon ->
                 kon.state == ContainerStateType.EXITED || kon.state == ContainerStateType.ERRORED
-            }.toString()
+            })
 
             // if there are any more containers that are in transitioning state, don't show the stats, instead keep the spinner
             if (allContainers.any { it.state == ContainerStateType.TRANSITIONING })
