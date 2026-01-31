@@ -42,4 +42,6 @@
     <string name="available_servers_users">Servidores y usuarios disponibles</string>
     <string name="login">Iniciar Sesión</string>
     <string name="remove">ELIMINAR</string>
+    <string name="container_logs_title">Registros de %1$s</string>
+    <string name="lines_count">%1$d líneas</string>
 </resources>

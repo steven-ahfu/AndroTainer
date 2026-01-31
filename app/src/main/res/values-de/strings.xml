@@ -42,4 +42,6 @@
     <string name="available_servers_users">Verfügbare Server und Benutzer</string>
     <string name="login">Anmelden</string>
     <string name="remove">ENTFERNEN</string>
+    <string name="container_logs_title">%1$s Protokolle</string>
+    <string name="lines_count">%1$d Zeilen</string>
 </resources>

@@ -40,7 +40,7 @@
             android:drawableStart="@drawable/ic_web_link"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:hint="https://mydomain.com/portainer"
+            android:hint="@string/mydomain_hint"
             android:inputType="textUri"
             android:importantForAutofill="no"
             android:maxLength="760"

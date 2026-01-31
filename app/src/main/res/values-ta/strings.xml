@@ -41,5 +41,7 @@
     <string name="servers_and_users">சேவையகங்கள் மற்றும் பயனர்கள்</string>
     <string name="available_servers_users">கிடைக்கக்கூடிய சேவையகங்கள் மற்றும் பயனர்கள்</string>
     <string name="login">உள்நுழைவு</string>
-    <string name="remove">நீக்கு</string>
+    <string name="remove">அகற்று</string>
+    <string name="container_logs_title">%1$s பதிவுகள்</string>
+    <string name="lines_count">%1$d வரிகள்</string>
 </resources>

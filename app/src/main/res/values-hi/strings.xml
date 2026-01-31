@@ -42,4 +42,6 @@
     <string name="available_servers_users">उपलब्ध सर्वर और उपयोगकर्ता</string>
     <string name="login">लॉग इन</string>
     <string name="remove">हटाएं</string>
+    <string name="container_logs_title">%1$s लॉग</string>
+    <string name="lines_count">%1$d पंक्तियाँ</string>
 </resources>

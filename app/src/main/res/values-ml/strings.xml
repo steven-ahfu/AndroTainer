@@ -42,5 +42,7 @@
     <string name="available_servers_users">ലഭ്യമായ സെർവറുകളും ഉപയോക്താക്കളും</string>
     <string name="login">ലോഗിൻ</string>
     <string name="remove">നീക്കം ചെയ്യുക</string>
+    <string name="container_logs_title">%1$s ലോഗുകൾ</string>
+    <string name="lines_count">%1$d വരികൾ</string>
 </resources>
 

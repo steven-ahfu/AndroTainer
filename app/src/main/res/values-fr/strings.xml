@@ -42,4 +42,6 @@
     <string name="available_servers_users">Serveurs et utilisateurs disponibles</string>
     <string name="login">Connexion</string>
     <string name="remove">SUPPRIMER</string>
+    <string name="container_logs_title">Journaux de %1$s</string>
+    <string name="lines_count">%1$d lignes</string>
 </resources>

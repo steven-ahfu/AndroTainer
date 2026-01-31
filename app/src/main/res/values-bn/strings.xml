@@ -41,5 +41,7 @@
     <string name="servers_and_users">সার্ভার এবং ব্যবহারকারী</string>
     <string name="available_servers_users">উপলব্ধ সার্ভার এবং ব্যবহারকারী</string>
     <string name="login">লগ ইন</string>
-    <string name="remove">মুছুন</string>
+    <string name="remove">সরান</string>
+    <string name="container_logs_title">%1$s লগ</string>
+    <string name="lines_count">%1$d লাইন</string>
 </resources>

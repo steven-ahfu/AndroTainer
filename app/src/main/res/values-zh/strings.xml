@@ -42,4 +42,6 @@
     <string name="available_servers_users">可用的服务器和用户</string>
     <string name="login">登录</string>
     <string name="remove">删除</string>
+    <string name="container_logs_title">%1$s 日志</string>
+    <string name="lines_count">%1$d 行</string>
 </resources>
