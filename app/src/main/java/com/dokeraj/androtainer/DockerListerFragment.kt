@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.util.Linkify
 import android.view.View
+import java.util.Locale
 import androidx.core.view.isVisible
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -371,11 +372,11 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             binding.tvRunningStat.visibility = pbAndTextVisibility.second
         }
         if (!isLoading) {
-            binding.tvTotalStat.text = String.format("%d", allContainers.size)
-            binding.tvRunningStat.text = String.format("%d", allContainers.count { kon ->
+            binding.tvTotalStat.text = String.format(Locale.US, "%d", allContainers.size)
+            binding.tvRunningStat.text = String.format(Locale.US, "%d", allContainers.count { kon ->
                 kon.state == ContainerStateType.RUNNING
             })
-            binding.tvStoppedStat.text = String.format("%d", allContainers.count { kon ->
+            binding.tvStoppedStat.text = String.format(Locale.US, "%d", allContainers.count { kon ->
                 kon.state == ContainerStateType.EXITED || kon.state == ContainerStateType.ERRORED
             })
 
