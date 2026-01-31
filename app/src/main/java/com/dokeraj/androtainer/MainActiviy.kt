@@ -1,6 +1,7 @@
 package com.dokeraj.androtainer
 
 import android.content.Context
+import androidx.core.content.edit
 import android.os.Bundle
 import android.text.Spanned
 import android.view.View
@@ -92,11 +93,9 @@ class MainActiviy : AppCompatActivity() {
 
     fun saveAppSettingsToPerma(appSettings: AppSettings) {
         val sharedPrefs = this.getSharedPreferences(SP_DB, MODE_PRIVATE)
-        val editor = sharedPrefs?.edit()
-
-        editor?.putString(APP_SETTINGS, Gson().toJson(appSettings))
-
-        editor?.apply()
+        sharedPrefs?.edit {
+            putString(APP_SETTINGS, Gson().toJson(appSettings))
+        }
     }
 
     fun setGlobalLoggingSettings(
@@ -127,11 +126,9 @@ class MainActiviy : AppCompatActivity() {
         logSettings: LogSettings,
     ) {
         val sharedPrefs = this.getSharedPreferences(SP_DB, MODE_PRIVATE)
-        val editor = sharedPrefs?.edit()
-
-        editor?.putString(LOG_SETTINGS, Gson().toJson(logSettings))
-
-        editor?.apply()
+        sharedPrefs?.edit {
+            putString(LOG_SETTINGS, Gson().toJson(logSettings))
+        }
     }
 
     fun saveCredentialsPermaData(
@@ -142,11 +139,9 @@ class MainActiviy : AppCompatActivity() {
         val jsArrayCreds: String = Gson().toJson(creds)
 
         val sharedPrefs = this.getSharedPreferences(SP_DB, MODE_PRIVATE)
-        val editor = sharedPrefs?.edit()
-
-        editor?.putString(USERS_CREDENTIALS, jsArrayCreds)
-
-        editor?.apply()
+        sharedPrefs?.edit {
+            putString(USERS_CREDENTIALS, jsArrayCreds)
+        }
     }
 
     fun setGlobalCredentials(user: Credential, isFromLogin: Boolean = false) {

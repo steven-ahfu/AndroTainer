@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.util.Linkify
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +105,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         }
 
         binding.btnAbout.setOnClickListener {
-            if (binding.tvAboutInfo.visibility == View.VISIBLE) {
+            if (binding.tvAboutInfo.isVisible) {
                 binding.tvAboutInfo.visibility = View.INVISIBLE
                 binding.btnHiddenFeatures.visibility = View.INVISIBLE
             } else {
@@ -168,7 +169,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         }
 
         binding.btnEndpoints.setOnClickListener {
-            if (binding.rvDockerEndpoints.visibility == View.VISIBLE)
+            if (binding.rvDockerEndpoints.isVisible)
                 binding.rvDockerEndpoints.visibility = View.GONE
             else {
                 binding.rvDockerEndpoints.visibility = View.VISIBLE
@@ -186,7 +187,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         }
 
         binding.clStatsTotal.setOnLongClickListener {
-            if (binding.llSearchTerm.visibility == View.VISIBLE) {
+            if (binding.llSearchTerm.isVisible) {
                 binding.etSearchTerm.setText("")
                 binding.llSearchTerm.visibility = View.GONE
                 globActivity.setGlobalAppSettings(searchTermVisibility = false)
