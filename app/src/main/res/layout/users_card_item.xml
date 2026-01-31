@@ -51,6 +51,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
             tools:text="Https://nesto.com/portainer"
+            android:paddingStart="26dp"
             android:paddingEnd="26dp"
             android:textColor="@color/disText1"
             android:textSize="12.2sp"
