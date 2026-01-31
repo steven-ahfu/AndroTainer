@@ -56,7 +56,7 @@ class DockerEndpointAdapter(
         holder.llEndpoint.setOnClickListener {
             val newUser = globalApp.currentUser!!.copy(currentEndpoint = currentItem)
             globActivity.setGlobalCredentials(newUser)
-            notifyDataSetChanged()
+            notifyItemRangeChanged(0, itemCount)
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START)
                 dockerListerFragment.callSwiperLogic(model,

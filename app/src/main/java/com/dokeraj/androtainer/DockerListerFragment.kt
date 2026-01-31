@@ -5,13 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.util.Linkify
 import android.view.View
-import java.util.Locale
-import androidx.core.view.isVisible
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,7 +33,7 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.linkify.LinkifyPlugin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.Locale.getDefault
+import java.util.Locale
 
 @AndroidEntryPoint
 class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
@@ -43,6 +42,9 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
     private val args: DockerListerFragmentArgs by navArgs()
     private var lastTimePressed: Long = 0L
     private val intervalToastTime = 1200
+
+    private var allContainers: List<Kontainer> = emptyList()
+    private var currentSearchTerm: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,12 +82,8 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             model.setStateEvent(MainStateEvent.InitializeView(args.dContainers.containers))
         }
 
-        // just give an empty list of containers when initializing the recyclerAdapter
-        // we will fill the adapter when the modelview is initialized
-        val containers: List<Kontainer> = listOf()
-
         val recyclerAdapter =
-            DockerContainerAdapter(containers,
+            DockerContainerAdapter(
                 globalVars.currentUser!!.serverUrl,
                 globalVars.currentUser!!.jwt!!,
                 globalVars.currentUser!!.isUsingApiKey,
@@ -209,7 +207,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 if (s.toString() == "")
                     filterContainersByTerm(recyclerAdapter, null)
                 else
-                    filterContainersByTerm(recyclerAdapter, s.toString().lowercase(getDefault()))
+                    filterContainersByTerm(recyclerAdapter, s.toString().lowercase(Locale.getDefault()))
             }
         })
 
@@ -245,8 +243,8 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         dataViewModel.dataState.observe(viewLifecycleOwner, { ds ->
             when (ds) {
                 is DataState.Success<List<Kontainer>> -> {
-                    recyclerAdapter.setItems(ds.data)
-                    recyclerAdapter.notifyDataSetChanged()
+                    allContainers = ds.data
+                    recyclerAdapter.submitList(getFilteredList())
                     binding.swiperLayout.isRefreshing = false
                     setContainerStats(ds.data)
                 }
@@ -260,22 +258,19 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 }
                 /** below these is the logic for handling the idividual cards*/
                 is DataState.CardLoading -> {
-                    recyclerAdapter.setItems(ds.data)
-                    recyclerAdapter.notifyDataSetChanged()
-                    //recyclerAdapter.notifyItemChanged(ds.itemIndex)
+                    allContainers = ds.data
+                    recyclerAdapter.submitList(getFilteredList())
                     setContainerStats(listOf(), true)
                 }
                 is DataState.CardSuccess -> {
+                    allContainers = ds.data
                     binding.swiperLayout.isRefreshing = false
-                    recyclerAdapter.setItems(ds.data)
-                    recyclerAdapter.notifyDataSetChanged()
-                    //recyclerAdapter.notifyItemChanged(ds.itemIndex)
+                    recyclerAdapter.submitList(getFilteredList())
                     setContainerStats(ds.data)
                 }
                 is DataState.CardError -> {
-                    recyclerAdapter.setItems(ds.data)
-                    recyclerAdapter.notifyDataSetChanged()
-                    //recyclerAdapter.notifyItemChanged(ds.itemIndex)
+                    allContainers = ds.data
+                    recyclerAdapter.submitList(getFilteredList())
                     setContainerStats(ds.data)
                 }
 
@@ -310,7 +305,9 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
     ) {
         if (globActivity.isJwtValid()) {
             // don't refresh if there are any items that are transitioning between states
-            if (recyclerAdapter.areItemsInTransitioningState())
+            val hasTransitioning = allContainers.any { it.state == ContainerStateType.TRANSITIONING }
+
+            if (hasTransitioning)
                 binding.swiperLayout.isRefreshing = false
             else {
                 callGetContainers(dataViewModel,
@@ -394,8 +391,8 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         recyclerAdapter: DockerContainerAdapter,
         searchTerm: String?,
     ) {
-        recyclerAdapter.containerSearchTerm = searchTerm
-        recyclerAdapter.notifyDataSetChanged()
+        currentSearchTerm = searchTerm
+        recyclerAdapter.submitList(getFilteredList())
     }
 
     private fun filterContainers(
@@ -413,6 +410,33 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 R.drawable.square_stats_shape_item)
         }
         globActivity.setGlobalAppSettings(filterPreference)
-        recyclerAdapter.notifyDataSetChanged()
+        recyclerAdapter.submitList(getFilteredList())
+    }
+
+    private fun getFilteredList(): List<Kontainer> {
+        val globActivity: MainActiviy = (activity as MainActiviy?)!!
+        val globalVars: GlobalApp = (globActivity.application as GlobalApp)
+        val filter = globalVars.appSettings!!.kontainerFilter
+        val searchTerm = currentSearchTerm
+
+        return allContainers.filter { container ->
+            val matchesFilter = when (filter) {
+                KontainerFilterPref.RUNNING -> when (container.state) {
+                    ContainerStateType.CREATED, ContainerStateType.RUNNING, ContainerStateType.TRANSITIONING, ContainerStateType.RESTARTING -> true
+                    else -> false
+                }
+                KontainerFilterPref.TOTAL -> true
+                KontainerFilterPref.STOPPED_OR_ERRORED -> when (container.state) {
+                    ContainerStateType.ERRORED, ContainerStateType.EXITED, ContainerStateType.TRANSITIONING, ContainerStateType.RESTARTING -> true
+                    else -> false
+                }
+            }
+
+            val matchesSearch = searchTerm?.let {
+                container.name.lowercase(Locale.getDefault()).startsWith(it)
+            } ?: true
+
+            matchesFilter && matchesSearch
+        }
     }
 }

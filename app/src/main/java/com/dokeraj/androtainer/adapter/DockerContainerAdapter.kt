@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokeraj.androtainer.DockerListerFragment
 import com.dokeraj.androtainer.DockerListerFragmentDirections
@@ -22,15 +24,12 @@ import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.models.ContainerActionType
 import com.dokeraj.androtainer.models.ContainerStateType
 import com.dokeraj.androtainer.models.Kontainer
-import com.dokeraj.androtainer.models.KontainerFilterPref
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
 import com.dokeraj.androtainer.viewmodels.MainStateEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.Locale.getDefault
-
+import java.util.Locale
 
 class DockerContainerAdapter(
-    private var pContainerList: List<Kontainer>,
     private val baseUrl: String,
     private val jwt: String,
     private val isUsingApiKey: Boolean,
@@ -39,10 +38,7 @@ class DockerContainerAdapter(
     private val context: Context,
     private val frag: DockerListerFragment,
     private val dataViewModel: DockerListerViewModel,
-) :
-    RecyclerView.Adapter<DockerContainerAdapter.ContainerViewHolder>() {
-
-    var containerSearchTerm: String? = null
+) : ListAdapter<Kontainer, DockerContainerAdapter.ContainerViewHolder>(KontainerDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContainerViewHolder {
         val binding = DockerCardItemBinding.inflate(
@@ -54,7 +50,7 @@ class DockerContainerAdapter(
     }
 
     override fun onBindViewHolder(holder: ContainerViewHolder, position: Int) {
-        val currentItem: Kontainer = pContainerList[position]
+        val currentItem: Kontainer = getItem(position)
 
         holder.dockerNameView.text = currentItem.name
 
@@ -72,10 +68,6 @@ class DockerContainerAdapter(
                     currentItemNum = position,
                     holder = holder
                 )
-                setVisibilityByFilterAndSearchTerm(globalApp.appSettings!!.kontainerFilter,
-                    currentItem.state,
-                    holder)
-                searchTermShowContainer(holder)
             }
             ContainerStateType.EXITED -> {
                 /** set style for stopped docker container */
@@ -90,10 +82,6 @@ class DockerContainerAdapter(
                     currentItemNum = position,
                     holder = holder
                 )
-                setVisibilityByFilterAndSearchTerm(globalApp.appSettings!!.kontainerFilter,
-                    currentItem.state,
-                    holder)
-                searchTermShowContainer(holder)
             }
             ContainerStateType.TRANSITIONING -> {
                 /** set style for container that is either starting or stopping */
@@ -108,10 +96,6 @@ class DockerContainerAdapter(
                     currentItemNum = position,
                     holder = holder
                 )
-                setVisibilityByFilterAndSearchTerm(globalApp.appSettings!!.kontainerFilter,
-                    currentItem.state,
-                    holder)
-                searchTermShowContainer(holder)
             }
             ContainerStateType.ERRORED -> {
                 /** set style for docker container that has received error from portainer api */
@@ -126,10 +110,6 @@ class DockerContainerAdapter(
                     currentItemNum = position,
                     holder = holder
                 )
-                setVisibilityByFilterAndSearchTerm(globalApp.appSettings!!.kontainerFilter,
-                    currentItem.state,
-                    holder)
-                searchTermShowContainer(holder)
             }
             ContainerStateType.CREATED -> {
                 /** set style for docker container that is in the created state */
@@ -144,10 +124,6 @@ class DockerContainerAdapter(
                     currentItemNum = position,
                     holder = holder
                 )
-                setVisibilityByFilterAndSearchTerm(globalApp.appSettings!!.kontainerFilter,
-                    currentItem.state,
-                    holder)
-                searchTermShowContainer(holder)
             }
 
             ContainerStateType.RESTARTING -> {
@@ -164,17 +140,13 @@ class DockerContainerAdapter(
                     currentItemNum = position,
                     holder = holder
                 )
-                setVisibilityByFilterAndSearchTerm(globalApp.appSettings!!.kontainerFilter,
-                    currentItem.state,
-                    holder)
-                searchTermShowContainer(holder)
             }
         }
 
         holder.dockerButton.setOnClickListener {
             callStartStopContainer(currentItemIndex = position,
                 containerId = currentItem.id,
-                actionType = if (pContainerList[position].state == ContainerStateType.RUNNING) ContainerActionType.STOP else ContainerActionType.START)
+                actionType = if (getItem(position).state == ContainerStateType.RUNNING) ContainerActionType.STOP else ContainerActionType.START)
         }
 
         // restart the container
@@ -203,8 +175,6 @@ class DockerContainerAdapter(
 
     }
 
-    override fun getItemCount() = pContainerList.size
-
     class ContainerViewHolder(binding: DockerCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val dockerNameView: TextView = binding.etDockerName
         val dockerStatusView: TextView = binding.etDockerStatus
@@ -225,7 +195,7 @@ class DockerContainerAdapter(
         val fullUrl = context.getString(R.string.StartStopContainer)
             .replace("{baseUrl}", baseUrl.removeSuffix("/"))
             .replace("{containerId}", containerId)
-            .replace("{actionType}", actionType.name.lowercase(getDefault()))
+            .replace("{actionType}", actionType.name.lowercase(Locale.US))
             .replace("{endpointId}", endpointId.toString())
 
         dataViewModel.setStateEvent(MainStateEvent.StartStopKontejneri(jwt = jwt,
@@ -264,7 +234,7 @@ class DockerContainerAdapter(
         currentItemNum: Int,
         holder: ContainerViewHolder,
     ) {
-        val currentItem = pContainerList[currentItemNum]
+        val currentItem = getItem(currentItemNum)
 
         if (holder.dockerNameView.text.toString() == currentItem.name) {
             // change cardHolderLayout background
@@ -274,7 +244,7 @@ class DockerContainerAdapter(
 
             // statusView text and color
             holder.dockerStatusView.text =
-                currentItem.status.replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
+                currentItem.status.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             holder.dockerStatusView.setTextColor(ContextCompat.getColor(context,
                 statusTextColor))
 
@@ -301,72 +271,12 @@ class DockerContainerAdapter(
         }
     }
 
-    fun setItems(newContainerList: List<Kontainer>) {
-        this.pContainerList = newContainerList
-    }
-
     fun areItemsInTransitioningState(): Boolean {
-        return pContainerList.any { pCont -> pCont.state == ContainerStateType.TRANSITIONING }
+        return currentList.any { pCont -> pCont.state == ContainerStateType.TRANSITIONING }
     }
+}
 
-    private fun setVisibilityByFilterAndSearchTerm(
-        kontainerFilterPref: KontainerFilterPref,
-        holderState: ContainerStateType,
-        holder: ContainerViewHolder,
-    ) {
-        when (kontainerFilterPref) {
-            KontainerFilterPref.RUNNING -> when (holderState) {
-                ContainerStateType.CREATED -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.RUNNING -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.ERRORED -> showHideCard(false, holder)
-                ContainerStateType.EXITED -> showHideCard(false, holder)
-                ContainerStateType.TRANSITIONING -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.RESTARTING -> showHideCard(searchTermShowContainer(holder), holder)
-            }
-
-            KontainerFilterPref.TOTAL -> when (holderState) {
-                ContainerStateType.CREATED -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.RUNNING -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.ERRORED -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.EXITED -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.TRANSITIONING -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.RESTARTING -> showHideCard(searchTermShowContainer(holder), holder)
-            }
-
-            KontainerFilterPref.STOPPED_OR_ERRORED -> when (holderState) {
-                ContainerStateType.CREATED -> showHideCard(false, holder)
-                ContainerStateType.RUNNING -> showHideCard(false, holder)
-                ContainerStateType.ERRORED -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.EXITED -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.TRANSITIONING -> showHideCard(searchTermShowContainer(holder), holder)
-                ContainerStateType.RESTARTING -> showHideCard(searchTermShowContainer(holder), holder)
-            }
-        }
-    }
-
-    private fun searchTermShowContainer(
-        holder: ContainerViewHolder,
-    ): Boolean {
-        return containerSearchTerm?.let {
-            holder.dockerNameView.text.toString().lowercase(getDefault()).startsWith(it)
-        } ?: run {
-            true
-        }
-    }
-
-    private fun showHideCard(showCard: Boolean, holder: ContainerViewHolder) {
-        if (showCard) {
-            holder.itemView.visibility = View.VISIBLE
-
-            val params = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-
-            params.bottomMargin = 8
-
-            holder.itemView.layoutParams = params
-        } else {
-            holder.itemView.visibility = View.GONE
-            holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
-        }
-    }
+class KontainerDiffCallback : DiffUtil.ItemCallback<Kontainer>() {
+    override fun areItemsTheSame(oldItem: Kontainer, newItem: Kontainer): Boolean = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Kontainer, newItem: Kontainer): Boolean = oldItem == newItem
 }
