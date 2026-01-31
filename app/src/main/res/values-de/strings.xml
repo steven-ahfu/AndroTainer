@@ -43,5 +43,8 @@
     <string name="login">Anmelden</string>
     <string name="remove">ENTFERNEN</string>
     <string name="container_logs_title">%1$s Protokolle</string>
-    <string name="lines_count">%1$d Zeilen</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d Zeile</item>
+        <item quantity="other">%d Zeilen</item>
+    </plurals>
 </resources>

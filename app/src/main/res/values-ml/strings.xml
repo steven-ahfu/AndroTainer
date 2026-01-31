@@ -43,6 +43,9 @@
     <string name="login">ലോഗിൻ</string>
     <string name="remove">നീക്കം ചെയ്യുക</string>
     <string name="container_logs_title">%1$s ലോഗുകൾ</string>
-    <string name="lines_count">%1$d വരികൾ</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d വരി</item>
+        <item quantity="other">%d വരികൾ</item>
+    </plurals>
 </resources>
 

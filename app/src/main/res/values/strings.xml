@@ -68,7 +68,10 @@
     <string name="placeholder_username" translatable="false">Numsi</string>
     <string name="remove">REMOVE</string>
     <string name="container_logs_title">%1$s Logs</string>
-    <string name="lines_count">%1$d lines</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d line</item>
+        <item quantity="other">%d lines</item>
+    </plurals>
     <string name="mydomain_hint" translatable="false">https://mydomain.com/portainer</string>
 
 </resources>

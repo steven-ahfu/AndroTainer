@@ -43,5 +43,9 @@
     <string name="login">Iniciar Sesión</string>
     <string name="remove">ELIMINAR</string>
     <string name="container_logs_title">Registros de %1$s</string>
-    <string name="lines_count">%1$d líneas</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d línea</item>
+        <item quantity="many">%d líneas</item>
+        <item quantity="other">%d líneas</item>
+    </plurals>
 </resources>

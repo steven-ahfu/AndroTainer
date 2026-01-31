@@ -43,5 +43,9 @@
     <string name="login">Connexion</string>
     <string name="remove">SUPPRIMER</string>
     <string name="container_logs_title">Journaux de %1$s</string>
-    <string name="lines_count">%1$d lignes</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d ligne</item>
+        <item quantity="many">%d lignes</item>
+        <item quantity="other">%d lignes</item>
+    </plurals>
 </resources>

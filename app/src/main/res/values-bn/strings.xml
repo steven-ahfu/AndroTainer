@@ -43,5 +43,8 @@
     <string name="login">লগ ইন</string>
     <string name="remove">সরান</string>
     <string name="container_logs_title">%1$s লগ</string>
-    <string name="lines_count">%1$d লাইন</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d লাইন</item>
+        <item quantity="other">%d লাইন</item>
+    </plurals>
 </resources>

@@ -43,5 +43,9 @@
     <string name="login">Accedi</string>
     <string name="remove">RIMUOVI</string>
     <string name="container_logs_title">Registri di %1$s</string>
-    <string name="lines_count">%1$d righe</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d riga</item>
+        <item quantity="many">%d righe</item>
+        <item quantity="other">%d righe</item>
+    </plurals>
 </resources>

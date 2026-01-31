@@ -148,7 +148,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
                 nextLineCount,
                 null
             )
-            binding.chpLinesCount.text = getString(R.string.lines_count, nextLineCount)
+            binding.chpLinesCount.text = resources.getQuantityString(R.plurals.lines_count, nextLineCount, nextLineCount)
         }
 
         binding.tbContainerLogging.setNavigationOnClickListener {
@@ -293,7 +293,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
         globalVars.logSettings?.let {
             binding.chpAutoRefresh.isChecked = it.autoRefresh
             binding.chpTimestamp.isChecked = it.timestamp
-            binding.chpLinesCount.text = getString(R.string.lines_count, it.linesCount)
+            binding.chpLinesCount.text = resources.getQuantityString(R.plurals.lines_count, it.linesCount, it.linesCount)
         }
     }
 

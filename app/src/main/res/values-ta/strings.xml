@@ -43,5 +43,8 @@
     <string name="login">உள்நுழைவு</string>
     <string name="remove">அகற்று</string>
     <string name="container_logs_title">%1$s பதிவுகள்</string>
-    <string name="lines_count">%1$d வரிகள்</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d வரி</item>
+        <item quantity="other">%d வரிகள்</item>
+    </plurals>
 </resources>
