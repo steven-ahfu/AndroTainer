@@ -18,6 +18,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:src="@drawable/ic_androtainerlogo"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

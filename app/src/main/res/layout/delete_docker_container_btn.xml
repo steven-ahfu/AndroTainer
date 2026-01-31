@@ -32,6 +32,7 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginTop="6dp"
                 android:src="@drawable/ic_delete_user"
+                android:contentDescription="@string/remove"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
