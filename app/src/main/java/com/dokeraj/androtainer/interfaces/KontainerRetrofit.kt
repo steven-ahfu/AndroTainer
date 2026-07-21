@@ -1,5 +1,7 @@
 package com.dokeraj.androtainer.interfaces
 
+import com.dokeraj.androtainer.models.retrofit.PContainerInspectResponse
+import com.dokeraj.androtainer.models.retrofit.PContainerStatsResponse
 import com.dokeraj.androtainer.models.retrofit.PContainersResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
@@ -62,6 +64,45 @@ interface KontainerRetrofit {
         @Url fullPath: String,
         @Query("force") force: Boolean,
         @Query("v") deleteVolumes: Int,
+    ): Response<Unit>
+
+    /** one-sample live stats: always call with stream=false (precpu populated by daemon) */
+    @GET
+    suspend fun getContainerStats(
+        @Header("Authorization") auth: String?,
+        @Url fullPath: String,
+        @Query("stream") stream: Boolean,
+    ): PContainerStatsResponse
+
+    @GET
+    suspend fun getContainerStatsApiKey(
+        @Header("X-API-Key") auth: String?,
+        @Url fullPath: String,
+        @Query("stream") stream: Boolean,
+    ): PContainerStatsResponse
+
+    @GET
+    suspend fun inspectContainer(
+        @Header("Authorization") auth: String?,
+        @Url fullPath: String,
+    ): PContainerInspectResponse
+
+    @GET
+    suspend fun inspectContainerApiKey(
+        @Header("X-API-Key") auth: String?,
+        @Url fullPath: String,
+    ): PContainerInspectResponse
+
+    @POST
+    suspend fun pauseUnpauseContainer(
+        @Header("Authorization") auth: String?,
+        @Url fullPath: String,
+    ): Response<Unit>
+
+    @POST
+    suspend fun pauseUnpauseContainerApiKey(
+        @Header("X-API-Key") auth: String?,
+        @Url fullPath: String,
     ): Response<Unit>
 
 }

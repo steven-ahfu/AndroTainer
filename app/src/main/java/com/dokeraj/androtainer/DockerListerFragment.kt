@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.util.Linkify
+import android.view.ContextThemeWrapper
 import android.view.View
+import android.widget.PopupMenu
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
@@ -22,9 +23,13 @@ import com.dokeraj.androtainer.databinding.FragmentDockerListerBinding
 import com.dokeraj.androtainer.dialogs.ShowHiddenFeaturesDiag
 import com.dokeraj.androtainer.globalvars.GlobalApp
 import com.dokeraj.androtainer.models.ContainerStateType
+import com.dokeraj.androtainer.models.HealthState
 import com.dokeraj.androtainer.models.Kontainer
-import com.dokeraj.androtainer.models.KontainerFilterPref
+import com.dokeraj.androtainer.models.KontainerSortField
+import com.dokeraj.androtainer.models.KontainerStateFilter
+import com.dokeraj.androtainer.models.KontainerStats
 import com.dokeraj.androtainer.util.DataState
+import com.dokeraj.androtainer.util.KontainerListOrganizer
 import com.dokeraj.androtainer.viewmodels.DockerListerViewModel
 import com.dokeraj.androtainer.viewmodels.MainStateEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +49,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
     private val intervalToastTime = 1200
 
     private var allContainers: List<Kontainer> = emptyList()
+    private var latestStatsById: Map<String, KontainerStats> = emptyMap()
     private var currentSearchTerm: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,54 +119,9 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             }
         }
 
-        // initialize the filtering
-        when (globalVars.appSettings!!.kontainerFilter) {
-            KontainerFilterPref.RUNNING -> filterContainers(recyclerAdapter,
-                globActivity,
-                binding.clStatsRunning,
-                listOf(binding.clStatsTotal, binding.clStatsStopped),
-                KontainerFilterPref.RUNNING)
-            KontainerFilterPref.STOPPED_OR_ERRORED -> filterContainers(recyclerAdapter,
-                globActivity,
-                binding.clStatsStopped,
-                listOf(binding.clStatsTotal, binding.clStatsRunning),
-                KontainerFilterPref.STOPPED_OR_ERRORED)
-            KontainerFilterPref.TOTAL -> filterContainers(recyclerAdapter,
-                globActivity,
-                binding.clStatsTotal,
-                listOf(binding.clStatsRunning, binding.clStatsStopped),
-                KontainerFilterPref.TOTAL)
-        }
-
-        // initialize the searchTermVisibility
-        if (globalVars.appSettings!!.searchTermVisibility)
-            binding.llSearchTerm.visibility = View.VISIBLE
-        else
-            binding.llSearchTerm.visibility = View.GONE
-
-
-        // container filtering
-        binding.clStatsRunning.setOnClickListener {
-            filterContainers(recyclerAdapter,
-                globActivity,
-                binding.clStatsRunning,
-                listOf(binding.clStatsTotal, binding.clStatsStopped),
-                KontainerFilterPref.RUNNING)
-        }
-        binding.clStatsStopped.setOnClickListener {
-            filterContainers(recyclerAdapter,
-                globActivity,
-                binding.clStatsStopped,
-                listOf(binding.clStatsTotal, binding.clStatsRunning),
-                KontainerFilterPref.STOPPED_OR_ERRORED)
-        }
-        binding.clStatsTotal.setOnClickListener {
-            filterContainers(recyclerAdapter,
-                globActivity,
-                binding.clStatsTotal,
-                listOf(binding.clStatsRunning, binding.clStatsStopped),
-                KontainerFilterPref.TOTAL)
-        }
+        // initialize the filter chips + sort button from persisted settings
+        initFilterChips(globActivity, globalVars, recyclerAdapter)
+        initSortButton(globActivity, globalVars, recyclerAdapter)
 
         binding.btnHiddenFeatures.setOnClickListener {
             val dialog = ShowHiddenFeaturesDiag()
@@ -185,19 +146,6 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
             callSwiperLogic(model, globActivity, globalVars, recyclerAdapter)
         }
 
-        binding.clStatsTotal.setOnLongClickListener {
-            if (binding.llSearchTerm.isVisible) {
-                binding.etSearchTerm.setText("")
-                binding.llSearchTerm.visibility = View.GONE
-                globActivity.setGlobalAppSettings(searchTermVisibility = false)
-            } else {
-                binding.llSearchTerm.visibility = View.VISIBLE
-                globActivity.setGlobalAppSettings(searchTermVisibility = true)
-            }
-
-            true
-        }
-
         binding.etSearchTerm.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -210,10 +158,6 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                     filterContainersByTerm(recyclerAdapter, s.toString().lowercase(Locale.getDefault()))
             }
         })
-
-        binding.clDeleteTerm.setOnClickListener {
-            binding.etSearchTerm.setText("")
-        }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
             // hijack the back button press and don't allow going back to login page (only close the drawer)
@@ -247,6 +191,7 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                     recyclerAdapter.submitList(getFilteredList())
                     binding.swiperLayout.isRefreshing = false
                     setContainerStats(ds.data)
+                    callGetLiveStats(dataViewModel)
                 }
                 is DataState.Error -> {
                     binding.swiperLayout.isRefreshing = false
@@ -277,6 +222,31 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
                 else -> {}
             }
         })
+
+        // live CPU/MEM per card — separate stream, so no interplay with dataState
+        dataViewModel.statsState.observe(viewLifecycleOwner, { stats ->
+            latestStatsById = stats ?: emptyMap()
+            recyclerAdapter.updateStats(latestStatsById)
+            val sortField = ((activity as MainActiviy).application as GlobalApp)
+                .appSettings?.sortField
+            if (sortField == KontainerSortField.CPU || sortField == KontainerSortField.MEMORY) {
+                recyclerAdapter.submitList(getFilteredList())
+            }
+        })
+    }
+
+    /** batch-fetch one stats sample per running container after each list load */
+    private fun callGetLiveStats(dataViewModel: DockerListerViewModel) {
+        val globalVars: GlobalApp = ((activity as MainActiviy?)!!.application as GlobalApp)
+        val user = globalVars.currentUser ?: return
+
+        val urlTemplate = getString(R.string.getContainerStats)
+            .replace("{baseUrl}", user.serverUrl.removeSuffix("/"))
+            .replace("{endpointId}", user.currentEndpoint.id.toString())
+
+        dataViewModel.setStateEvent(MainStateEvent.GetStats(jwt = user.jwt,
+            urlTemplate = urlTemplate,
+            isUsingApiKey = user.isUsingApiKey))
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -355,36 +325,38 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
     }
 
     private fun setContainerStats(allContainers: List<Kontainer>, isLoading: Boolean = false) {
-        fun showProgressBar(show: Boolean) {
-            val pbAndTextVisibility = if (show)
-                Pair(View.VISIBLE, View.INVISIBLE)
-            else
-                Pair(View.INVISIBLE, View.VISIBLE)
-
-            binding.pbTotalStats.visibility = pbAndTextVisibility.first
-            binding.pbRunningStats.visibility = pbAndTextVisibility.first
-            binding.pbStoppedStats.visibility = pbAndTextVisibility.first
-            binding.tvTotalStat.visibility = pbAndTextVisibility.second
-            binding.tvStoppedStat.visibility = pbAndTextVisibility.second
-            binding.tvRunningStat.visibility = pbAndTextVisibility.second
+        if (isLoading) {
+            listOf(
+                binding.tvSummaryRunning,
+                binding.tvSummaryUnhealthy,
+                binding.tvSummaryExited,
+                binding.tvSummaryTotal,
+            ).forEach { it.text = "—" }
+            binding.tvContainerCount.setText(R.string.containers_loading)
+            return
         }
-        if (!isLoading) {
-            binding.tvTotalStat.text = String.format(Locale.US, "%d", allContainers.size)
-            binding.tvRunningStat.text = String.format(Locale.US, "%d", allContainers.count { kon ->
-                kon.state == ContainerStateType.RUNNING
-            })
-            binding.tvStoppedStat.text = String.format(Locale.US, "%d", allContainers.count { kon ->
-                kon.state == ContainerStateType.EXITED || kon.state == ContainerStateType.ERRORED
-            })
 
-            // if there are any more containers that are in transitioning state, don't show the stats, instead keep the spinner
-            if (allContainers.any { it.state == ContainerStateType.TRANSITIONING })
-                showProgressBar(true)
-            else
-                showProgressBar(false)
-        } else {
-            showProgressBar(true)
+        val running = allContainers.count { it.state == ContainerStateType.RUNNING }
+        val unhealthy = allContainers.count { it.health == HealthState.UNHEALTHY }
+        val exited = allContainers.count {
+            it.state == ContainerStateType.EXITED || it.state == ContainerStateType.ERRORED
         }
+        val healthy = allContainers.count { it.health == HealthState.HEALTHY }
+        val created = allContainers.count { it.state == ContainerStateType.CREATED }
+
+        binding.tvSummaryRunning.text = running.toString()
+        binding.tvSummaryUnhealthy.text = unhealthy.toString()
+        binding.tvSummaryExited.text = exited.toString()
+        binding.tvSummaryTotal.text = allContainers.size.toString()
+        binding.tvContainerCount.text = resources.getQuantityString(
+            R.plurals.containers_count,
+            allContainers.size,
+            allContainers.size,
+        )
+        binding.chipFilterRunning.text = getString(R.string.filter_running) + " $running"
+        binding.chipFilterHealthy.text = getString(R.string.filter_healthy) + " $healthy"
+        binding.chipFilterExited.text = getString(R.string.filter_exited) + " $exited"
+        binding.chipFilterCreated.text = getString(R.string.filter_created) + " $created"
     }
 
     private fun filterContainersByTerm(
@@ -395,48 +367,116 @@ class DockerListerFragment : Fragment(R.layout.fragment_docker_lister) {
         recyclerAdapter.submitList(getFilteredList())
     }
 
-    private fun filterContainers(
-        recyclerAdapter: DockerContainerAdapter,
+    /** seed the multi-select filter chips from persisted settings and wire changes back */
+    private fun initFilterChips(
         globActivity: MainActiviy,
-        layoutToSelect: ConstraintLayout,
-        layoutsToDeselect: List<ConstraintLayout>,
-        filterPreference: KontainerFilterPref,
+        globalVars: GlobalApp,
+        recyclerAdapter: DockerContainerAdapter,
     ) {
-        layoutToSelect.background = ContextCompat.getDrawable(requireContext(),
-            R.drawable.square_stats_shape_item_selected)
+        val chipByFilter = mapOf(
+            KontainerStateFilter.RUNNING to binding.chipFilterRunning,
+            KontainerStateFilter.HEALTHY to binding.chipFilterHealthy,
+            KontainerStateFilter.EXITED to binding.chipFilterExited,
+            KontainerStateFilter.CREATED to binding.chipFilterCreated)
 
-        layoutsToDeselect.forEach {
-            it.background = ContextCompat.getDrawable(requireContext(),
-                R.drawable.square_stats_shape_item)
+        val persisted = globalVars.appSettings!!.stateFilters ?: emptyList()
+        chipByFilter.forEach { (filter, chip) -> chip.isChecked = filter in persisted }
+
+        binding.cgStateFilters.setOnCheckedStateChangeListener { _, _ ->
+            val selected: List<KontainerStateFilter> =
+                chipByFilter.filter { (_, chip) -> chip.isChecked }.keys.toList()
+            globActivity.setGlobalAppSettings(stateFilters = selected)
+            recyclerAdapter.submitList(getFilteredList())
         }
-        globActivity.setGlobalAppSettings(filterPreference)
-        recyclerAdapter.submitList(getFilteredList())
+    }
+
+    /** sort menu: re-selecting the active field toggles direction */
+    private fun initSortButton(
+        globActivity: MainActiviy,
+        globalVars: GlobalApp,
+        recyclerAdapter: DockerContainerAdapter,
+    ) {
+        updateSortButtonLabel(globalVars)
+        binding.btnSort.setOnClickListener { anchor ->
+            val popupContext = ContextThemeWrapper(
+                requireContext(),
+                R.style.ThemeOverlay_AndroTainer_PopupMenu,
+            )
+            val popup = PopupMenu(popupContext, anchor)
+            popup.menuInflater.inflate(R.menu.menu_sort, popup.menu)
+
+            val currentField = globalVars.appSettings!!.sortField ?: KontainerSortField.NAME
+            val currentAsc = globalVars.appSettings!!.sortAscending ?: true
+            val arrow = if (currentAsc) "▲" else "▼"
+            val itemByField = mapOf(
+                KontainerSortField.NAME to popup.menu.findItem(R.id.sortByName),
+                KontainerSortField.UPTIME to popup.menu.findItem(R.id.sortByUptime),
+                KontainerSortField.CREATED to popup.menu.findItem(R.id.sortByCreated),
+                KontainerSortField.CPU to popup.menu.findItem(R.id.sortByCpu),
+                KontainerSortField.MEMORY to popup.menu.findItem(R.id.sortByMemory),
+            )
+            itemByField[currentField]?.let { it.title = "${it.title} $arrow" }
+
+            popup.setOnMenuItemClickListener { item ->
+                val pickedField = when (item.itemId) {
+                    R.id.sortByName -> KontainerSortField.NAME
+                    R.id.sortByUptime -> KontainerSortField.UPTIME
+                    R.id.sortByCreated -> KontainerSortField.CREATED
+                    R.id.sortByCpu -> KontainerSortField.CPU
+                    R.id.sortByMemory -> KontainerSortField.MEMORY
+                    else -> return@setOnMenuItemClickListener false
+                }
+                val newAscending = if (pickedField == currentField) {
+                    !currentAsc // re-tap toggles direction
+                } else {
+                    pickedField == KontainerSortField.NAME // NAME starts asc, others desc
+                }
+                globActivity.setGlobalAppSettings(sortField = pickedField,
+                    sortAscending = newAscending)
+                updateSortButtonLabel(globalVars, pickedField, newAscending)
+                recyclerAdapter.submitList(getFilteredList()) {
+                    binding.recyclerView.scrollToPosition(0)
+                }
+                true
+            }
+            popup.show()
+        }
+    }
+
+    private fun updateSortButtonLabel(
+        globalVars: GlobalApp,
+        field: KontainerSortField = globalVars.appSettings!!.sortField ?: KontainerSortField.NAME,
+        ascending: Boolean = globalVars.appSettings!!.sortAscending ?: true,
+    ) {
+        val fieldLabel = getString(when (field) {
+            KontainerSortField.NAME -> R.string.sort_by_name
+            KontainerSortField.UPTIME -> R.string.sort_by_uptime
+            KontainerSortField.CREATED -> R.string.sort_by_created
+            KontainerSortField.CPU -> R.string.sort_by_cpu
+            KontainerSortField.MEMORY -> R.string.sort_by_memory
+        })
+        binding.btnSort.text = getString(
+            R.string.sort_button_label,
+            fieldLabel,
+            if (ascending) "↑" else "↓",
+        )
     }
 
     private fun getFilteredList(): List<Kontainer> {
         val globActivity: MainActiviy = (activity as MainActiviy?)!!
         val globalVars: GlobalApp = (globActivity.application as GlobalApp)
-        val filter = globalVars.appSettings!!.kontainerFilter
-        val searchTerm = currentSearchTerm
+        val settings = globalVars.appSettings!!
 
-        return allContainers.filter { container ->
-            val matchesFilter = when (filter) {
-                KontainerFilterPref.RUNNING -> when (container.state) {
-                    ContainerStateType.CREATED, ContainerStateType.RUNNING, ContainerStateType.TRANSITIONING, ContainerStateType.RESTARTING -> true
-                    else -> false
-                }
-                KontainerFilterPref.TOTAL -> true
-                KontainerFilterPref.STOPPED_OR_ERRORED -> when (container.state) {
-                    ContainerStateType.ERRORED, ContainerStateType.EXITED, ContainerStateType.TRANSITIONING, ContainerStateType.RESTARTING -> true
-                    else -> false
-                }
-            }
+        val filtered = KontainerListOrganizer.filter(
+            allContainers,
+            (settings.stateFilters ?: emptyList()).toSet(),
+            currentSearchTerm)
 
-            val matchesSearch = searchTerm?.let {
-                container.name.lowercase(Locale.getDefault()).startsWith(it)
-            } ?: true
-
-            matchesFilter && matchesSearch
-        }
+        return KontainerListOrganizer.sort(
+            filtered,
+            settings.sortField ?: KontainerSortField.NAME,
+            settings.sortAscending ?: true,
+            latestStatsById,
+        )
     }
 }

@@ -4,7 +4,24 @@
 /.idea
 .DS_Store
 /build
+/builds/
+/app/release/
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+
+# Commercially licensed fonts - never commit (public builds use Inter)
+/app/fonts/sohne/
+
+# Signing material - never commit keystores or secrets
+*.jks
+*.keystore
+*.p12
+*.keystore.base64
+*.jks.base64
+keystore.properties
+signing.properties
+.env
+.env.*
+.agents/

@@ -9,143 +9,189 @@
     tools:context=".HomeFragment"
     tools:openDrawer="end">
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_login"
-        tools:context=".HomeFragment">
-
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
-            app:srcCompat="@drawable/ic_androtainerlogo_text"
-            android:contentDescription="@string/app_name" />
-
-        <EditText
-            android:id="@+id/etUrl"
-            style="@style/Widget.AppCompat.EditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView3"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:width="300dip"
-            android:backgroundTint="#38daff"
-            android:drawableStart="@drawable/ic_web_link"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:hint="@string/mydomain_hint"
-            android:inputType="textUri"
-            android:importantForAutofill="no"
-            android:maxLength="760"
-            android:textColor="@color/loginText"
-            android:textColorHint="@color/loginDisabledText" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/conApiKey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etUrl"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/etApiKey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="58dp"
-                android:width="250dip"
-                android:backgroundTint="#38daff"
-                android:drawableStart="@drawable/ic_fingerprint"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/api_key_hint"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:textColor="@color/loginText"
-                android:textColorHint="@color/loginDisabledText"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="@color/dis2"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/lnLayUsrPwd"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_below="@+id/etUrl"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:paddingStart="28dp"
+            android:paddingTop="44dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="40dp">
 
-            <EditText
-                android:id="@+id/etUser"
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="168dp"
+                android:layout_height="168dp"
+                app:cardBackgroundColor="@color/dis3"
+                app:cardCornerRadius="48dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/dis7"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_androtainerlogo" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:width="250dip"
-                android:backgroundTint="#38daff"
-                android:drawableStart="@drawable/ic_person_login"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/username_hint"
-                android:autofillHints="username"
-                android:inputType="textPersonName"
-                android:textColor="@color/loginText"
-                android:textColorHint="@color/loginDisabledText" />
+                android:layout_marginTop="20dp"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
+                android:textColor="@color/disText2"
+                android:textStyle="bold" />
 
-
-            <EditText
-                android:id="@+id/etPass"
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="25dp"
-                android:width="250dip"
-                android:backgroundTint="#38daff"
-                android:drawableStart="@drawable/ic_padlock"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/password_hint"
-                android:autofillHints="password"
-                android:inputType="textPassword"
-                android:textColor="@color/loginText"
-                android:textColorHint="@color/loginDisabledText" />
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/login_subtitle"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/disText1" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/mydomain_hint"
+                app:boxBackgroundColor="@color/dis3"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
+                app:startIconDrawable="@drawable/ic_web_link"
+                app:startIconTint="@color/blue_main">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="url"
+                    android:importantForAutofill="yes"
+                    android:inputType="textUri"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/conApiKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/api_key_hint"
+                    app:boxBackgroundColor="@color/dis3"
+                    app:boxCornerRadiusBottomEnd="24dp"
+                    app:boxCornerRadiusBottomStart="24dp"
+                    app:boxCornerRadiusTopEnd="24dp"
+                    app:boxCornerRadiusTopStart="24dp"
+                    app:endIconMode="password_toggle"
+                    app:startIconDrawable="@drawable/ic_padlock"
+                    app:startIconTint="@color/blue_main">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etApiKey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints=""
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnLayUsrPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username_hint"
+                    app:boxBackgroundColor="@color/dis3"
+                    app:boxCornerRadiusBottomEnd="24dp"
+                    app:boxCornerRadiusBottomStart="24dp"
+                    app:boxCornerRadiusTopEnd="24dp"
+                    app:boxCornerRadiusTopStart="24dp"
+                    app:startIconDrawable="@drawable/ic_person_login"
+                    app:startIconTint="@color/blue_main">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="username"
+                        android:inputType="textPersonName"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/password_hint"
+                    app:boxBackgroundColor="@color/dis3"
+                    app:boxCornerRadiusBottomEnd="24dp"
+                    app:boxCornerRadiusBottomStart="24dp"
+                    app:boxCornerRadiusTopEnd="24dp"
+                    app:boxCornerRadiusTopStart="24dp"
+                    app:endIconMode="password_toggle"
+                    app:startIconDrawable="@drawable/ic_padlock"
+                    app:startIconTint="@color/blue_main">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="password"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/swUseApiKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="18dp"
+                android:text="@string/use_api_key"
+                android:textColor="@color/disText2" />
+
+            <include
+                android:id="@+id/lgnBtn"
+                layout="@layout/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="48dp" />
         </LinearLayout>
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/swUseApiKey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnLayUsrPwd"
-            android:layout_gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#38daff"
-            android:fontFamily="sans-serif"
-            android:text="@string/use_api_key"
-            android:textColor="@color/loginDisabledText" />
-
-        <include
-            android:id="@+id/lgnBtn"
-            layout="@layout/login_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/swUseApiKey"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="45dp" />
-
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_users_view"

@@ -14,12 +14,14 @@
         android:background="@color/dis4"
         tools:context=".DockerListerFragment">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dis2"
-            android:elevation="20dp"
+            android:background="@color/dis3"
+            android:elevation="0dp"
+            android:minHeight="72dp"
+            app:navigationIconTint="@color/blue_main"
             app:layout_constraintTop_toTopOf="parent">
 
 
@@ -49,7 +51,7 @@
                     android:textStyle="italic" />
             </LinearLayout>
 
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swiperLayout"
@@ -67,251 +69,232 @@
                 android:orientation="vertical">
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardContainerSummary"
+                    style="@style/kontainerSummaryCardStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="0.5dp"
-                    android:background="@drawable/square_stats_shape">
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="4dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clStatsTotal"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:layout_marginStart="23dp"
-                        android:background="@drawable/square_stats_shape_item"
-                        android:textAllCaps="false"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="18dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/total"
-                            android:textColor="@color/dis6"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.100000024" />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/docker_stats_divider"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.50" />
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSummaryRunning"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                                android:textColor="@color/status_running"
+                                android:textStyle="bold"
+                                tools:text="34" />
 
-                        <ProgressBar
-                            android:id="@+id/pbTotalStats"
-                            style="@style/Widget.AppCompat.ProgressBar"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:indeterminateTint="@color/dis6"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="1.0" />
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/running"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                android:textColor="@color/disText1" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tvTotalStat"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            tools:text="0"
-                            android:textColor="@color/dis6"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clStatsRunning"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/square_stats_shape_item"
-                        android:textAllCaps="false"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSummaryUnhealthy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                                android:textColor="@color/status_unhealthy"
+                                android:textStyle="bold"
+                                tools:text="0" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/unhealthy"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                android:textColor="@color/disText1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/running"
-                            android:textColor="@color/dis6"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.100000024" />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/docker_stats_divider"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.50" />
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSummaryExited"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                                android:textColor="@color/status_exited"
+                                android:textStyle="bold"
+                                tools:text="20" />
 
-                        <ProgressBar
-                            android:id="@+id/pbRunningStats"
-                            style="@style/Widget.AppCompat.ProgressBar"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:indeterminateTint="@color/dis6"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="1.0" />
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/filter_exited"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                android:textColor="@color/disText1" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tvRunningStat"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            tools:text="0"
-                            android:textColor="@color/dis6"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clStatsStopped"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:layout_marginEnd="23dp"
-                        android:background="@drawable/square_stats_shape_item"
-                        android:textAllCaps="false"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tvSummaryTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                                android:textColor="@color/blue_main"
+                                android:textStyle="bold"
+                                tools:text="71" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/stopped"
-                            android:textColor="@color/dis6"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.100000024" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/docker_stats_divider"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.50" />
-
-                        <ProgressBar
-                            android:id="@+id/pbStoppedStats"
-                            style="@style/Widget.AppCompat.ProgressBar"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:indeterminateTint="@color/dis6"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="1.0" />
-
-                        <TextView
-                            android:id="@+id/tvStoppedStat"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            tools:text="0"
-                            android:textColor="@color/dis6"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/total"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                android:textColor="@color/disText1" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
-                    android:id="@+id/llSearchTerm"
+                    android:id="@+id/llFilterSort"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:visibility="visible">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="8dp">
 
-                    <EditText
-                        android:id="@+id/etSearchTerm"
-                        android:layout_width="0dp"
-                        android:hint="@string/search_hint"
-                        android:importantForAutofill="no"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="textNoSuggestions" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clDeleteTerm"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginEnd="9dp"
-                        android:background="@drawable/square_stats_shape_item"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvContainerCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:textColor="@color/disText2"
+                            tools:text="71 containers" />
 
-                        <TextView
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSort"
+                            style="@style/kontainerSortButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/clear_search"
-                            android:textColor="@color/dis6"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:contentDescription="@string/sort_containers"
+                            android:text="@string/sort_by_name"
+                            android:textAllCaps="false"
+                            app:icon="@drawable/ic_sort"
+                            app:iconGravity="textStart" />
+                    </LinearLayout>
 
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cgStateFilters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="6dp"
+                            app:singleLine="true"
+                            app:singleSelection="false">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipFilterRunning"
+                                style="@style/kontainerFilterChipStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:text="@string/filter_running" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipFilterHealthy"
+                                style="@style/kontainerFilterChipStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:text="@string/filter_healthy" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipFilterExited"
+                                style="@style/kontainerFilterChipStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:text="@string/filter_exited" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipFilterCreated"
+                                style="@style/kontainerFilterChipStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:text="@string/filter_created" />
+                        </com.google.android.material.chip.ChipGroup>
+                    </HorizontalScrollView>
                 </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/llSearchTerm"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="@string/search_hint"
+                    app:boxBackgroundColor="@color/dis3"
+                    app:boxCornerRadiusBottomEnd="28dp"
+                    app:boxCornerRadiusBottomStart="28dp"
+                    app:boxCornerRadiusTopEnd="28dp"
+                    app:boxCornerRadiusTopStart="28dp"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_search"
+                    app:startIconTint="@color/blue_main">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSearchTerm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:importantForAutofill="no"
+                        android:inputType="textNoSuggestions"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
@@ -336,8 +319,10 @@
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/dis3"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_navigation_drawer"
         android:clickable="true"
+        android:elevation="12dp"
         android:orientation="vertical">
 
         <include
@@ -355,9 +340,9 @@
             app:layout_constraintTop_toBottomOf="@+id/listerHeder"
             app:layout_constraintVertical_bias="0.005">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
-                style="?android:attr/borderlessButtonStyle"
+                style="@style/kontainerDrawerButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
@@ -377,9 +362,9 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/blue_main" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageUsers"
-                style="?android:attr/borderlessButtonStyle"
+                style="@style/kontainerDrawerButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="3dp"
@@ -400,9 +385,9 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/blue_main" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEndpoints"
-                style="?android:attr/borderlessButtonStyle"
+                style="@style/kontainerDrawerButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="3dp"
@@ -434,9 +419,9 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/blue_main" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAbout"
-                style="?android:attr/borderlessButtonStyle"
+                style="@style/kontainerDrawerButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="3dp"
@@ -463,8 +448,9 @@
                 android:textSize="12sp"
                 android:visibility="invisible" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnHiddenFeatures"
+                style="@style/kontainerDrawerButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="19dp"

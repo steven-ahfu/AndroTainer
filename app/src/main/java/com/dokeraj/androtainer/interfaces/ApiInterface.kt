@@ -13,14 +13,14 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface ApiInterface:MasterInter {
+interface ApiInterface {
     //@Headers("Content-Type: application/json")
     @POST
     fun loginRequest(@Body userData: UserCredentials, @Url fullPath: String): Call<Jwt>
 
     @Headers("Content-Type: application/octet-stream")
     @GET
-    override fun getLog(
+    fun getLog(
         @Url fullPath: String,
         @Header("Authorization") auth: String,
         @Query("since") since: Int,
@@ -33,7 +33,7 @@ interface ApiInterface:MasterInter {
 
     @Headers("Content-Type: application/json")
     @GET
-    override fun getEnpointId(
+    fun getEnpointId(
         @Url fullPath: String,
         @Header("Authorization") auth: String,
         @Query("limit") limit: Int,

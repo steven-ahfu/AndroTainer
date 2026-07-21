@@ -15,6 +15,7 @@ data class Kontainer(
     val hostConfig: HostConfig,
     val mounts: List<Mount>,
     val ports: List<Port>,
+    val health: HealthState = HealthState.NONE,
 ): Parcelable
 
 
@@ -24,7 +25,15 @@ enum class ContainerStateType {
     TRANSITIONING,
     ERRORED,
     CREATED,
-    RESTARTING
+    RESTARTING,
+    PAUSED
+}
+
+enum class HealthState {
+    HEALTHY,
+    UNHEALTHY,
+    STARTING,
+    NONE
 }
 
 enum class ContainerActionType {

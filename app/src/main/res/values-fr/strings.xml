@@ -2,7 +2,7 @@
 <resources>
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
-    <string name="about_app">**AndroTainer** est une application open source. Ce *SERVICE* est fourni par Dokeraj gratuitement et est destiné à être utilisé tel quel.\nLe code source peut être trouvé ici : https://github.com/althafvly/AndroTainer\n\n`Version actuelle : %1$s`</string>
+    <string name="about_app">**AndroTainer** est une application open source. Ce *SERVICE* est fourni par Dokeraj gratuitement et est destiné à être utilisé tel quel.\nLe code source peut être trouvé ici : https://github.com/steven-ahfu/AndroTainer\n\n`Version actuelle : %1$s`</string>
     <string name="users_manage_note">`TOUTE IDENTIFICATION SUPPRIMÉE NE SERA SUPPRIMÉE QUE D\'ANDROTAINER`\n\nAstuce : Vous pouvez trouver les identifiants stockés en glissant vers la droite sur l\'écran de connexion.</string>
     <string name="dialogWarning">Si vous choisissez `CONTINUER`, vous serez déconnecté et renvoyé à l\'écran de connexion.</string>
     <string name="hiddenHeader">Fonctionnalités cachées</string>

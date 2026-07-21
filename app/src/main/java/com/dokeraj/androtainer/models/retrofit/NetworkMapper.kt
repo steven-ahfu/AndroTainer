@@ -1,6 +1,7 @@
 package com.dokeraj.androtainer.models.retrofit
 
 import com.dokeraj.androtainer.models.ContainerStateType
+import com.dokeraj.androtainer.models.HealthState
 import com.dokeraj.androtainer.models.HostConfig
 import com.dokeraj.androtainer.models.Kontainer
 import com.dokeraj.androtainer.models.MaintainerInfo
@@ -16,6 +17,13 @@ class NetworkMapper @Inject constructor() : EntityMapper<PContainerResponse, Kon
             ContainerStateType.valueOf(entity.state.uppercase(getDefault()))
         } catch (e: IllegalArgumentException) {
             ContainerStateType.ERRORED
+        }
+
+        val health: HealthState = when {
+            entity.status.contains("(healthy)") -> HealthState.HEALTHY
+            entity.status.contains("(unhealthy)") -> HealthState.UNHEALTHY
+            entity.status.contains("(health: starting)") -> HealthState.STARTING
+            else -> HealthState.NONE
         }
 
         val maintainerInfo: MaintainerInfo =
@@ -43,7 +51,8 @@ class NetworkMapper @Inject constructor() : EntityMapper<PContainerResponse, Kon
             maintainerInfo = maintainerInfo,
             hostConfig = hostConfig,
             mounts = mounts,
-            ports = ports
+            ports = ports,
+            health = health
         )
     }
 

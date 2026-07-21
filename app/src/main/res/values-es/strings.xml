@@ -2,7 +2,7 @@
 <resources>
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="navigation_drawer_close">Cerrar menú de navegación</string>
-    <string name="about_app">**AndroTainer** es una aplicación de código abierto. Este *SERVICIO* es proporcionado por Dokeraj sin costo alguno y está diseñado para usarse tal cual.\nEl código fuente se puede encontrar aquí: https://github.com/althafvly/AndroTainer\n\n`Versión actual: %1$s`</string>
+    <string name="about_app">**AndroTainer** es una aplicación de código abierto. Este *SERVICIO* es proporcionado por Dokeraj sin costo alguno y está diseñado para usarse tal cual.\nEl código fuente se puede encontrar aquí: https://github.com/steven-ahfu/AndroTainer\n\n`Versión actual: %1$s`</string>
     <string name="users_manage_note">`CUALQUIER CREDENCIAL ELIMINADA SOLO SE ELIMINARÁ DE ANDROTAINER`\n\nConsejo: Puede encontrar las credenciales almacenadas deslizando hacia la derecha en la pantalla de inicio de sesión.</string>
     <string name="dialogWarning">Si elige `CONTINUAR`, se cerrará la sesión y volverá a la pantalla de inicio de sesión.</string>
     <string name="hiddenHeader">Funcionalidades ocultas</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="navigation_drawer_open">নেভিগেশন মেনু খুলুন</string>
     <string name="navigation_drawer_close">নেভিগেশন মেনু বন্ধ করুন</string>
-    <string name="about_app">**AndroTainer** একটি ওপেন সোর্স অ্যাপ। এই *পরিষেবা* Dokeraj বিনামূল্যে প্রদান করে।\nসোর্স কোড এখানে পাওয়া যাবে: https://github.com/althafvly/AndroTainer\n\n`বর্তমান সংস্করণ: %1$s`</string>
+    <string name="about_app">**AndroTainer** একটি ওপেন সোর্স অ্যাপ। এই *পরিষেবা* Dokeraj বিনামূল্যে প্রদান করে।\nসোর্স কোড এখানে পাওয়া যাবে: https://github.com/steven-ahfu/AndroTainer\n\n`বর্তমান সংস্করণ: %1$s`</string>
     <string name="users_manage_note">`যেকোনো মুছে ফেলা ক্রেডেনশিয়াল শুধুমাত্র ANDROTAINER থেকে সরানো হবে`\n\nটিপ: আপনি লগইন স্ক্রিনে ডানদিকে সোয়াইপ করে সংরক্ষিত ক্রেডেনশিয়ালগুলি খুঁজে পেতে পারেন।</string>
     <string name="dialogWarning">আপনি যদি `চালিয়ে যান` চয়ন করেন, আপনি লগ আউট হয়ে যাবেন এবং লগইন স্ক্রিনে ফিরে আসবেন।</string>
     <string name="hiddenHeader">লুকানো কার্যকারিতা</string>

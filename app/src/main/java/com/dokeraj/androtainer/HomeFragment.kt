@@ -1,8 +1,6 @@
 package com.dokeraj.androtainer
 
 import android.annotation.SuppressLint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.util.Patterns
 import android.view.GestureDetector
@@ -34,7 +32,6 @@ import com.dokeraj.androtainer.util.DataState
 import com.dokeraj.androtainer.viewmodels.HomeFragmentViewModel
 import com.dokeraj.androtainer.viewmodels.HomeMainStateEvent
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import java.time.ZoneOffset
@@ -77,43 +74,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
-        binding.etUrl.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-
-                when (Patterns.WEB_URL.matcher(binding.etUrl.text.toString())
-                    .matches() && (binding.etUrl.text.toString().lowercase(getDefault())
-                    .startsWith("http") || binding.etUrl.text.toString().lowercase(getDefault())
-                    .startsWith("https"))) {
-                    true -> {
-                        binding.etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_web_link,
-                            0,
-                            0,
-                            0)
-                        val background = binding.etUrl.background
-                        background.mutate()
-                        background.colorFilter =
-                            PorterDuffColorFilter(ContextCompat.getColor(requireContext(),
-                                R.color.blue_main),
-                                PorterDuff.Mode.SRC_ATOP)
-                        binding.etUrl.background = background
-                    }
-                    else -> {
-                        binding.etUrl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_warning,
-                            0,
-                            0,
-                            0)
-                        val background = binding.etUrl.background
-                        background.mutate()
-                        background.colorFilter =
-                            PorterDuffColorFilter(ContextCompat.getColor(requireContext(),
-                                R.color.orange_warning),
-                                PorterDuff.Mode.SRC_ATOP)
-                        binding.etUrl.background = background
-                    }
-                }
-            }
-        }
-
         val btnLoginState = BtnLogin(requireContext(), binding.lgnBtn)
 
         if (globActivity.getLogoutMsg() != null) {
@@ -139,7 +99,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             callGetContainers(globalVars.currentUser!!.serverUrl,
                 globalVars.currentUser!!.jwt!!,
                 globalVars.currentUser!!.currentEndpoint.id, globalVars.currentUser!!.isUsingApiKey)
-        } else if (globActivity.hasJwt() && (!globActivity.isJwtValid() && !globActivity.isUserUsingApiKey())) {
+        } else if (globActivity.hasJwt() && !globActivity.isJwtValid()) {
             btnLoginState.changeBtnState(false)
             if (globActivity.isUserUsingApiKey()) {
                 authenticateApi(binding.etUrl.text.toString(),
@@ -180,36 +140,38 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.lgnBtn.root.setOnClickListener {
             disableDrawerSwipe = true
             btnLoginState.changeBtnState(false)
-            if (binding.swUseApiKey.isChecked) {
-                authenticateApi(binding.etUrl.text.toString(),
-                    binding.etApiKey.text.toString(),
-                    btnLoginState)
-            } else if (Patterns.WEB_URL.matcher(binding.etUrl.text.toString())
-                    .matches() && (binding.etUrl.text.toString()
-                    .lowercase(getDefault()).startsWith("http") || binding.etUrl.text.toString()
-                    .lowercase(getDefault())
-                    .startsWith("https"))
-            ) {
-                authenticate(binding.etUrl.text.toString(),
-                    binding.etUser.text.toString(),
-                    binding.etPass.text.toString(), btnLoginState)
-            } else {
+            val baseUrl = binding.etUrl.text.toString().trim()
+            val isValidUrl = Patterns.WEB_URL.matcher(baseUrl).matches() &&
+                    (baseUrl.lowercase(getDefault()).startsWith("http://") ||
+                            baseUrl.lowercase(getDefault()).startsWith("https://"))
 
-                val errText = if (!binding.etUrl.text.toString().lowercase(getDefault())
-                        .startsWith("http") && !binding.etUrl.text.toString()
-                        .lowercase(getDefault())
-                        .startsWith("https")
-                )
+            if (!isValidUrl) {
+                val errText = if (!baseUrl.lowercase(getDefault()).startsWith("http://") &&
+                    !baseUrl.lowercase(getDefault()).startsWith("https://"))
                     "The URL must start with http:// or https://"
                 else
                     "Invalid URL!"
 
+                disableDrawerSwipe = false
                 btnLoginState.changeBtnState(true)
                 globActivity.showGenericSnack(requireContext(),
                     requireView(),
                     errText,
                     R.color.white,
                     R.color.orange_warning)
+            } else if (binding.swUseApiKey.isChecked) {
+                val apiKey = binding.etApiKey.text.toString().trim()
+                if (apiKey.isEmpty()) {
+                    onLoginError(btnLoginState, "API key cannot be empty!")
+                    return@setOnClickListener
+                }
+                authenticateApi(baseUrl,
+                    apiKey,
+                    btnLoginState)
+            } else {
+                authenticate(baseUrl,
+                    binding.etUser.text.toString(),
+                    binding.etPass.text.toString(), btnLoginState)
             }
         }
 
@@ -264,10 +226,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     call: retrofit2.Call<Jwt?>,
                     response: retrofit2.Response<Jwt?>,
                 ) {
-                    if (response.code() == 200) {
-                        val jwtResponse: String? = response.body()?.jwt
+                    if (response.isSuccessful) {
+                        val jwtResponse = response.body()?.jwt?.takeIf { it.isNotBlank() }
 
-                        jwtResponse?.let {
+                        if (jwtResponse != null) {
                             val jwtValidUntil: Long =
                                 ZonedDateTime.now(ZoneOffset.UTC).plusHours(7).plusMinutes(59)
                                     .toInstant()
@@ -277,9 +239,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                                 usr = usr,
                                 pwd = pwd,
                                 btnLoginState = btnLoginState,
-                                jwt = it,
+                                jwt = jwtResponse,
                                 jwtValidUntil = jwtValidUntil,
                                 isUsingApiKey = false)
+                        } else {
+                            onLoginError(btnLoginState,
+                                "Portainer returned an empty authentication token!")
                         }
                     } else {
                         showResponseSnack(response.code().toString(), btnLoginState)
@@ -297,33 +262,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         apiKey: String,
         btnLoginState: BtnLogin,
     ) {
-        val fullPath =
-            getString(R.string.status).replace("{baseUrl}", baseUrl.removeSuffix("/"))
-        val api = RetrofitInstance.retrofitInstance!!.create(ApiInterfaceApiKey::class.java)
-        api.getStatus(fullPath, apiKey)
-            .enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>,
-                ) {
-                    if (response.code() == 200) {
-                        val usr = apiKey.take(3) + ".." + apiKey.takeLast(3)
-                        getEndpointId(baseUrl = baseUrl,
-                            usr = usr,
-                            pwd = "",
-                            btnLoginState = btnLoginState,
-                            jwt = apiKey,
-                            jwtValidUntil = 0L,
-                            isUsingApiKey = true)
-                    } else {
-                        showResponseSnack(response.code().toString(), btnLoginState)
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    onLoginError(btnLoginState, "Server not permitting communication! ${t.message}")
-                }
-            })
+        val usr = apiKey.take(3) + ".." + apiKey.takeLast(3)
+        getEndpointId(baseUrl = baseUrl,
+            usr = usr,
+            pwd = "",
+            btnLoginState = btnLoginState,
+            jwt = apiKey,
+            jwtValidUntil = 0L,
+            isUsingApiKey = true)
     }
 
     private fun getEndpointId(
@@ -349,19 +295,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-        val (api, authType) = if (!isUsingApiKey) {
-            Pair(RetrofitInstance.retrofitInstance!!.create(ApiInterface::class.java),
-                "Bearer ${jwt}")
-        } else {
-            Pair(RetrofitInstance.retrofitInstance!!.create(ApiInterfaceApiKey::class.java), jwt)
-        }
-
         val fullPath =
             getString(R.string.getEnpointId).replace("{baseUrl}", baseUrl.removeSuffix("/"))
 
-
-        api.getEnpointId(fullPath, authType, 10, 0)
-            .enqueue(object : retrofit2.Callback<PEndpointsResponse> {
+        val callback = object : retrofit2.Callback<PEndpointsResponse> {
                 override fun onResponse(
                     call: Call<PEndpointsResponse>,
                     response: Response<PEndpointsResponse>,
@@ -399,9 +336,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
 
                 override fun onFailure(call: Call<PEndpointsResponse>, t: Throwable) {
-                    onLoginError(btnLoginState, "Failed to get Portainer endpoint ID!")
+                    onLoginError(btnLoginState,
+                        "Failed to get Portainer endpoint ID! ${t.message.orEmpty()}")
                 }
-            })
+            }
+
+        if (isUsingApiKey) {
+            RetrofitInstance.retrofitInstance!!
+                .create(ApiInterfaceApiKey::class.java)
+                .getEnpointId(fullPath, jwt, 10, 0)
+                .enqueue(callback)
+        } else {
+            RetrofitInstance.retrofitInstance!!
+                .create(ApiInterface::class.java)
+                .getEnpointId(fullPath, "Bearer $jwt", 10, 0)
+                .enqueue(callback)
+        }
 
     }
 

@@ -5,4 +5,6 @@ object PermaVals {
     const val USERS_CREDENTIALS = "USERS_CREDENTIALS"
     const val LOG_SETTINGS = "LOG_SETTINGS"
     const val APP_SETTINGS = "APP_SETTINGS"
+    const val CONTAINER_THRESHOLDS = "CONTAINER_THRESHOLDS"
+    const val ALERT_STATE = "ALERT_STATE"
 }

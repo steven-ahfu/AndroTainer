@@ -253,15 +253,7 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
                 .replace("{containerId}", containerId)
                 .replace("{endpointId}", endpointId.toString())
 
-        val (api, authType) = if (!isUsingApiKey) {
-            Pair(RetrofitInstance.retrofitInstance!!.create(ApiInterface::class.java),
-                "Bearer ${jwt}")
-        } else {
-            Pair(RetrofitInstance.retrofitInstance!!.create(ApiInterfaceApiKey::class.java), jwt)
-        }
-
-        api.getLog(fullPath, authType, 0, 1, 1, numOfRows, if (useTimestamp) 1 else 0)
-            .enqueue(object : retrofit2.Callback<ResponseBody> {
+        val callback = object : retrofit2.Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>,
@@ -284,7 +276,20 @@ class DockerLogging : Fragment(R.layout.fragment_logging) {
                         true,
                         "ERROR failure: ${t.message}")
                 }
-            })
+            }
+
+        if (isUsingApiKey) {
+            RetrofitInstance.retrofitInstance!!
+                .create(ApiInterfaceApiKey::class.java)
+                .getLog(fullPath, jwt, 0, 1, 1, numOfRows, if (useTimestamp) 1 else 0)
+                .enqueue(callback)
+        } else {
+            RetrofitInstance.retrofitInstance!!
+                .create(ApiInterface::class.java)
+                .getLog(fullPath, "Bearer $jwt", 0, 1, 1, numOfRows,
+                    if (useTimestamp) 1 else 0)
+                .enqueue(callback)
+        }
     }
 
     private fun initChipsState(

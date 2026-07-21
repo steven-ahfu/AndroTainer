@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font
+        app:font="@font/jetbrains_mono_collection"
+        app:fontStyle="normal"
+        app:fontWeight="400"
+        app:ttcIndex="11" />
+    <font
+        app:font="@font/jetbrains_mono_collection"
+        app:fontStyle="normal"
+        app:fontWeight="500"
+        app:ttcIndex="9" />
+    <font
+        app:font="@font/jetbrains_mono_collection"
+        app:fontStyle="normal"
+        app:fontWeight="700"
+        app:ttcIndex="0" />
+</font-family>

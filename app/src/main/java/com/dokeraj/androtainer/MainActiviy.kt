@@ -1,6 +1,10 @@
 package com.dokeraj.androtainer
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import android.os.Bundle
 import android.text.Spanned
@@ -8,7 +12,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.dokeraj.androtainer.globalvars.GlobalApp
+import com.dokeraj.androtainer.globalvars.MonitorStore
+import com.dokeraj.androtainer.workers.StatsMonitorWorker
+import java.util.concurrent.TimeUnit
 import com.dokeraj.androtainer.globalvars.PermaVals.APP_SETTINGS
 import com.dokeraj.androtainer.globalvars.PermaVals.LOG_SETTINGS
 import com.dokeraj.androtainer.globalvars.PermaVals.SP_DB
@@ -16,6 +28,8 @@ import com.dokeraj.androtainer.globalvars.PermaVals.USERS_CREDENTIALS
 import com.dokeraj.androtainer.models.Credential
 import com.dokeraj.androtainer.models.CredentialDeserializer
 import com.dokeraj.androtainer.models.KontainerFilterPref
+import com.dokeraj.androtainer.models.KontainerSortField
+import com.dokeraj.androtainer.models.KontainerStateFilter
 import com.dokeraj.androtainer.models.LogSettings
 import com.dokeraj.androtainer.models.retrofit.AppSettings
 import com.google.android.material.snackbar.Snackbar
@@ -75,6 +89,10 @@ class MainActiviy : AppCompatActivity() {
     fun setGlobalAppSettings(
         inputKontainerFilter: KontainerFilterPref? = null,
         searchTermVisibility: Boolean? = null,
+        sortField: KontainerSortField? = null,
+        sortAscending: Boolean? = null,
+        stateFilters: List<KontainerStateFilter>? = null,
+        monitorIntervalMinutes: Int? = null,
     ) {
         val global = (this.application as GlobalApp)
 
@@ -83,7 +101,14 @@ class MainActiviy : AppCompatActivity() {
         val searchTermVisibilityToSave: Boolean =
             searchTermVisibility ?: global.appSettings!!.searchTermVisibility
 
-        val appSettings = AppSettings(kontainerFilterToSave, searchTermVisibilityToSave)
+        val appSettings = AppSettings(
+            kontainerFilterToSave,
+            searchTermVisibilityToSave,
+            sortField = sortField ?: global.appSettings!!.sortField,
+            sortAscending = sortAscending ?: global.appSettings!!.sortAscending,
+            stateFilters = stateFilters ?: global.appSettings!!.stateFilters,
+            monitorIntervalMinutes = monitorIntervalMinutes
+                ?: global.appSettings!!.monitorIntervalMinutes)
         // set app settings to global var
         global.appSettings = appSettings
 
@@ -263,9 +288,17 @@ class MainActiviy : AppCompatActivity() {
         else null
 
         val appSettingsStr: String? = sharedPrefs?.getString(APP_SETTINGS, null)
-        val appSettings: AppSettings? = if (appSettingsStr != null)
+        val rawAppSettings: AppSettings = if (appSettingsStr != null)
             GsonBuilder().create().fromJson(appSettingsStr, AppSettings::class.java)
         else AppSettings(KontainerFilterPref.RUNNING, false)
+
+        /** Gson bypasses Kotlin default values, so fields added after v2.3 come back
+         * null from legacy persisted JSON — normalize them to their defaults here */
+        val appSettings: AppSettings = rawAppSettings.copy(
+            sortField = rawAppSettings.sortField ?: KontainerSortField.NAME,
+            sortAscending = rawAppSettings.sortAscending ?: true,
+            stateFilters = rawAppSettings.stateFilters ?: emptyList(),
+            monitorIntervalMinutes = rawAppSettings.monitorIntervalMinutes ?: 15)
 
         val lastUsedCred: Credential? = getLatestActivityUser(credentials)
 
@@ -274,6 +307,46 @@ class MainActiviy : AppCompatActivity() {
         global.currentUser = lastUsedCred
         global.logSettings = logSettings
         global.appSettings = appSettings
+    }
+
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* best effort */ }
+
+    /** contextual runtime request (API 33+), fired when the user saves their first threshold */
+    fun requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT >= 33 &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    /** (re)schedule or cancel the periodic stats monitor to match saved thresholds */
+    fun syncMonitorWork() {
+        val workManager = WorkManager.getInstance(this)
+        val thresholds = MonitorStore.readThresholds(this)
+
+        if (thresholds.isEmpty()) {
+            workManager.cancelUniqueWork(StatsMonitorWorker.UNIQUE_WORK_NAME)
+            return
+        }
+
+        val intervalMinutes =
+            ((this.application as GlobalApp).appSettings?.monitorIntervalMinutes ?: 15)
+                .coerceAtLeast(15)
+                .toLong()
+
+        val request = PeriodicWorkRequestBuilder<StatsMonitorWorker>(
+            intervalMinutes, TimeUnit.MINUTES)
+            .setConstraints(Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build())
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(StatsMonitorWorker.UNIQUE_WORK_NAME,
+            ExistingPeriodicWorkPolicy.UPDATE,
+            request)
     }
 
     private fun getLatestActivityUser(allCredentials: List<Credential>): Credential? {
@@ -288,6 +361,7 @@ class MainActiviy : AppCompatActivity() {
 
         /** Load saved data from storage to a global var */
         initializeGlobalVar()
+        syncMonitorWork()
     }
 
 

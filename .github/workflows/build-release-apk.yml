@@ -1,0 +1,121 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: APK build type
+        required: true
+        type: choice
+        options:
+          - release
+          - debug
+        default: release
+
+concurrency:
+  group: build-apk-${{ github.ref }}-${{ inputs.build_type }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    name: Build ${{ inputs.build_type }} APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Verify signing secrets are configured
+        if: inputs.build_type == 'release'
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          missing=""
+          [ -z "$ANDROID_KEYSTORE_BASE64" ] && missing="$missing ANDROID_KEYSTORE_BASE64"
+          [ -z "$ANDROID_KEYSTORE_PASSWORD" ] && missing="$missing ANDROID_KEYSTORE_PASSWORD"
+          [ -z "$ANDROID_KEY_ALIAS" ] && missing="$missing ANDROID_KEY_ALIAS"
+          [ -z "$ANDROID_KEY_PASSWORD" ] && missing="$missing ANDROID_KEY_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required repository secret(s):$missing"
+            exit 1
+          fi
+          echo "All required signing secrets are present."
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle (with caching)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Restore signing keystore
+        if: inputs.build_type == 'release'
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          keystore_file="$RUNNER_TEMP/release.keystore"
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$keystore_file"
+          if [ ! -s "$keystore_file" ]; then
+            echo "::error::Decoded keystore is empty - check ANDROID_KEYSTORE_BASE64."
+            exit 1
+          fi
+          chmod 600 "$keystore_file"
+          echo "ANDROID_KEYSTORE_FILE=$keystore_file" >> "$GITHUB_ENV"
+
+      - name: Build selected APK
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ "${{ inputs.build_type }}" = "release" ]; then
+            ./gradlew :app:assembleRelease --no-daemon
+          else
+            ./gradlew :app:assembleDebug --no-daemon
+          fi
+
+      - name: Verify APK output
+        run: |
+          shopt -s nullglob
+          apks=(builds/AndroTainer_v*-${{ inputs.build_type }}.apk)
+          if [ "${#apks[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one ${{ inputs.build_type }} APK, found ${#apks[@]}."
+            find builds app/build/outputs/apk -maxdepth 3 -type f -name '*.apk' -print || true
+            exit 1
+          fi
+          if [ "${{ inputs.build_type }}" = "release" ]; then
+            apk="${apks[0]}"
+            apksigner="$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -n1)"
+            if [ -z "$apksigner" ]; then
+              echo "::error::apksigner was not found under $ANDROID_HOME/build-tools."
+              exit 1
+            fi
+            "$apksigner" verify --verbose --print-certs "$apk"
+          fi
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AndroTainer-${{ inputs.build_type }}-apk
+          path: builds/AndroTainer_v*-${{ inputs.build_type }}.apk
+          if-no-files-found: error
+
+      - name: Clean up keystore
+        if: always()
+        run: |
+          keystore_file="${ANDROID_KEYSTORE_FILE:-$RUNNER_TEMP/release.keystore}"
+          if [ -f "$keystore_file" ]; then
+            shred -u "$keystore_file" 2>/dev/null || rm -f "$keystore_file"
+          fi

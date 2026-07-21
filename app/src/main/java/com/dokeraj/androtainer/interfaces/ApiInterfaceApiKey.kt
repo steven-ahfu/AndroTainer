@@ -9,14 +9,10 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface ApiInterfaceApiKey:MasterInter {
+interface ApiInterfaceApiKey {
     @Headers("Content-Type: application/octet-stream")
     @GET
-    fun getStatus(@Url fullPath: String,@Header("X-API-Key") auth: String): Call<ResponseBody>
-
-    @Headers("Content-Type: application/octet-stream")
-    @GET
-    override fun getLog(
+    fun getLog(
         @Url fullPath: String,
         @Header("X-API-Key") auth: String,
         @Query("since") since: Int,
@@ -29,7 +25,7 @@ interface ApiInterfaceApiKey:MasterInter {
 
     @Headers("Content-Type: application/json")
     @GET
-    override fun getEnpointId(
+    fun getEnpointId(
         @Url fullPath: String,
         @Header("X-API-Key") auth: String,
         @Query("limit") limit: Int,

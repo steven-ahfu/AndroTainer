@@ -1,10 +1,21 @@
-name: build
+name: Build debug APK
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: build-debug-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
 
 jobs:
   build:
+    name: Build and verify debug APK
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repo
@@ -16,29 +27,30 @@ jobs:
           distribution: 'jetbrains'
           java-version: '21'
 
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug lint
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and lint with Gradle
+        run: ./gradlew --no-daemon :app:assembleDebug :app:lintDebug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Android Lint Report
-        uses: yutailang0119/action-android-lint@v4
-        with:
-          report-path: app/build/reports/lint-results-debug.xml
-        continue-on-error: false
+          name: AndroTainer-debug-apk
+          path: builds/AndroTainer_v*-debug.apk
+          if-no-files-found: error
 
       - name: Create Release
-        if: github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: ncipollo/release-action@v1
         with:
           tag: "latest"
           name: "latest"
           prerelease: true
-          artifacts: app/build/outputs/apk/debug/app-debug.apk
+          artifacts: builds/AndroTainer_v*-debug.apk
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true

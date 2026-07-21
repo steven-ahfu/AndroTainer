@@ -2,6 +2,7 @@ package com.dokeraj.androtainer.di
 
 import com.dokeraj.androtainer.interfaces.KontainerRetrofit
 import com.dokeraj.androtainer.models.retrofit.NetworkMapper
+import com.dokeraj.androtainer.models.retrofit.StatsNetworkMapper
 import com.dokeraj.androtainer.repositories.DockerListerRepo
 import dagger.Module
 import dagger.Provides
@@ -18,7 +19,8 @@ object RepositoryModule {
     fun provideDockerListerRepository(
         kontainerRetrofit: KontainerRetrofit,
         networkMapper: NetworkMapper,
+        statsNetworkMapper: StatsNetworkMapper,
     ): DockerListerRepo {
-        return DockerListerRepo(kontainerRetrofit, networkMapper)
+        return DockerListerRepo(kontainerRetrofit, networkMapper, statsNetworkMapper)
     }
 }

@@ -7,23 +7,25 @@
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="container_logo">Container Logo</string>
-    <string name="about_app">**AndroTainer** is an open source app. This *SERVICE* is provided by Dokeraj at no cost and is intended for use as is.\nSource code can be found here: https://github.com/althafvly/AndroTainer\n\n`Current version: %1$s`</string>
+    <string name="about_app">**AndroTainer** is an open source app. This *SERVICE* is provided by Dokeraj at no cost and is intended for use as is.\nSource code can be found here: https://github.com/steven-ahfu/AndroTainer\n\n`Current version: %1$s`</string>
     <string name="users_manage_note">`ANY DELETED CREDENTIAL WILL ONLY BE REMOVED FROM ANDROTAINER`\n\nPro tip: You can find the stored credentials by swiping right on the login screen.</string>
     <string name="dialogWarning">If `CONTINUE` is chosen, you will be logged out and pushed back to the login screen.</string>
     <string name="hiddenHeader">Hidden Functionalities</string>
-    <string name="hiddenExplanations">`Restart container` - Long press on the **START** / **STOP** button.\n\n`Search container by name` - Long press on the **Total** statistics filter.\n\n`Open logs` - Long press on container name.\n\n`Change refresh time for logs` - Long press on **Auto Refresh** button.</string>
+    <string name="hiddenExplanations">`Container actions` - Long press a container card to start, stop, restart, pause, unpause, or open logs.\n\n`Search containers` - Use the container name field above the list.\n\n`Sort live usage` - Choose CPU usage or Memory usage from the sort menu.\n\n`Change refresh time for logs` - Long press the **Auto Refresh** button.</string>
     <string name="deletingContainerNote">Long press the remove button to delete the container **{containerName}**</string>
     <!--
      URLs to portainer
      -->
     <string name="authenticate" translatable="false">{baseUrl}/api/auth</string>
-    <string name="status" translatable="false">{baseUrl}/api/status/version</string>
     <string name="getEnpointId" translatable="false">{baseUrl}/api/endpoints</string>
     <string name="getDockerContainers" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/json</string>
     <string name="StartStopContainer" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}/{actionType}</string>
     <string name="RestartContainer" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}/restart</string>
 
     <string name="removeDockerContainer" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}</string>
+    <string name="getContainerStats" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}/stats</string>
+    <string name="inspectContainer" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}/json</string>
+    <string name="pauseUnpauseContainer" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}/{pauseAction}</string>
     <string name="getLog" translatable="false">{baseUrl}/api/endpoints/{endpointId}/docker/containers/{containerId}/logs</string>
     <!--
     URLs to logos for docker details fragment (json format)
@@ -34,7 +36,40 @@
     <string name="total">Total</string>
     <string name="running">Running</string>
     <string name="stopped">Stopped</string>
+    <string name="unhealthy" translatable="false">Unhealthy</string>
+    <plurals name="containers_count" translatable="false">
+        <item quantity="one">%d container</item>
+        <item quantity="other">%d containers</item>
+    </plurals>
+    <string name="containers_loading" translatable="false">Loading containers…</string>
+    <string name="sort_button_label" translatable="false">Sort: %1$s %2$s</string>
     <string name="clear_search" translatable="false">X</string>
+    <string name="filter_running" translatable="false">Running</string>
+    <string name="filter_healthy" translatable="false">Healthy</string>
+    <string name="filter_exited" translatable="false">Exited</string>
+    <string name="filter_created" translatable="false">Created</string>
+    <string name="sort_containers" translatable="false">Sort containers</string>
+    <string name="sort_by_name" translatable="false">Name</string>
+    <string name="sort_by_uptime" translatable="false">Uptime</string>
+    <string name="sort_by_created" translatable="false">Created</string>
+    <string name="sort_by_cpu" translatable="false">CPU usage</string>
+    <string name="sort_by_memory" translatable="false">Memory usage</string>
+    <string name="action_start" translatable="false">Start</string>
+    <string name="action_stop" translatable="false">Stop</string>
+    <string name="action_restart" translatable="false">Restart</string>
+    <string name="action_pause" translatable="false">Pause</string>
+    <string name="action_unpause" translatable="false">Unpause</string>
+    <string name="action_open_logs" translatable="false">Open logs</string>
+    <string name="live_stats_title" translatable="false">Live Stats</string>
+    <string name="stats_unavailable" translatable="false">Stats unavailable</string>
+    <string name="action_alerts" translatable="false">Alerts</string>
+    <string name="threshold_explainer" translatable="false">Get a notification when this container exceeds a limit. CPU alerts need 3 consecutive polls over the limit; memory alerts fire immediately. Leave a field blank for no alert.</string>
+    <string name="threshold_cpu_hint" translatable="false">CPU limit</string>
+    <string name="threshold_mem_hint" translatable="false">Memory limit</string>
+    <string name="threshold_interval_hint" translatable="false">Check interval</string>
+    <string name="threshold_save" translatable="false">Save</string>
+    <string name="threshold_cancel" translatable="false">Cancel</string>
+    <string name="threshold_delete" translatable="false">Remove</string>
     <string name="logout">Logout</string>
     <string name="manage_users">Manage Users</string>
     <string name="endpoints">Endpoints</string>
@@ -42,6 +77,7 @@
     <string name="hidden_functionalities">Hidden Functionalities</string>
     <string name="search_hint">Search container name</string>
     <string name="api_key_hint">Api Key</string>
+    <string name="login_subtitle" translatable="false">Connect to your Portainer server</string>
     <string name="username_hint">UserName</string>
     <string name="password_hint">Password</string>
     <string name="use_api_key">Use Api Key</string>
